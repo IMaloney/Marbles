@@ -1,22 +1,29 @@
-﻿#ifndef CUBE_H
+#ifndef CUBE_H
 #define CUBE_H
 
-# include "Shape.h"
-#include "shapes/Faces/Rectangle.h"
+#include "Shape.h"
 
-class Cube
-    : public Shape
+#include <iostream>
+
+class Cube : public Shape
 {
 public:
-    Cube(int param1);
-    virtual ~Cube();
+    Cube();
+    Cube(int param1, int param2);
+    ~Cube();
 
-protected:
+private:
+    int m_param1;
+    int m_param2;
 
-    virtual std::vector<float> buildShape();
-    void buildFace(Point p);
-    std::vector<float> m_points;
-    std::vector<float> m_face;
+    std::vector<GLfloat> generateVertexData(int param1, int param2) override;
+
+    std::vector<GLfloat> buildZPlaneSide(std::vector<GLfloat> verts, std::vector<GLfloat> first, std::vector<GLfloat> normal,
+                   std::vector<GLfloat> plane, int squaresPerRow, GLfloat squareSize);
+    std::vector<GLfloat> buildYPlaneSide(std::vector<GLfloat> verts, std::vector<GLfloat> first, std::vector<GLfloat> normal,
+                   std::vector<GLfloat> plane, int squaresPerRow, GLfloat squareSize);
+    std::vector<GLfloat> buildXPlaneSide(std::vector<GLfloat> verts, std::vector<GLfloat> first, std::vector<GLfloat> normal,
+                   std::vector<GLfloat> plane, int squaresPerRow, GLfloat squareSize);
 };
 
 #endif // CUBE_H

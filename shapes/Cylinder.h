@@ -2,22 +2,22 @@
 #define CYLINDER_H
 
 #include "Shape.h"
-#include "shapes/Faces/Circle.h"
-#include "shapes/Faces/Rectangle.h"
-#include "shapes/Faces/AtomicTriangle.h"
 
-class Cylinder
-    : public Shape
+class Cylinder : public Shape
 {
 public:
+    Cylinder();
     Cylinder(int param1, int param2);
-    virtual ~Cylinder();
+    ~Cylinder();
 
-protected:
-    virtual std::vector<float> buildShape();
-    void buildSides(std::vector<float> *ret, float angle);
-    void buildCaps(std::vector<float> *ret, float angle);
-    std::unique_ptr<Circle> m_top;
+    std::vector<GLfloat> generateAngleVector(int numSlices);
+    std::vector<GLfloat> generatePositionVector(float angle, float z, float radius);
+
+private:
+    int m_param1;
+    int m_param2;
+
+    std::vector<GLfloat> generateVertexData(int param1, int param2) override;
 };
 
 #endif // CYLINDER_H

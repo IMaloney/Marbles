@@ -2,6 +2,10 @@
 #define SCENE_H
 
 #include "CS123SceneData.h"
+#include <map>
+#include <string>
+#include <QImage>
+#include <QString>
 
 class Camera;
 class CS123ISceneParser;
@@ -34,6 +38,16 @@ protected:
     // Sets the global data for the scene.
     virtual void setGlobal(const CS123SceneGlobalData &global);
 
+    void dfs(const CS123SceneNode &node, const glm::mat4x4 &matrix);
+
+    glm::mat4x4 getTransformation(CS123SceneTransformation transformation);
+
+    CS123SceneGlobalData m_globalData;
+    std::vector<CS123SceneLightData> m_lightData;
+    std::vector<CS123ScenePrimitive> m_primitives;
+    std::vector<glm::mat4x4> m_transformations;
+    std::vector<CS123FlatSceneNode> m_flattenedGraph;
+    std::map<std::string, QImage> m_textures;
 };
 
 #endif // SCENE_H

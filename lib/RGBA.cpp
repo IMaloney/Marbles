@@ -1,6 +1,8 @@
 #include "RGBA.h"
 #include "math.h"
 
+using namespace std;
+
 RGBA RGBA::operator+(const RGBA &that) const {
     return RGBA(this->r + that.r, this->g + that.g, this->b + that.b, this->a + that.a);
 }
@@ -100,8 +102,8 @@ RGBA RGBAUtils::toRGBA(RGBAFloat const &that) {
 RGBAFloat RGBAUtils::distance(const RGBAFloat &c1, const RGBAFloat &c2) {
     float r, g, b;
     // need to check this
-    r = std::sqrt(std::pow(c1.r, 2.0) + std::pow((c2.r), 2.0));
-    g = std::sqrt(std::pow((c1.g), 2.0) + std::pow((c2.g), 2.0));
-    b = std::sqrt(std::pow((c1.b), 2.0) + std::pow((c2.b), 2.0));
+    r = sqrt(pow(c1.r, 2.0) + pow((c2.r), 2.0));
+    g = sqrt(pow((c1.g), 2.0) + pow((c2.g), 2.0));
+    b = sqrt(pow((c1.b), 2.0) + pow((c2.b), 2.0));
     return RGBAFloat((r), (g), (b), c1.a);
 }

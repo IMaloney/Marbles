@@ -2,24 +2,23 @@
 #define CONE_H
 
 #include "Shape.h"
-#include "shapes/Faces/TessalatedTriangle.h"
-#include "shapes/Faces/Circle.h"
+#include "Cylinder.h"
 
-class Cone
-    : public Shape
+class Cone : public Shape
 {
 public:
+    Cone();
     Cone(int param1, int param2);
-    virtual ~Cone();
+    ~Cone();
 
-protected:
-    virtual std::vector<float> buildShape();
+private:
+    int m_param1;
+    int m_param2;
+    Cylinder m_cylinder;
 
-    void buildBase(std::vector<float> *ret, float angle);
-    void buildFaces(std::vector<float> *ret, float angle);
+    std::vector<GLfloat> generateVertexData(int param1, int param2) override;
 
-    std::unique_ptr<Circle> m_base;
-    std::unique_ptr<TessalatedTriangle> m_side;
+    glm::vec3 calculateSurfaceNormal(float angle);
 };
 
 #endif // CONE_H

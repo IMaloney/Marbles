@@ -8,6 +8,7 @@ TEMPLATE = app
 QMAKE_LFLAGS += -no-pie
 QMAKE_CXXFLAGS += -std=c++14
 CONFIG += c++14
+#CONFIG += sdk_no_version_check #??????
 
 unix:!macx {
     LIBS += -lGLU
@@ -31,6 +32,12 @@ SOURCES += \
     scenegraph/ShapesScene.cpp \
     scenegraph/SceneviewScene.cpp \
     scenegraph/RayScene.cpp \
+    shapes/Cone.cpp \
+    shapes/Cube.cpp \
+    shapes/Cylinder.cpp \
+    shapes/ExampleShape.cpp \
+    shapes/Shape.cpp \
+    shapes/Sphere.cpp \
     ui/Canvas2D.cpp \
     ui/SupportCanvas2D.cpp \
     ui/SupportCanvas3D.cpp \
@@ -69,6 +76,12 @@ HEADERS += \
     scenegraph/ShapesScene.h \
     scenegraph/SceneviewScene.h \
     scenegraph/RayScene.h \
+    shapes/Cone.h \
+    shapes/Cube.h \
+    shapes/Cylinder.h \
+    shapes/ExampleShape.h \
+    shapes/Shape.h \
+    shapes/Sphere.h \
     ui/Canvas2D.h \
     ui/SupportCanvas2D.h \
     ui/SupportCanvas3D.h \

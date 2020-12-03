@@ -68,12 +68,17 @@ private:
 
     glm::vec4 m_lightDirection = glm::normalize(glm::vec4(1.f, -1.f, -1.f, 0.f));
 
+    //    bool useSceneviewScene;
+    //    int shapeType;              // Selected shape type
+    //    int shapeParameter1;
+    //    int shapeParameter2;
+    //    float shapeParameter3;
+    //    bool useLighting;           // Enable default lighting
+    //    bool drawWireframe;         // Draw wireframe only
+    //    bool drawNormals;
+
     // essentially an OpenGLShape from lab 1
     std::unique_ptr<Shape> m_shape;
-
-    int m_shapeType;
-    int m_param1;
-    int m_param2;
 
     int m_width;
     int m_height;
@@ -96,6 +101,8 @@ private:
     void renderNormals();
     void renderWireframe();
     void setSceneUniforms(SupportCanvas3D *context);
+
+    void setShape(int shapeType);
 
 };
 

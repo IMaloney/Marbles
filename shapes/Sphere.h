@@ -2,21 +2,26 @@
 #define SPHERE_H
 
 #include "Shape.h"
-#include "shapes/Faces/AtomicTriangle.h"
-#include "shapes/Faces/Rectangle.h"
+#include "Cylinder.h"
 
-class Sphere
-    : public Shape
+class Sphere : public Shape
 {
 public:
+    Sphere();
     Sphere(int param1, int param2);
-    virtual ~Sphere();
+    ~Sphere();
 
-protected:
-    virtual std::vector<float> buildShape();
-    AtomicTriangle buildHalves(std::vector<float> *ret, float xyAngle, float xzAngle);
-    void buildBody(std::vector<float> *ret, int numTriangles, float xyAngle, float xzAngle);
-    void buildSides(std::vector<float> *ret, std::vector<float> temp, float xzAngle);
+private:
+    int m_param1;
+    int m_param2;
+    Cylinder m_cylinder;
+
+    std::vector<GLfloat> generateVertexData(int param1, int param2) override;
+
+    std::vector<GLfloat> generateLatitudeAngleVector(int param1);
+    glm::vec3 sphereToCartesian(float radius, float lat, float lon);
+    void addPointAndNorm(std::vector<GLfloat> * data, glm::vec3 point);
+    void addUVCoords(std::vector<GLfloat>* data, glm::vec3 point);
 };
 
 #endif // SPHERE_H

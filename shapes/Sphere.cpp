@@ -1,91 +1,141 @@
 #include "Sphere.h"
 
-#include <iostream>
-
-Sphere::Sphere(int param1, int param2)
-    : Shape(param1, param2)
+Sphere::Sphere()
 {
-    m_minParam1 = 2;
-    m_minParam2 = 3;
-    this->checkMins();
-    this->createShape();
+}
+
+Sphere::Sphere(int param1, int param2) :
+    Shape(),
+    m_param1(param1),
+    m_param2(param2),
+    m_cylinder()
+{
+    m_vertexData = generateVertexData(param1, param2);
+    /** build the VAO so that the shape is ready to be drawn */
+    buildVAO();
 }
 
 Sphere::~Sphere()
 {
-
 }
 
-std::vector<float> Sphere::buildShape()
-{
-//    subtract 2 since the body contains rectangles and the halves contain the other triangle bits
-    int numTriangles = m_sParam1 - 2;
-    float xyAngle = 180.f/m_sParam1,
-          xzAngle = 360.f/m_sParam2;
-    std::vector<float> ret, temp;
-//    AtomicTriangle t = this->buildHalves(&temp, xyAngle, xzAngle);
-//    this->buildBody(&temp, numTriangles, xyAngle, xzAngle);
-    this->buildBody(&ret, numTriangles, xyAngle, xzAngle);
-//    this->buildSides(&ret, &temp, xzAngle);
-    return ret;
-}
+std::vector<GLfloat> Sphere::generateVertexData(int param1, int param2) {
+    std::vector<GLfloat> data = std::vector<GLfloat>();
 
-void Sphere::buildSides(std::vector<float> *ret, std::vector<float> temp, float xzAngle) {
-    glm::mat4 mat = glm::rotate(ShapeUtils::rad(xzAngle), glm::vec3(0.f,1.f,0.f));
-    for (int i = 0; i < m_sParam2; i++) {
-        temp = ShapeUtils::rotate(temp, mat);
-        ShapeUtils::combine(ret, temp);
-    }
+    std::vector<GLfloat> anglesLat = generateLatitudeAngleVector(param1);
+    std::vector<GLfloat> anglesLon = m_cylinder.generateAngleVector(param2);
 
-}
+    for (int i = 0; i < param1; i++) {
+        for (int j = 0; j < param2; j++) {
 
-//does not work
-void Sphere::buildBody(std::vector<float> *ret, int numTriangles, float xyAngle, float xzAngle)
-{
-    float angle = 2 * xyAngle;
-    Point p1 = Point(.5f * std::cos(ShapeUtils::rad(xzAngle)) * std::sin(ShapeUtils::rad(xyAngle)), .5f * std::cos(ShapeUtils::rad(xyAngle)), .5f * std::sin(ShapeUtils::rad(xzAngle)) * std::sin(ShapeUtils::rad(xyAngle))),
-          p2 = Point(.5f * std::cos(ShapeUtils::rad(0.f)) * std::sin(ShapeUtils::rad(xyAngle)), .5f * std::cos(ShapeUtils::rad(xyAngle)), .5f * std::sin(ShapeUtils::rad(0.f)) * std::sin(ShapeUtils::rad(xyAngle))),
-          p3, p4;
-    std::unique_ptr<Rectangle> rect;
-    int test = numTriangles;
-    for (int i = numTriangles; i > 0; i --) {
-        p3 = Point(.5f * std::cos(ShapeUtils::rad(0.f)) * std::sin(ShapeUtils::rad(angle)), .5f * std::cos(ShapeUtils::rad(angle)), .5f * std::sin(ShapeUtils::rad(0.f)) * std::sin(ShapeUtils::rad(angle)));
-        p4 = Point(.5f * std::cos(ShapeUtils::rad(xzAngle)) * std::sin(ShapeUtils::rad(angle)), .5f * std::cos(ShapeUtils::rad(angle)), .5f * std::sin(ShapeUtils::rad(angle)) * std::sin(ShapeUtils::rad(angle)));
-        rect = std::make_unique<Rectangle>(p1, p2, p3, p4);
-        if (numTriangles == test) {
-//            prints out points of first triangle crated at the top
-            std::cout << "point 1: " << std::endl;
-            p1.printValues();
-            std::cout << "point 2: " << std::endl;
-            p2.printValues();
-            std::cout << "point 3: " << std::endl;
-            p3.printValues();
-            std::cout << "point 4: " << std::endl;
-            p4.printValues();
+            // Save the two longitude angles for this slice
+            float angleLon1 = anglesLon[j];
+            float angleLon2;
+
+            // Check that they are
+            if (j == param2 - 1) {
+                angleLon2 = anglesLon[0];
+            } else {
+                angleLon2 = anglesLon[j+1];
+            }
+
+
+            if (i == 0) {
+                glm::vec3 point1 = sphereToCartesian(.5, anglesLat[0], angleLon1);
+                glm::vec3 point2 = sphereToCartesian(.5, anglesLat[1], angleLon1);
+                glm::vec3 point3 = sphereToCartesian(.5, anglesLat[1], angleLon2);
+
+                addPointAndNorm(&data, point3);
+//                addUVCoords(&data, point3);
+                addPointAndNorm(&data, point2);
+//                addUVCoords(&data, point2);
+                addPointAndNorm(&data, point1);
+//                addUVCoords(&data, point1);
+
+
+            } else if (i == param1 - 1) {
+                glm::vec3 point1 = sphereToCartesian(.5, anglesLat[param1 - 1], angleLon1);
+                glm::vec3 point2 = sphereToCartesian(.5, anglesLat[param1], angleLon1);
+                glm::vec3 point3 = sphereToCartesian(.5, anglesLat[param1 - 1], angleLon2);
+
+                addPointAndNorm(&data, point3);
+//                addUVCoords(&data, point3);
+                addPointAndNorm(&data, point2);
+//                addUVCoords(&data, point2);
+                addPointAndNorm(&data, point1);
+//                addUVCoords(&data, point1);
+            } else {
+                glm::vec3 point1 = sphereToCartesian(.5, anglesLat[i], angleLon1);
+                glm::vec3 point2 = sphereToCartesian(.5, anglesLat[i+1], angleLon1);
+                glm::vec3 point3 = sphereToCartesian(.5, anglesLat[i], angleLon2);
+                glm::vec3 point4 = sphereToCartesian(.5, anglesLat[i+1], angleLon2);
+
+                addPointAndNorm(&data, point3);
+//                addUVCoords(&data, point3);
+                addPointAndNorm(&data, point2);
+//                addUVCoords(&data, point2);
+                addPointAndNorm(&data, point1);
+//                addUVCoords(&data, point1);
+
+                addPointAndNorm(&data, point4);
+//                addUVCoords(&data, point4);
+                addPointAndNorm(&data, point2);
+//                addUVCoords(&data, point2);
+                addPointAndNorm(&data, point3);
+//                addUVCoords(&data, point3);
+            }
         }
-        angle += xyAngle;
-        p1 = p4;
-        p2 = p3;
-        ShapeUtils::combine(ret, rect->getPoints());
     }
+    return data;
 }
 
-AtomicTriangle Sphere::buildHalves(std::vector<float> *ret, float xyAngle, float xzAngle)
-{
-    // top half
-    Point p1, p2, p3;
-    p1 = Point(0.f, .5f, 0.f);
-    p2 = Point(.5f * std::cos(ShapeUtils::rad(0.f)) * std::sin(ShapeUtils::rad(xyAngle)), .5f * std::cos(ShapeUtils::rad(xyAngle)), .5f * std::sin(ShapeUtils::rad(0.f)) * std::sin(ShapeUtils::rad(xyAngle)));
-    p3 = Point(.5f * std::cos(ShapeUtils::rad(xzAngle)) * std::sin(ShapeUtils::rad(xyAngle)), .5f * std::cos(ShapeUtils::rad(xyAngle)), .5f * std::sin(ShapeUtils::rad(xzAngle)) * std::sin(ShapeUtils::rad(xyAngle)));
-    AtomicTriangle t = AtomicTriangle(p1, p2 , p3);
-    ShapeUtils::combine(ret, t.getPoints());
-    std::cout << "top triangle p3 (problem point):" << std::endl;
-    // bottom half
-    p1 = Point(0.f, -.5f, 0.f);
-    p2 = Point(.5f * std::cos(ShapeUtils::rad(0.f)) * std::sin(ShapeUtils::rad(xyAngle)), -.5f * std::cos(ShapeUtils::rad(xyAngle)), .5f * std::sin(ShapeUtils::rad(0.f)) * std::sin(ShapeUtils::rad(xyAngle)));
-    p3 = Point(.5f * std::cos(ShapeUtils::rad(xzAngle)) * std::sin(ShapeUtils::rad(xyAngle)), -.5f * std::cos(ShapeUtils::rad(xyAngle)), .5f * std::sin(ShapeUtils::rad(xzAngle)) * std::sin(ShapeUtils::rad(xyAngle)));
-    AtomicTriangle bt = AtomicTriangle(p1, p3, p2);
-    ShapeUtils::combine(ret, bt.getPoints());
+std::vector<GLfloat> Sphere::generateLatitudeAngleVector(int param1) {
+    std::vector<GLfloat> angles = std::vector<GLfloat>();
 
-    return t;
+    for (int i = 0; i <= param1; i++) {
+        float angle = (M_PI/(float) param1) * (float)i;
+        angles.push_back(angle);
+    }
+    return angles;
 }
+
+glm::vec3 Sphere::sphereToCartesian(float radius, float lat, float lon) {
+    glm::vec3 coords = glm::vec3();
+
+    coords.x = radius * sin(lat) * cos(lon);
+    coords.y = radius * cos(lat);
+    coords.z = radius * sin(lat) * sin(lon);
+
+    return coords;
+}
+
+void Sphere::addPointAndNorm(std::vector<GLfloat>* data, glm::vec3 point) {
+    data->push_back(point.x);
+    data->push_back(point.y);
+    data->push_back(point.z);
+    // Normal is the same as the point!!!
+    data->push_back(point.x);
+    data->push_back(point.y);
+    data->push_back(point.z);
+}
+
+void Sphere::addUVCoords(std::vector<GLfloat>* data, glm::vec3 point) {
+    float u;
+    float v;
+
+    float angle = atan2(point.z, point.x);
+
+    if (angle >= 0) {
+        u = 1.0f - (angle/(2*M_PI));
+    } else {
+        u = -angle / (2*M_PI);
+    }
+
+    float latitude = asin(point.y/0.5f);
+    v = (latitude/M_PI) + 0.5f;
+
+    data->push_back(u);
+    data->push_back(v);
+}
+
+

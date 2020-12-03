@@ -7,6 +7,10 @@
 #include "SupportCanvas3D.h"
 #include "ResourceLoader.h"
 #include "gl/shaders/CS123Shader.h"
+#include "CS123SceneData.h"
+
+#include <iostream>
+
 using namespace CS123::GL;
 
 
@@ -56,6 +60,7 @@ void SceneviewScene::render(SupportCanvas3D *context) {
     m_phongShader->bind();
     setSceneUniforms(context);
     setLights();
+    setLevelOfDetail();
     renderGeometry();
     glBindTexture(GL_TEXTURE_2D, 0);
     m_phongShader->unbind();
@@ -77,23 +82,85 @@ void SceneviewScene::setMatrixUniforms(Shader *shader, SupportCanvas3D *context)
 
 void SceneviewScene::setLights()
 {
-    // TODO: [SCENEVIEW] Fill this in...
-    //
-    // Set up the lighting for your scene using m_phongShader.
-    // The lighting information will most likely be stored in CS123SceneLightData structures.
-    //
+    for (int i = 0; i < (int) m_lightData.size(); i++) {
+        m_phongShader->setLight(m_lightData[i]);
+    }
+}
+
+void SceneviewScene::setLevelOfDetail() {
+    int lodFactor = (int) std::floor(m_flattenedGraph.size() / 100) + 1;
+
+    int param1 = std::max((int) floor(20/lodFactor), 3);
+    int param2 = std::max((int) floor(20/lodFactor), 3);
+    float param3 = 20.0f;
+
+//    if (lodFactor > 0) {
+//        param1 = std::max((int) floor(20/lodFactor), 3);
+//        param2 = std::max((int) floor(20/lodFactor), 3);
+//    }
+
+    m_shape = std::make_shared<Shape>();
+    m_cone = std::make_shared<Cone>(param1, param2);
+    m_cube = std::make_shared<Cube>(param1, param2);
+    m_cylinder = std::make_shared<Cylinder>(param1, param2);
+    m_sphere = std::make_shared<Sphere>(param1, param2);
+//    m_torus = std::make_shared<Torus>(param1, param2, param3);
+}
+
+void SceneviewScene::getPrimative(CS123ScenePrimitive primitive) {
+    switch (primitive.type) {
+        case PrimitiveType::PRIMITIVE_CUBE:
+            m_shape = m_cube;
+            break;
+        case PrimitiveType::PRIMITIVE_CONE:
+            m_shape = m_cone;
+            break;
+        case PrimitiveType::PRIMITIVE_CYLINDER:
+            m_shape = m_cylinder;
+            break;
+        case PrimitiveType::PRIMITIVE_TORUS:
+//            m_shape = m_torus;
+            break;
+        case PrimitiveType::PRIMITIVE_SPHERE:
+            m_shape = m_sphere;
+            break;
+        case PrimitiveType::PRIMITIVE_MESH:
+            std::cerr << "Mesh not yet implemented" << std::endl;
+            break;
+        default:
+            std::cerr << "Error, no primitive type detected" << std::endl;
+            break;
+    }
 }
 
 void SceneviewScene::renderGeometry() {
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-    // TODO: [SCENEVIEW] Fill this in...
-    // You shouldn't need to write *any* OpenGL in this class!
-    //
-    //
-    // This is where you should render the geometry of the scene. Use what you
-    // know about OpenGL and leverage your Shapes classes to get the job done.
-    //
 
+    for (int i = 0; i < (int) m_flattenedGraph.size(); i++) {
+        CS123FlatSceneNode node = m_flattenedGraph[i];
+        CS123ScenePrimitive prim = node.primitive;
+        glm::mat4x4 trans = node.transformation;
+
+        // Sets m_shape to be our current primitive type
+        getPrimative(prim);
+
+        // Apply material
+        // Multiply ambient and diffuse by global coefficients
+        prim.material.cAmbient *= m_globalData.ka;
+        prim.material.cDiffuse *= m_globalData.kd;
+        m_phongShader->applyMaterial(prim.material);
+
+//        // Add texture
+//        QImage image = m_textures[node.texFilename];
+//        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+//        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+//        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.width(), image.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, image.bits());
+
+        // Set model transformation matrix to our transformation matrix
+        m_phongShader->setUniform("m" , trans);
+
+        m_shape->draw();
+    }
 }
 
 void SceneviewScene::settingsChanged() {

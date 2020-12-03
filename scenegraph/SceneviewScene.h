@@ -5,6 +5,13 @@
 
 #include <memory>
 
+#include "shapes/Shape.h"
+#include "shapes/Cone.h"
+#include "shapes/Cube.h"
+#include "shapes/Cylinder.h"
+#include "shapes/Sphere.h"
+//#include "shapes/Torus.h"
+
 
 namespace CS123 { namespace GL {
 
@@ -55,10 +62,20 @@ private:
     void setLights();
     void renderGeometry();
 
+    void setLevelOfDetail();
+    void getPrimative(CS123ScenePrimitive primitive);
+
     std::unique_ptr<CS123::GL::CS123Shader> m_phongShader;
     std::unique_ptr<CS123::GL::Shader> m_wireframeShader;
     std::unique_ptr<CS123::GL::Shader> m_normalsShader;
     std::unique_ptr<CS123::GL::Shader> m_normalsArrowShader;
+
+    std::shared_ptr<Shape> m_shape;
+    std::shared_ptr<Cone> m_cone;
+    std::shared_ptr<Cube> m_cube;
+    std::shared_ptr<Cylinder> m_cylinder;
+    std::shared_ptr<Sphere> m_sphere;
+//    std::shared_ptr<Torus> m_torus;
 
 };
 

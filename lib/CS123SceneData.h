@@ -163,5 +163,13 @@ struct CS123SceneNode {
    std::vector<CS123SceneNode*> children;
 };
 
+struct CS123FlatSceneNode {
+   CS123ScenePrimitive primitive;
+   glm::mat4x4 transformation;
+   std::string texFilename;
+   glm::vec4 boundingBoxMax;
+   glm::vec4 boundingBoxMin;
+};
+
 #endif
 

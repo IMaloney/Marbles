@@ -4,14 +4,22 @@
 #include <SupportCanvas3D.h>
 #include <QFileDialog>
 
+#include "gl/shaders/ShaderAttribLocations.h"
+
 #include <sstream>
-
 #include <iostream>
+#include <filesystem>
+#include <cstdio>
+#include <iostream>
+#include <fstream>
 
+#include "shapes/ExampleShape.h"
 #include "shapes/Cube.h"
-#include "shapes/Cylinder.h"
 #include "shapes/Cone.h"
+#include "shapes/Cylinder.h"
 #include "shapes/Sphere.h"
+//#include "shapes/Torus.h"
+//#include "shapes/MeshLoader.h"
 
 using namespace CS123::GL;
 #include "gl/shaders/CS123Shader.h"
@@ -22,10 +30,7 @@ using namespace CS123::GL;
 ShapesScene::ShapesScene(int width, int height) :
     m_shape(nullptr),
     m_width(width),
-    m_height(height),
-    m_shapeType(settings.shapeType),
-    m_param1(settings.shapeParameter1),
-    m_param2(settings.shapeParameter2)
+    m_height(height)
 {
     initializeSceneMaterial();
     initializeSceneLight();
@@ -163,9 +168,10 @@ void ShapesScene::renderNormalsPass (SupportCanvas3D *context) {
 
 void ShapesScene::renderGeometry() {
     // TODO: [SHAPES] Render the shape. Lab 1 seems like it'll come in handy...
-//    if (m_shape) {
-//        m_shape->draw();
-//    }
+
+    if (m_shape) {
+        m_shape->draw();
+    }
 }
 
 void ShapesScene::clearLights() {
@@ -188,5 +194,70 @@ void ShapesScene::setLights(const glm::mat4 viewMatrix) {
 
 void ShapesScene::settingsChanged() {
 
+    // TODO: [SHAPES] Fill this in if applicable.
+    // TODO: [SHAPES] Fill this in, for now default to an example shape
+//    m_shape = std::make_unique<Cube>(settings.shapeParameter1, settings.shapeParameter2);
+    setShape(settings.shapeType);
+
 }
 
+void ShapesScene::setShape(int shapeType) {
+    int param1;
+    int param2;
+    switch(shapeType) {
+        case SHAPE_CUBE:
+            m_shape = std::make_unique<Cube>(settings.shapeParameter1, settings.shapeParameter2);
+            break;
+        case SHAPE_CONE:
+            if (settings.shapeParameter2 <= 3) {
+                m_shape = std::make_unique<Cone>(settings.shapeParameter1, 3);
+            } else {
+                m_shape = std::make_unique<Cone>(settings.shapeParameter1, settings.shapeParameter2);
+            }
+            break;
+        case SHAPE_SPHERE:
+            if (settings.shapeParameter1 <= 2) {
+                param1 = 2;
+            } else {
+                param1 = settings.shapeParameter1;
+            }
+
+            if (settings.shapeParameter2 <= 3) {
+                param2 = 3;
+            } else {
+                param2 = settings.shapeParameter2;
+            }
+            m_shape = std::make_unique<Sphere>(param1, param2);
+            break;
+        case SHAPE_CYLINDER:
+            if (settings.shapeParameter2 <= 3) {
+                m_shape = std::make_unique<Cylinder>(settings.shapeParameter1, 3);
+            } else {
+                m_shape = std::make_unique<Cylinder>(settings.shapeParameter1, settings.shapeParameter2);
+            }
+            break;
+        case SHAPE_TORUS:
+            if (settings.shapeParameter1 <= 3) {
+                param1 = 3;
+            } else {
+                param1 = settings.shapeParameter1;
+            }
+
+            if (settings.shapeParameter2 <= 3) {
+                param2 = 3;
+            } else {
+                param2 = settings.shapeParameter2;
+            }
+//            m_shape = std::make_unique<Torus>(param1, param2, settings.shapeParameter3);
+            break;
+        case SHAPE_SPECIAL_1:
+//            m_shape = std::make_unique<MeshLoader>("/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/projects-wtauten/meshes/sphere.obj");
+            break;
+        case SHAPE_SPECIAL_2:
+//            m_shape = std::make_unique<MeshLoader>("/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/projects-wtauten/meshes/teapot.obj");
+            break;
+        default:
+            std::cerr << "Something went wildly wrong: no shape type detected" << std::endl;
+            break;
+    }
+}
