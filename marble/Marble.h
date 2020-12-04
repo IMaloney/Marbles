@@ -20,6 +20,13 @@ protected:
     int m_radius;
     int m_weight;
     std::vector<GLfloat> m_points;
+
+    float m_velocity;
+
+    glm::vec4 m_centerPosition;
+    glm::vec4 m_currDirection;
+
+    glm::vec4 m_boundingBoxTopLeft;
     // may not need this method, but just in case changing the gravity changes other aspects of the marble
     // just have a protected method that all marble types will overwrite
     virtual void updateMarble() = 0;
