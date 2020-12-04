@@ -10,6 +10,10 @@ QMAKE_CXXFLAGS += -std=c++14
 CONFIG += c++14
 #CONFIG += sdk_no_version_check #??????
 
+DESTDIR=bin #Target file directory
+OBJECTS_DIR=generated_files #Intermediate object files directory
+MOC_DIR=generated_files #Intermediate moc files directory
+
 unix:!macx {
     LIBS += -lGLU
 }
