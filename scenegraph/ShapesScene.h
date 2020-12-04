@@ -10,6 +10,9 @@
 #include "gl/datatype/FBO.h"
 #include "Settings.h"
 
+
+#include "shapes/Box.h"
+
 namespace CS123 { namespace GL {
 
     class Shader;
@@ -101,8 +104,6 @@ private:
     void renderNormals();
     void renderWireframe();
     void setSceneUniforms(SupportCanvas3D *context);
-
-    void setShape(int shapeType);
 
 };
 

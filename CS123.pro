@@ -42,6 +42,7 @@ SOURCES += \
     shapes/Cylinder.cpp \
     shapes/ExampleShape.cpp \
     shapes/Shape.cpp \
+    shapes/ShapeUtils.cpp \
     shapes/Sphere.cpp \
     ui/Canvas2D.cpp \
     ui/SupportCanvas2D.cpp \
@@ -91,6 +92,7 @@ HEADERS += \
     shapes/Cylinder.h \
     shapes/ExampleShape.h \
     shapes/Shape.h \
+    shapes/ShapeUtils.h \
     shapes/Sphere.h \
     ui/Canvas2D.h \
     ui/SupportCanvas2D.h \

@@ -195,68 +195,7 @@ void ShapesScene::settingsChanged() {
 
     // TODO: [SHAPES] Fill this in if applicable.
     // TODO: [SHAPES] Fill this in, for now default to an example shape
-//    m_shape = std::make_unique<Cube>(settings.shapeParameter1, settings.shapeParameter2);
-    setShape(settings.shapeType);
+    m_shape = std::make_unique<Box>(1.5f);
 
-}
 
-void ShapesScene::setShape(int shapeType) {
-    int param1;
-    int param2;
-    switch(shapeType) {
-        case SHAPE_CUBE:
-            m_shape = std::make_unique<Cube>(settings.shapeParameter1, settings.shapeParameter2);
-            break;
-        case SHAPE_CONE:
-            if (settings.shapeParameter2 <= 3) {
-                m_shape = std::make_unique<Cone>(settings.shapeParameter1, 3);
-            } else {
-                m_shape = std::make_unique<Cone>(settings.shapeParameter1, settings.shapeParameter2);
-            }
-            break;
-        case SHAPE_SPHERE:
-            if (settings.shapeParameter1 <= 2) {
-                param1 = 2;
-            } else {
-                param1 = settings.shapeParameter1;
-            }
-
-            if (settings.shapeParameter2 <= 3) {
-                param2 = 3;
-            } else {
-                param2 = settings.shapeParameter2;
-            }
-            m_shape = std::make_unique<Sphere>(param1, param2);
-            break;
-        case SHAPE_CYLINDER:
-            if (settings.shapeParameter2 <= 3) {
-                m_shape = std::make_unique<Cylinder>(settings.shapeParameter1, 3);
-            } else {
-                m_shape = std::make_unique<Cylinder>(settings.shapeParameter1, settings.shapeParameter2);
-            }
-            break;
-        case SHAPE_TORUS:
-            if (settings.shapeParameter1 <= 3) {
-                param1 = 3;
-            } else {
-                param1 = settings.shapeParameter1;
-            }
-
-            if (settings.shapeParameter2 <= 3) {
-                param2 = 3;
-            } else {
-                param2 = settings.shapeParameter2;
-            }
-//            m_shape = std::make_unique<Torus>(param1, param2, settings.shapeParameter3);
-            break;
-        case SHAPE_SPECIAL_1:
-//            m_shape = std::make_unique<MeshLoader>("/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/projects-wtauten/meshes/sphere.obj");
-            break;
-        case SHAPE_SPECIAL_2:
-//            m_shape = std::make_unique<MeshLoader>("/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/projects-wtauten/meshes/teapot.obj");
-            break;
-        default:
-            std::cerr << "Something went wildly wrong: no shape type detected" << std::endl;
-            break;
-    }
 }
