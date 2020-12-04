@@ -23,7 +23,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
     QByteArrayData data[28];
-    char stringdata0[434];
+    char stringdata0[433];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -42,30 +42,30 @@ QT_MOC_LITERAL(6, 69, 8), // "fileOpen"
 QT_MOC_LITERAL(7, 78, 8), // "fileSave"
 QT_MOC_LITERAL(8, 87, 19), // "checkAllRayFeatures"
 QT_MOC_LITERAL(9, 107, 21), // "uncheckAllRayFeatures"
-QT_MOC_LITERAL(10, 129, 11), // "filterImage"
-QT_MOC_LITERAL(11, 141, 11), // "renderImage"
-QT_MOC_LITERAL(12, 153, 10), // "clearImage"
-QT_MOC_LITERAL(13, 164, 11), // "revertImage"
-QT_MOC_LITERAL(14, 176, 16), // "activateCanvas2D"
-QT_MOC_LITERAL(15, 193, 16), // "activateCanvas3D"
-QT_MOC_LITERAL(16, 210, 14), // "setCameraAxisX"
-QT_MOC_LITERAL(17, 225, 14), // "setCameraAxisY"
-QT_MOC_LITERAL(18, 240, 14), // "setCameraAxisZ"
-QT_MOC_LITERAL(19, 255, 23), // "updateCameraTranslation"
-QT_MOC_LITERAL(20, 279, 21), // "updateCameraRotationN"
-QT_MOC_LITERAL(21, 301, 21), // "updateCameraRotationV"
-QT_MOC_LITERAL(22, 323, 21), // "updateCameraRotationU"
-QT_MOC_LITERAL(23, 345, 13), // "resetUpVector"
-QT_MOC_LITERAL(24, 359, 12), // "resetSliders"
-QT_MOC_LITERAL(25, 372, 16), // "updateCameraClip"
-QT_MOC_LITERAL(26, 389, 23), // "updateCameraHeightAngle"
-QT_MOC_LITERAL(27, 413, 20) // "setCameraAxonometric"
+QT_MOC_LITERAL(10, 129, 10), // "dropMarble"
+QT_MOC_LITERAL(11, 140, 11), // "renderImage"
+QT_MOC_LITERAL(12, 152, 10), // "clearImage"
+QT_MOC_LITERAL(13, 163, 11), // "revertImage"
+QT_MOC_LITERAL(14, 175, 16), // "activateCanvas2D"
+QT_MOC_LITERAL(15, 192, 16), // "activateCanvas3D"
+QT_MOC_LITERAL(16, 209, 14), // "setCameraAxisX"
+QT_MOC_LITERAL(17, 224, 14), // "setCameraAxisY"
+QT_MOC_LITERAL(18, 239, 14), // "setCameraAxisZ"
+QT_MOC_LITERAL(19, 254, 23), // "updateCameraTranslation"
+QT_MOC_LITERAL(20, 278, 21), // "updateCameraRotationN"
+QT_MOC_LITERAL(21, 300, 21), // "updateCameraRotationV"
+QT_MOC_LITERAL(22, 322, 21), // "updateCameraRotationU"
+QT_MOC_LITERAL(23, 344, 13), // "resetUpVector"
+QT_MOC_LITERAL(24, 358, 12), // "resetSliders"
+QT_MOC_LITERAL(25, 371, 16), // "updateCameraClip"
+QT_MOC_LITERAL(26, 388, 23), // "updateCameraHeightAngle"
+QT_MOC_LITERAL(27, 412, 20) // "setCameraAxonometric"
 
     },
     "MainWindow\0updateAspectRatio\0\0"
     "settingsChanged\0fileCopy3Dto2D\0fileNew\0"
     "fileOpen\0fileSave\0checkAllRayFeatures\0"
-    "uncheckAllRayFeatures\0filterImage\0"
+    "uncheckAllRayFeatures\0dropMarble\0"
     "renderImage\0clearImage\0revertImage\0"
     "activateCanvas2D\0activateCanvas3D\0"
     "setCameraAxisX\0setCameraAxisY\0"
@@ -163,7 +163,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 5: _t->fileSave(); break;
         case 6: _t->checkAllRayFeatures(); break;
         case 7: _t->uncheckAllRayFeatures(); break;
-        case 8: _t->filterImage(); break;
+        case 8: _t->dropMarble(); break;
         case 9: _t->renderImage(); break;
         case 10: _t->clearImage(); break;
         case 11: _t->revertImage(); break;

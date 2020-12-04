@@ -136,7 +136,7 @@ public:
         scrollArea->setWidgetResizable(true);
         canvas2D = new Canvas2D();
         canvas2D->setObjectName(QString::fromUtf8("canvas2D"));
-        canvas2D->setGeometry(QRect(0, 0, 348, 3059));
+        canvas2D->setGeometry(QRect(0, 0, 537, 3059));
         scrollArea->setWidget(canvas2D);
 
         gridLayout_11->addWidget(scrollArea, 0, 0, 1, 1);
@@ -339,7 +339,7 @@ public:
         QObject::connect(actionClear, SIGNAL(triggered()), MainWindow, SLOT(clearImage()));
         QObject::connect(actionRevert, SIGNAL(triggered()), MainWindow, SLOT(revertImage()));
 
-        tabWidget->setCurrentIndex(1);
+        tabWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -382,7 +382,7 @@ public:
 #endif // QT_CONFIG(shortcut)
         tabWidget->setTabText(tabWidget->indexOf(tab2D), QCoreApplication::translate("MainWindow", "2D", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab3D), QCoreApplication::translate("MainWindow", "3D", nullptr));
-        marbleDock->setWindowTitle(QCoreApplication::translate("MainWindow", "Br&ush", nullptr));
+        marbleDock->setWindowTitle(QCoreApplication::translate("MainWindow", "Marbles!", nullptr));
         marbleType->setTitle(QCoreApplication::translate("MainWindow", "Marble Type", nullptr));
         marbleTypeMetal->setText(QCoreApplication::translate("MainWindow", "Metal", nullptr));
         marbleTypeGlass->setText(QCoreApplication::translate("MainWindow", "Glass", nullptr));

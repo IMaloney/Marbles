@@ -24,14 +24,19 @@ win32 {
 }
 
 SOURCES += \
+    marble/Marble.cpp \
     camera/OrbitingCamera.cpp \
     camera/CamtransCamera.cpp \
     camera/QuaternionCamera.cpp \
+    marble/MetalMarble.cpp \
+    marble/WoodMarble.cpp \
+    scenegraph/MarbleScene.cpp \
     scenegraph/Scene.cpp \
     scenegraph/OpenGLScene.cpp \
     scenegraph/ShapesScene.cpp \
     scenegraph/SceneviewScene.cpp \
     scenegraph/RayScene.cpp \
+    shapes/Box.cpp \
     shapes/Cone.cpp \
     shapes/Cube.cpp \
     shapes/Cylinder.cpp \
@@ -67,15 +72,20 @@ SOURCES += \
 
 
 HEADERS += \
+    marble/Marble.h \
     camera/Camera.h \
     camera/OrbitingCamera.h \
     camera/CamtransCamera.h \
     camera/QuaternionCamera.h \
+    marble/MetalMarble.h \
+    marble/WoodMarble.h \
+    scenegraph/MarbleScene.h \
     scenegraph/Scene.h \
     scenegraph/OpenGLScene.h \
     scenegraph/ShapesScene.h \
     scenegraph/SceneviewScene.h \
     scenegraph/RayScene.h \
+    shapes/Box.h \
     shapes/Cone.h \
     shapes/Cube.h \
     shapes/Cylinder.h \

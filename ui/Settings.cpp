@@ -27,7 +27,7 @@ void Settings::loadSettingsOrDefaults() {
     // Set the default values below
     QSettings s("Marbles", "Marbles");
 
-    // Brush
+    // Marble defaults
     marbleType = s.value("marbleType", MARBLE_METAL).toInt();
     marbleRadius = s.value("marbleRadius", 5).toInt();
     marbleWeight = s.value("marbleWeight", 10).toInt();

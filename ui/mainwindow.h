@@ -85,7 +85,7 @@ public slots:
     void uncheckAllRayFeatures();
 
     // Called when the user presses the "Filter Image" button in the Filter panel
-    void filterImage();
+    void dropMarble();
 
     // Called when the user presses the "Render Image" button in the Ray panel
     void renderImage();

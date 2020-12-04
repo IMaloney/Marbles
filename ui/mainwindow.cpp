@@ -48,19 +48,10 @@ MainWindow::MainWindow(QWidget *parent) :
     actions.push_back(ui->dock->toggleViewAction()); \
     actions.back()->setShortcut(QKeySequence(key));
 
-//    SETUP_ACTION(brushDock,     "CTRL+1");
-//    SETUP_ACTION(filterDock,    "CTRL+2");
-//    SETUP_ACTION(shapesDock,    "CTRL+3");
-//    SETUP_ACTION(camtransDock,  "CTRL+4");
-//    SETUP_ACTION(rayDock,       "CTRL+5");
 
     ui->menuToolbars->addActions(actions);
 #undef SETUP_ACTION
 
-//    tabifyDockWidget(ui->brushDock, ui->filterDock);
-//    tabifyDockWidget(ui->brushDock, ui->shapesDock);
-//    tabifyDockWidget(ui->brushDock, ui->camtransDock);
-//    tabifyDockWidget(ui->brushDock, ui->rayDock);
     ui->marbleDock->raise();
 
     dataBind();
@@ -72,23 +63,7 @@ MainWindow::MainWindow(QWidget *parent) :
     // Reset the contents of both canvas widgets (make a new 500x500 image for the 2D one)
     fileNew();
 
-    // Make certain radio buttons switch to the 2D canvas when clicked.
-//    QList<QRadioButton*> a;
-//    a += ui->brushTypeLinear;
-//    a += ui->brushTypeQuadratic;
-//    a += ui->brushTypeSmudge;
-//    a += ui->brushTypeConstant;
-//    a += ui->brushTypeSpecial1;
-//    a += ui->brushTypeSpecial2;
-//    a += ui->filterTypeBlur;
-//    a += ui->filterTypeEdgeDetect;
-//    a += ui->filterTypeRotate;
-//    a += ui->filterTypeScale;
-//    a += ui->filterTypeSpecial1;
-//    a += ui->filterTypeSpecial2;
-//    a += ui->filterTypeSpecial3;
-//    foreach (QRadioButton *rb, a)
-//        connect(rb, SIGNAL(clicked()), this, SLOT(activateCanvas2D()));
+    // Make certain radio buttons switch to the 3D canvas when clicked.
 
 //    a.clear();
 //    a += ui->shapeTypeCone;
@@ -150,84 +125,6 @@ void MainWindow::dataBind() {
     BIND(IntBinding::bindSliderAndTextbox(
         ui->marbleWeightSlider, ui->marbleWeightTextbox, settings.marbleWeight, 0, 255))
 
-//    // Filter dock
-//    BIND(ChoiceBinding::bindRadioButtons(
-//            filterButtonGroup,
-//            NUM_FILTER_TYPES,
-//            settings.filterType,
-//            ui->filterTypeEdgeDetect,
-//            ui->filterTypeBlur,
-//            ui->filterTypeScale,
-//            ui->filterTypeRotate,
-//            ui->filterTypeSpecial1,
-//            ui->filterTypeSpecial2,
-//            ui->filterTypeSpecial3))
-//    BIND(FloatBinding::bindSliderAndTextbox(
-//        ui->edgeDetectSensitivitySlider, ui->edgeDetectSensitivityTextbox, settings.edgeDetectSensitivity,
-//            0.f, 1.f))
-//    BIND(IntBinding::bindSliderAndTextbox(
-//        ui->blurRadiusSlider, ui->blurRadiusTextbox, settings.blurRadius, 1.f, 200.f))
-//    BIND(FloatBinding::bindSliderAndTextbox(
-//        ui->scaleSliderX, ui->scaleTextboxX, settings.scaleX, 0.1f, 10.f))
-//    BIND(FloatBinding::bindSliderAndTextbox(
-//        ui->scaleSliderY, ui->scaleTextboxY, settings.scaleY, 0.1f, 10.f))
-//    BIND(IntBinding::bindSliderAndTextbox(
-//        ui->rotateSlider, ui->rotateAngleEdit, settings.rotateAngle, -360.f, 360.f))
-
-    // Shapes dock
-//    BIND(BoolBinding::bindCheckbox(ui->showSceneviewInstead, settings.useSceneviewScene))
-//    BIND(ChoiceBinding::bindRadioButtons(
-//            shapesButtonGroup,
-//            NUM_SHAPE_TYPES,
-//            settings.shapeType,
-//            ui->shapeTypeCube,
-//            ui->shapeTypeCone,
-//            ui->shapeTypeSphere,
-//            ui->shapeTypeCylinder,
-//            ui->shapeTypeTorus,
-//            ui->shapeTypeSpecial1,
-//            ui->shapeTypeSpecial2))
-//    BIND(IntBinding::bindSliderAndTextbox(
-//        ui->shapeParameterSlider1, ui->shapeParameterTextbox1, settings.shapeParameter1, 1.f, 100.f))
-//    BIND(IntBinding::bindSliderAndTextbox(
-//        ui->shapeParameterSlider2, ui->shapeParameterTextbox2, settings.shapeParameter2, 1.f, 100.f))
-//    BIND(FloatBinding::bindSliderAndTextbox(
-//        ui->shapeParameterSlider3, ui->shapeParameterTextbox3, settings.shapeParameter3, 1.f, 100.f))
-//    BIND(BoolBinding::bindCheckbox(ui->useLightingCheckbox, settings.useLighting))
-//    BIND(BoolBinding::bindCheckbox(ui->drawWireframeCheckbox, settings.drawWireframe))
-//    BIND(BoolBinding::bindCheckbox(ui->drawNormalsCheckbox, settings.drawNormals))
-
-    // Camtrans dock
-//    BIND(BoolBinding::bindCheckbox(ui->cameraOrbitCheckbox, settings.useOrbitCamera))
-//    BIND(FloatBinding::bindDial(ui->transX, settings.cameraPosX, -2, 2, true))
-//    BIND(FloatBinding::bindDial(ui->transY, settings.cameraPosY, -2, 2, true))
-//    BIND(FloatBinding::bindDial(ui->transZ, settings.cameraPosZ, -2, 2, true))
-//    BIND(FloatBinding::bindDial(ui->rotU,   settings.cameraRotU, -20, 20, true))
-//    BIND(FloatBinding::bindDial(ui->rotV,   settings.cameraRotV, -20, 20, true))
-//    BIND(FloatBinding::bindDial(ui->rotW,   settings.cameraRotN, -180, 180, false))
-//    BIND(FloatBinding::bindSliderAndTextbox(
-//              ui->cameraFovSlider, ui->cameraFovTextbox, settings.cameraFov, 1, 179))
-//    BIND(FloatBinding::bindSliderAndTextbox(
-//              ui->cameraNearSlider, ui->cameraNearTextbox, settings.cameraNear, 0.1, 50))
-//    BIND(FloatBinding::bindSliderAndTextbox(
-//              ui->cameraFarSlider, ui->cameraFarTextbox, settings.cameraFar, 0.1, 50))
-    //initializeCamtransFrustum(); // always set the viewing frustum to reasonable settings when we start the program
-
-
-    // Ray dock
-//    BIND(BoolBinding::bindCheckbox(ui->raySuperSamping,          settings.useSuperSampling))
-//    BIND(IntBinding::bindTextbox(ui->raySuperSamplesTextbox,   settings.numSuperSamples))
-//    BIND(BoolBinding::bindCheckbox(ui->rayAntiAliasing,          settings.useAntiAliasing))
-//    BIND(BoolBinding::bindCheckbox(ui->rayShadows,               settings.useShadows))
-//    BIND(BoolBinding::bindCheckbox(ui->rayTextureMapping,        settings.useTextureMapping))
-//    BIND(BoolBinding::bindCheckbox(ui->rayReflection,            settings.useReflection))
-//    BIND(BoolBinding::bindCheckbox(ui->rayRefraction,            settings.useRefraction))
-//    BIND(BoolBinding::bindCheckbox(ui->rayPointLights,           settings.usePointLights))
-//    BIND(BoolBinding::bindCheckbox(ui->rayDirectionalLights,     settings.useDirectionalLights))
-//    BIND(BoolBinding::bindCheckbox(ui->raySpotLights,            settings.useSpotLights))
-//    BIND(BoolBinding::bindCheckbox(ui->rayMultiThreading,        settings.useMultiThreading))
-//    BIND(BoolBinding::bindCheckbox(ui->rayUseKDTree,             settings.useKDTree))
-
     BIND(ChoiceBinding::bindTabs(ui->tabWidget, settings.currentTab))
 
 #undef BIND
@@ -271,7 +168,7 @@ void MainWindow::updateAspectRatio() {
 
 
 void MainWindow::settingsChanged() {
-    ui->canvas2D->settingsChanged();
+//    ui->canvas2D->settingsChanged();
     m_canvas3D->settingsChanged();
 }
 
@@ -364,12 +261,11 @@ void MainWindow::uncheckAllRayFeatures() {
     setAllRayFeatures(false);
 }
 
-void MainWindow::filterImage() {
+void MainWindow::dropMarble() {
     // Disable the UI so the user can't interfere with the filtering
     setAllEnabled(false);
 
-    // Actually do the filter.
-//    ui->canvas2D->filterImage();
+//    m_canvas3D->
 
     // Enable the UI again
     setAllEnabled(true);
