@@ -14,6 +14,18 @@ public:
     virtual ~Marble();
 
     void updateGravity(const float &newGrav);
+    void updatePosition(glm::vec4 center);
+    void updateCurrentDirection(glm::vec4 dir);
+    void updateVelocity(float velocity);
+
+    int getRadius();
+
+    float getGravity();
+    glm::vec4 getPosition();
+    glm::vec4 getCurrentDirection();
+    float getVelocity();
+
+    bool checkBoxCollision();
 
 protected:
     float m_gravity;
@@ -26,7 +38,7 @@ protected:
     glm::vec4 m_centerPosition;
     glm::vec4 m_currDirection;
 
-    glm::vec4 m_boundingBoxTopLeft;
+    glm::vec4 m_boundingBoxTopLeftFront;
     // may not need this method, but just in case changing the gravity changes other aspects of the marble
     // just have a protected method that all marble types will overwrite
     virtual void updateMarble() = 0;
