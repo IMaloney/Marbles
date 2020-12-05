@@ -165,8 +165,12 @@ void ShapesScene::renderNormalsPass (SupportCanvas3D *context) {
 
 
 void ShapesScene::loadBoxShader() {
-    std::string vertexSource = ResourceLoader::loadResourceFileToString("../shaders/box/box.vert");
-    std::string fragmentSource = ResourceLoader::loadResourceFileToString("../shaders/box/box.frag");
+    // TODO
+//    std::string vertexSource = ResourceLoader::loadResourceFileToString("../shaders/box/box.vert");
+//    std::string fragmentSource = ResourceLoader::loadResourceFileToString("../shaders/box/box.frag");
+    std::string vertexSource = ResourceLoader::loadResourceFileToString("/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/shaders/box/box.vert");
+    std::string fragmentSource = ResourceLoader::loadResourceFileToString("/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/shaders/box/box.frag");
+//    /Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/shaders/box
     m_boxShader = std::make_unique<CS123::GL::Shader>(vertexSource, fragmentSource);
 }
 
@@ -174,9 +178,11 @@ void ShapesScene::loadBoxShader() {
 void ShapesScene::renderGeometry() {
     // TODO: [SHAPES] Render the shape. Lab 1 seems like it'll come in handy...
     if (m_shape) {
-//        m_boxShader->bind();
+        m_boxShader->bind();
+        glBindTexture(m_shape->getTextureID(), GL_TEXTURE_2D);
+        std::cout << "checkpoint 3" << std::endl;
         m_shape->draw();
-//        m_boxShader->unbind();
+        m_boxShader->unbind();
     }
 }
 
