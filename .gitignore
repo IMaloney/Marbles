@@ -1,3 +1,5 @@
 *.o
 .qmake.stash
 bin/CS123
+Makefile
+
