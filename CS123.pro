@@ -44,7 +44,6 @@ SOURCES += \
     shapes/Cone.cpp \
     shapes/Cube.cpp \
     shapes/Cylinder.cpp \
-    shapes/ExampleShape.cpp \
     shapes/Shape.cpp \
     shapes/ShapeUtils.cpp \
     shapes/Sphere.cpp \
@@ -94,7 +93,6 @@ HEADERS += \
     shapes/Cone.h \
     shapes/Cube.h \
     shapes/Cylinder.h \
-    shapes/ExampleShape.h \
     shapes/Shape.h \
     shapes/ShapeUtils.h \
     shapes/Sphere.h \
@@ -150,7 +148,9 @@ OTHER_FILES += shaders/shader.frag \
     shaders/deferredlighting/lighting/lighting.frag \
     shaders/deferredlighting/lighting/lighting.vert \
     shaders/deferredlighting/compositing/compositing.frag \
-    shaders/deferredlighting/compositing/compositing.vert
+    shaders/deferredlighting/compositing/compositing.vert \
+    shaders/box/box.frag \
+    shaders/box/box.vert
 
 # Don't add the -pg flag unless you know what you are doing. It makes QThreadPool freeze on Mac OS X
 QMAKE_CXXFLAGS_RELEASE -= -O2
@@ -180,4 +180,6 @@ DISTFILES += \
     shaders/normals/normals.gsh \
     shaders/normals/normalsArrow.gsh \
     shaders/normals/normalsArrow.frag \
-    shaders/normals/normalsArrow.vert
+    shaders/normals/normalsArrow.vert \
+    shaders/box/box.frag \
+    shaders/box/box.vert

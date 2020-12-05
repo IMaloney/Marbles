@@ -9,6 +9,8 @@
 #include "gl/GLDebug.h"
 #include "gl/textures/Texture2D.h"
 
+#include <iostream>
+
 namespace CS123 { namespace GL {
 
 Shader::Shader(const std::string &vertexSource, const std::string &fragmentSource)

@@ -69,6 +69,11 @@ private:
     CS123SceneLightData  m_light;
     CS123SceneMaterial   m_material;
 
+    std::unique_ptr<CS123::GL::Shader> m_boxShader;
+
+    void loadBoxShader();
+
+
     glm::vec4 m_lightDirection = glm::normalize(glm::vec4(1.f, -1.f, -1.f, 0.f));
 
     //    bool useSceneviewScene;

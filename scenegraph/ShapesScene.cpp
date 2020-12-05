@@ -12,13 +12,11 @@
 #include <iostream>
 #include <fstream>
 
-#include "shapes/ExampleShape.h"
 #include "shapes/Cube.h"
 #include "shapes/Cone.h"
 #include "shapes/Cylinder.h"
 #include "shapes/Sphere.h"
-//#include "shapes/Torus.h"
-//#include "shapes/MeshLoader.h"
+
 
 using namespace CS123::GL;
 #include "gl/shaders/CS123Shader.h"
@@ -39,7 +37,7 @@ ShapesScene::ShapesScene(int width, int height) :
     loadNormalsArrowShader();
 
     //TODO: [SHAPES] Allocate any additional memory you need...
-
+    this->loadBoxShader();
 }
 
 ShapesScene::~ShapesScene()
@@ -165,11 +163,20 @@ void ShapesScene::renderNormalsPass (SupportCanvas3D *context) {
     m_normalsArrowShader->unbind();
 }
 
+
+void ShapesScene::loadBoxShader() {
+    std::string vertexSource = ResourceLoader::loadResourceFileToString("../shaders/box/box.vert");
+    std::string fragmentSource = ResourceLoader::loadResourceFileToString("../shaders/box/box.frag");
+    m_boxShader = std::make_unique<CS123::GL::Shader>(vertexSource, fragmentSource);
+}
+
+
 void ShapesScene::renderGeometry() {
     // TODO: [SHAPES] Render the shape. Lab 1 seems like it'll come in handy...
-
     if (m_shape) {
+//        m_boxShader->bind();
         m_shape->draw();
+//        m_boxShader->unbind();
     }
 }
 
@@ -195,6 +202,7 @@ void ShapesScene::settingsChanged() {
 
     // TODO: [SHAPES] Fill this in if applicable.
     // TODO: [SHAPES] Fill this in, for now default to an example shape
+    // issue in box
     m_shape = std::make_unique<Box>(1.5f);
 
 

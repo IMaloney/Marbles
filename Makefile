@@ -68,7 +68,6 @@ SOURCES       = marble/Marble.cpp \
 		shapes/Cone.cpp \
 		shapes/Cube.cpp \
 		shapes/Cylinder.cpp \
-		shapes/ExampleShape.cpp \
 		shapes/Shape.cpp \
 		shapes/ShapeUtils.cpp \
 		shapes/Sphere.cpp \
@@ -119,7 +118,6 @@ OBJECTS       = generated_files/Marble.o \
 		generated_files/Cone.o \
 		generated_files/Cube.o \
 		generated_files/Cylinder.o \
-		generated_files/ExampleShape.o \
 		generated_files/Shape.o \
 		generated_files/ShapeUtils.o \
 		generated_files/Sphere.o \
@@ -162,6 +160,8 @@ DIST          = brush/README_BRUSH \
 		shaders/normals/normalsArrow.gsh \
 		shaders/normals/normalsArrow.frag \
 		shaders/normals/normalsArrow.vert \
+		shaders/box/box.frag \
+		shaders/box/box.vert \
 		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/features/spec_pre.prf \
 		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/common/unix.conf \
 		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/common/linux.conf \
@@ -356,7 +356,6 @@ DIST          = brush/README_BRUSH \
 		shapes/Cone.h \
 		shapes/Cube.h \
 		shapes/Cylinder.h \
-		shapes/ExampleShape.h \
 		shapes/Shape.h \
 		shapes/ShapeUtils.h \
 		shapes/Sphere.h \
@@ -404,7 +403,6 @@ DIST          = brush/README_BRUSH \
 		shapes/Cone.cpp \
 		shapes/Cube.cpp \
 		shapes/Cylinder.cpp \
-		shapes/ExampleShape.cpp \
 		shapes/Shape.cpp \
 		shapes/ShapeUtils.cpp \
 		shapes/Sphere.cpp \
@@ -821,8 +819,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents resources.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents marble/Marble.h camera/Camera.h camera/OrbitingCamera.h camera/CamtransCamera.h camera/QuaternionCamera.h marble/MetalMarble.h marble/WoodMarble.h scenegraph/MarbleScene.h scenegraph/Scene.h scenegraph/OpenGLScene.h scenegraph/ShapesScene.h scenegraph/SceneviewScene.h scenegraph/RayScene.h shapes/Box.h shapes/Cone.h shapes/Cube.h shapes/Cylinder.h shapes/ExampleShape.h shapes/Shape.h shapes/ShapeUtils.h shapes/Sphere.h ui/Canvas2D.h ui/SupportCanvas2D.h ui/SupportCanvas3D.h ui/Settings.h ui/mainwindow.h ui/Databinding.h ui_mainwindow.h gl/shaders/Shader.h gl/GLDebug.h gl/shaders/ShaderAttribLocations.h gl/datatype/VBOAttribMarker.h gl/datatype/VBO.h gl/datatype/IBO.h gl/datatype/VAO.h gl/datatype/FBO.h gl/textures/Texture.h gl/textures/Texture2D.h gl/textures/TextureParameters.h gl/textures/TextureParametersBuilder.h gl/textures/RenderBuffer.h gl/textures/DepthBuffer.h gl/shaders/CS123Shader.h gl/util/FullScreenQuad.h lib/CS123XmlSceneParser.h lib/CS123SceneData.h lib/CS123ISceneParser.h lib/ResourceLoader.h glew-1.10.0/include/GL/glew.h lib/RGBA.h $(DISTDIR)/
-	$(COPY_FILE) --parents marble/Marble.cpp camera/OrbitingCamera.cpp camera/CamtransCamera.cpp camera/QuaternionCamera.cpp marble/MetalMarble.cpp marble/WoodMarble.cpp scenegraph/MarbleScene.cpp scenegraph/Scene.cpp scenegraph/OpenGLScene.cpp scenegraph/ShapesScene.cpp scenegraph/SceneviewScene.cpp scenegraph/RayScene.cpp shapes/Box.cpp shapes/Cone.cpp shapes/Cube.cpp shapes/Cylinder.cpp shapes/ExampleShape.cpp shapes/Shape.cpp shapes/ShapeUtils.cpp shapes/Sphere.cpp ui/Canvas2D.cpp ui/SupportCanvas2D.cpp ui/SupportCanvas3D.cpp ui/Settings.cpp ui/mainwindow.cpp ui/Databinding.cpp lib/CS123XmlSceneParser.cpp lib/ResourceLoader.cpp gl/shaders/Shader.cpp gl/GLDebug.cpp gl/datatype/VBOAttribMarker.cpp gl/datatype/VBO.cpp gl/datatype/IBO.cpp gl/datatype/VAO.cpp gl/datatype/FBO.cpp gl/textures/Texture.cpp gl/textures/Texture2D.cpp gl/textures/TextureParameters.cpp gl/textures/TextureParametersBuilder.cpp gl/textures/RenderBuffer.cpp gl/textures/DepthBuffer.cpp gl/shaders/CS123Shader.cpp gl/util/FullScreenQuad.cpp main.cpp glew-1.10.0/src/glew.c lib/RGBA.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents marble/Marble.h camera/Camera.h camera/OrbitingCamera.h camera/CamtransCamera.h camera/QuaternionCamera.h marble/MetalMarble.h marble/WoodMarble.h scenegraph/MarbleScene.h scenegraph/Scene.h scenegraph/OpenGLScene.h scenegraph/ShapesScene.h scenegraph/SceneviewScene.h scenegraph/RayScene.h shapes/Box.h shapes/Cone.h shapes/Cube.h shapes/Cylinder.h shapes/Shape.h shapes/ShapeUtils.h shapes/Sphere.h ui/Canvas2D.h ui/SupportCanvas2D.h ui/SupportCanvas3D.h ui/Settings.h ui/mainwindow.h ui/Databinding.h ui_mainwindow.h gl/shaders/Shader.h gl/GLDebug.h gl/shaders/ShaderAttribLocations.h gl/datatype/VBOAttribMarker.h gl/datatype/VBO.h gl/datatype/IBO.h gl/datatype/VAO.h gl/datatype/FBO.h gl/textures/Texture.h gl/textures/Texture2D.h gl/textures/TextureParameters.h gl/textures/TextureParametersBuilder.h gl/textures/RenderBuffer.h gl/textures/DepthBuffer.h gl/shaders/CS123Shader.h gl/util/FullScreenQuad.h lib/CS123XmlSceneParser.h lib/CS123SceneData.h lib/CS123ISceneParser.h lib/ResourceLoader.h glew-1.10.0/include/GL/glew.h lib/RGBA.h $(DISTDIR)/
+	$(COPY_FILE) --parents marble/Marble.cpp camera/OrbitingCamera.cpp camera/CamtransCamera.cpp camera/QuaternionCamera.cpp marble/MetalMarble.cpp marble/WoodMarble.cpp scenegraph/MarbleScene.cpp scenegraph/Scene.cpp scenegraph/OpenGLScene.cpp scenegraph/ShapesScene.cpp scenegraph/SceneviewScene.cpp scenegraph/RayScene.cpp shapes/Box.cpp shapes/Cone.cpp shapes/Cube.cpp shapes/Cylinder.cpp shapes/Shape.cpp shapes/ShapeUtils.cpp shapes/Sphere.cpp ui/Canvas2D.cpp ui/SupportCanvas2D.cpp ui/SupportCanvas3D.cpp ui/Settings.cpp ui/mainwindow.cpp ui/Databinding.cpp lib/CS123XmlSceneParser.cpp lib/ResourceLoader.cpp gl/shaders/Shader.cpp gl/GLDebug.cpp gl/datatype/VBOAttribMarker.cpp gl/datatype/VBO.cpp gl/datatype/IBO.cpp gl/datatype/VAO.cpp gl/datatype/FBO.cpp gl/textures/Texture.cpp gl/textures/Texture2D.cpp gl/textures/TextureParameters.cpp gl/textures/TextureParametersBuilder.cpp gl/textures/RenderBuffer.cpp gl/textures/DepthBuffer.cpp gl/shaders/CS123Shader.cpp gl/util/FullScreenQuad.cpp main.cpp glew-1.10.0/src/glew.c lib/RGBA.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ui/mainwindow.ui $(DISTDIR)/
 
 
@@ -2433,7 +2431,9 @@ generated_files/MarbleScene.o: scenegraph/MarbleScene.cpp scenegraph/MarbleScene
 		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qpainterpath.h \
 		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/QString \
 		marble/Marble.h \
-		glew-1.10.0/include/GL/glew.h
+		glew-1.10.0/include/GL/glew.h \
+		gl/shaders/Shader.h \
+		lib/ResourceLoader.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o generated_files/MarbleScene.o scenegraph/MarbleScene.cpp
 
 generated_files/Scene.o: scenegraph/Scene.cpp scenegraph/Scene.h \
@@ -2924,6 +2924,10 @@ generated_files/ShapesScene.o: scenegraph/ShapesScene.cpp scenegraph/ShapesScene
 		glm/gtc/matrix_transform.hpp \
 		glm/gtc/matrix_transform.inl \
 		glm/gtx/transform.inl \
+		gl/datatype/VAO.h \
+		gl/datatype/VBO.h \
+		gl/datatype/VBOAttribMarker.h \
+		gl/shaders/ShaderAttribLocations.h \
 		shapes/ShapeUtils.h \
 		camera/Camera.h \
 		ui/SupportCanvas3D.h \
@@ -2976,8 +2980,6 @@ generated_files/ShapesScene.o: scenegraph/ShapesScene.cpp scenegraph/ShapesScene
 		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qdir.h \
 		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qfileinfo.h \
 		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtWidgets/qdialog.h \
-		gl/shaders/ShaderAttribLocations.h \
-		shapes/ExampleShape.h \
 		shapes/Cube.h \
 		shapes/Cone.h \
 		shapes/Cylinder.h \
@@ -3148,6 +3150,10 @@ generated_files/SceneviewScene.o: scenegraph/SceneviewScene.cpp scenegraph/Scene
 		glm/gtc/matrix_transform.hpp \
 		glm/gtc/matrix_transform.inl \
 		glm/gtx/transform.inl \
+		gl/datatype/VAO.h \
+		gl/datatype/VBO.h \
+		gl/datatype/VBOAttribMarker.h \
+		gl/shaders/ShaderAttribLocations.h \
 		shapes/Cone.h \
 		shapes/Cylinder.h \
 		shapes/Cube.h \
@@ -3482,7 +3488,84 @@ generated_files/Box.o: shapes/Box.cpp shapes/Box.h \
 		glm/gtc/matrix_transform.hpp \
 		glm/gtc/matrix_transform.inl \
 		glm/gtx/transform.inl \
-		shapes/ShapeUtils.h
+		gl/datatype/VAO.h \
+		gl/datatype/VBO.h \
+		gl/datatype/VBOAttribMarker.h \
+		gl/shaders/ShaderAttribLocations.h \
+		shapes/ShapeUtils.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qimage.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qtguiglobal.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qglobal.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qconfig.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qtcore-config.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qsystemdetection.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qprocessordetection.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qcompilerdetection.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qtypeinfo.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qsysinfo.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qlogging.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qflags.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qatomic.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qbasicatomic.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qgenericatomic.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qatomic_msvc.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qglobalstatic.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qmutex.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qnumeric.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qversiontagging.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qtgui-config.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qcolor.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qrgb.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qnamespace.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qstringlist.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qlist.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qalgorithms.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qiterator.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qrefcount.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qarraydata.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qhashfunctions.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qstring.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qchar.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qbytearray.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qstringliteral.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qstringalgorithms.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qstringview.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qstringbuilder.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qpair.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qvector.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qcontainertools_impl.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qpoint.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qbytearraylist.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qregexp.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qstringmatcher.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qrgba64.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qpaintdevice.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qwindowdefs.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qwindowdefs_win.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qrect.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qmargins.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qsize.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qpixelformat.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qtransform.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qmatrix.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qpolygon.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qregion.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qdatastream.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qscopedpointer.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qiodevice.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qobject.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qcoreevent.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qmetatype.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qvarlengtharray.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qcontainerfwd.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qobject_impl.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qline.h \
+		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qpainterpath.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o generated_files/Box.o shapes/Box.cpp
 
 generated_files/Cone.o: shapes/Cone.cpp shapes/Cone.h \
@@ -3568,6 +3651,10 @@ generated_files/Cone.o: shapes/Cone.cpp shapes/Cone.h \
 		glm/gtc/matrix_transform.hpp \
 		glm/gtc/matrix_transform.inl \
 		glm/gtx/transform.inl \
+		gl/datatype/VAO.h \
+		gl/datatype/VBO.h \
+		gl/datatype/VBOAttribMarker.h \
+		gl/shaders/ShaderAttribLocations.h \
 		shapes/Cylinder.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o generated_files/Cone.o shapes/Cone.cpp
 
@@ -3653,7 +3740,11 @@ generated_files/Cube.o: shapes/Cube.cpp shapes/Cube.h \
 		glm/gtx/transform.hpp \
 		glm/gtc/matrix_transform.hpp \
 		glm/gtc/matrix_transform.inl \
-		glm/gtx/transform.inl
+		glm/gtx/transform.inl \
+		gl/datatype/VAO.h \
+		gl/datatype/VBO.h \
+		gl/datatype/VBOAttribMarker.h \
+		gl/shaders/ShaderAttribLocations.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o generated_files/Cube.o shapes/Cube.cpp
 
 generated_files/Cylinder.o: shapes/Cylinder.cpp shapes/Cylinder.h \
@@ -3739,93 +3830,11 @@ generated_files/Cylinder.o: shapes/Cylinder.cpp shapes/Cylinder.h \
 		glm/gtc/matrix_transform.hpp \
 		glm/gtc/matrix_transform.inl \
 		glm/gtx/transform.inl \
-		shapes/ExampleShape.h
+		gl/datatype/VAO.h \
+		gl/datatype/VBO.h \
+		gl/datatype/VBOAttribMarker.h \
+		gl/shaders/ShaderAttribLocations.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o generated_files/Cylinder.o shapes/Cylinder.cpp
-
-generated_files/ExampleShape.o: shapes/ExampleShape.cpp shapes/ExampleShape.h \
-		shapes/Shape.h \
-		glm/glm.hpp \
-		glm/detail/_fixes.hpp \
-		glm/fwd.hpp \
-		glm/detail/type_int.hpp \
-		glm/detail/setup.hpp \
-		glm/detail/type_float.hpp \
-		glm/detail/type_vec.hpp \
-		glm/detail/precision.hpp \
-		glm/detail/type_mat.hpp \
-		glm/vec2.hpp \
-		glm/detail/type_vec2.hpp \
-		glm/detail/_swizzle.hpp \
-		glm/detail/_swizzle_func.hpp \
-		glm/detail/type_vec2.inl \
-		glm/vec3.hpp \
-		glm/detail/type_vec3.hpp \
-		glm/detail/type_vec3.inl \
-		glm/vec4.hpp \
-		glm/detail/type_vec4.hpp \
-		glm/detail/type_vec4.inl \
-		glm/mat2x2.hpp \
-		glm/detail/type_mat2x2.hpp \
-		glm/detail/type_mat2x2.inl \
-		glm/mat2x3.hpp \
-		glm/detail/type_mat2x3.hpp \
-		glm/detail/type_mat2x3.inl \
-		glm/mat2x4.hpp \
-		glm/detail/type_mat2x4.hpp \
-		glm/detail/type_mat2x4.inl \
-		glm/mat3x2.hpp \
-		glm/detail/type_mat3x2.hpp \
-		glm/detail/type_mat3x2.inl \
-		glm/mat3x3.hpp \
-		glm/detail/type_mat3x3.hpp \
-		glm/detail/type_mat3x3.inl \
-		glm/mat3x4.hpp \
-		glm/detail/type_mat3x4.hpp \
-		glm/detail/type_mat3x4.inl \
-		glm/mat4x2.hpp \
-		glm/detail/type_mat4x2.hpp \
-		glm/detail/type_mat4x2.inl \
-		glm/mat4x3.hpp \
-		glm/detail/type_mat4x3.hpp \
-		glm/detail/type_mat4x3.inl \
-		glm/mat4x4.hpp \
-		glm/detail/type_mat4x4.hpp \
-		glm/detail/type_mat4x4.inl \
-		glm/trigonometric.hpp \
-		glm/detail/func_trigonometric.hpp \
-		glm/detail/func_trigonometric.inl \
-		glm/detail/_vectorize.hpp \
-		glm/detail/type_vec1.hpp \
-		glm/detail/type_vec1.inl \
-		glm/exponential.hpp \
-		glm/detail/func_exponential.hpp \
-		glm/detail/func_exponential.inl \
-		glm/detail/func_vector_relational.hpp \
-		glm/detail/func_vector_relational.inl \
-		glm/common.hpp \
-		glm/detail/func_common.hpp \
-		glm/detail/func_common.inl \
-		glm/packing.hpp \
-		glm/detail/func_packing.hpp \
-		glm/detail/func_packing.inl \
-		glm/detail/type_half.hpp \
-		glm/detail/type_half.inl \
-		glm/geometric.hpp \
-		glm/detail/func_geometric.hpp \
-		glm/detail/func_geometric.inl \
-		glm/matrix.hpp \
-		glm/detail/func_matrix.hpp \
-		glm/detail/func_matrix.inl \
-		glm/vector_relational.hpp \
-		glm/integer.hpp \
-		glm/detail/func_integer.hpp \
-		glm/detail/func_integer.inl \
-		glew-1.10.0/include/GL/glew.h \
-		glm/gtx/transform.hpp \
-		glm/gtc/matrix_transform.hpp \
-		glm/gtc/matrix_transform.inl \
-		glm/gtx/transform.inl
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o generated_files/ExampleShape.o shapes/ExampleShape.cpp
 
 generated_files/Shape.o: shapes/Shape.cpp shapes/Shape.h \
 		glm/glm.hpp \
@@ -4082,6 +4091,10 @@ generated_files/Sphere.o: shapes/Sphere.cpp shapes/Sphere.h \
 		glm/gtc/matrix_transform.hpp \
 		glm/gtc/matrix_transform.inl \
 		glm/gtx/transform.inl \
+		gl/datatype/VAO.h \
+		gl/datatype/VBO.h \
+		gl/datatype/VBOAttribMarker.h \
+		gl/shaders/ShaderAttribLocations.h \
 		shapes/Cylinder.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o generated_files/Sphere.o shapes/Sphere.cpp
 
@@ -4631,6 +4644,10 @@ generated_files/SupportCanvas3D.o: ui/SupportCanvas3D.cpp ui/SupportCanvas3D.h \
 		glm/gtc/matrix_transform.hpp \
 		glm/gtc/matrix_transform.inl \
 		glm/gtx/transform.inl \
+		gl/datatype/VAO.h \
+		gl/datatype/VBO.h \
+		gl/datatype/VBOAttribMarker.h \
+		gl/shaders/ShaderAttribLocations.h \
 		shapes/Cone.h \
 		shapes/Cylinder.h \
 		shapes/Cube.h \
@@ -5252,6 +5269,10 @@ generated_files/mainwindow.o: ui/mainwindow.cpp ui/mainwindow.h \
 		glm/gtc/matrix_transform.hpp \
 		glm/gtc/matrix_transform.inl \
 		glm/gtx/transform.inl \
+		gl/datatype/VAO.h \
+		gl/datatype/VBO.h \
+		gl/datatype/VBOAttribMarker.h \
+		gl/shaders/ShaderAttribLocations.h \
 		shapes/ShapeUtils.h \
 		scenegraph/SceneviewScene.h \
 		shapes/Cone.h \

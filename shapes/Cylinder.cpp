@@ -1,5 +1,4 @@
 #include "Cylinder.h"
-#include "shapes/ExampleShape.h"
 
 Cylinder::Cylinder()
 {

@@ -1,12 +1,11 @@
 #include "Shape.h"
-#include "gl/datatype/VAO.h"
-#include "gl/datatype/VBO.h"
-#include "gl/datatype/VBOAttribMarker.h"
-#include "gl/shaders/ShaderAttribLocations.h"
+
+
 
 using namespace CS123::GL;
 
 Shape::Shape() :
+    m_drawMode(CS123::GL::VBO::LAYOUT_TRIANGLES),
     m_VAO(nullptr)
 {
 
@@ -27,6 +26,17 @@ void Shape::draw() {
     }
 }
 
+void Shape::setDrawMode(CS123::GL::VBO::GEOMETRY_LAYOUT mode){
+    m_drawMode = mode;
+}
+
+//void Shape::setAttribute(GLuint name, GLuint numElementsPerVertex, int offset,
+//                               VBOAttribMarker::DATA_TYPE type, bool normalize) {
+//    m_markers.push_back(VBOAttribMarker(name, numElementsPerVertex, offset, type, normalize));
+//}
+
+
+// this shape needs to be more extensible
 void Shape::buildVAO() {
     // commenting out the normals for testing (will need them for lighting)
     const int numFloatsPerVertex = 3;
@@ -37,7 +47,7 @@ void Shape::buildVAO() {
 //    markers.push_back(VBOAttribMarker(ShaderAttrib::NORMAL, 3, 3*sizeof(float)));
 //    markers.push_back(VBOAttribMarker(ShaderAttrib::POSITION, 3, 0));
 //    markers.push_back(VBOAttribMarker(ShaderAttrib::NORMAL, 3, 3*sizeof(float)));
-//    markers.push_back(VBOAttribMarker(ShaderAttrib::TEXCOORD0, 2, 6*sizeof(float)));
-    VBO vbo = VBO(m_vertexData.data(), m_vertexData.size(), markers);
+    markers.push_back(VBOAttribMarker(ShaderAttrib::TEXCOORD0, 2, 3*sizeof(float)));
+    VBO vbo = VBO(m_vertexData.data(), m_vertexData.size(), markers, m_drawMode);
     m_VAO = std::make_unique<VAO>(vbo, numVertices);
 }
