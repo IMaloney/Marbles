@@ -16,6 +16,7 @@ Box::Box(float size) :
 {
     m_texture = QImage("../textures/real_marble.png");
     std::cout<< "width: " << m_texture.width() << std::endl;
+    std::cout<< "height: " << m_texture.height() << std::endl;
     this->buildBox();
     this->buildVAO();
     this->initializeTexture();
@@ -107,5 +108,5 @@ void Box::initializeTexture() {
     // no tiling
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_texture.width(), m_texture.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, m_texture.bits());
+//    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_texture.width(), m_texture.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, m_texture.bits());
 }
