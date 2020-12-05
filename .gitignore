@@ -1,1 +1,3 @@
 *.o
+.qmake.stash
+bin/CS123
