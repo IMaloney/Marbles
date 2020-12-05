@@ -110,6 +110,8 @@ private:
     void renderWireframe();
     void setSceneUniforms(SupportCanvas3D *context);
 
+    void dropMarble();
+
 };
 
 #endif // SHAPESSCENE_H
