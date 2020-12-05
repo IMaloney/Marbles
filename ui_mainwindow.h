@@ -382,7 +382,7 @@ public:
 #endif // QT_CONFIG(shortcut)
         tabWidget->setTabText(tabWidget->indexOf(tab2D), QCoreApplication::translate("MainWindow", "2D", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab3D), QCoreApplication::translate("MainWindow", "3D", nullptr));
-        marbleDock->setWindowTitle(QCoreApplication::translate("MainWindow", "Marbles!", nullptr));
+        marbleDock->setWindowTitle(QCoreApplication::translate("MainWindow", "Br&ush", nullptr));
         marbleType->setTitle(QCoreApplication::translate("MainWindow", "Marble Type", nullptr));
         marbleTypeMetal->setText(QCoreApplication::translate("MainWindow", "Metal", nullptr));
         marbleTypeGlass->setText(QCoreApplication::translate("MainWindow", "Glass", nullptr));

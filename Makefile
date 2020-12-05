@@ -160,166 +160,8 @@ DIST          = brush/README_BRUSH \
 		shaders/normals/normalsArrow.gsh \
 		shaders/normals/normalsArrow.frag \
 		shaders/normals/normalsArrow.vert \
-<<<<<<< HEAD
 		shaders/box/box.frag \
 		shaders/box/box.vert \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/features/spec_pre.prf \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/common/unix.conf \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/common/linux.conf \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/common/sanitize.conf \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/common/gcc-base.conf \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/common/gcc-base-unix.conf \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/common/g++-base.conf \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/common/g++-unix.conf \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/qconfig.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_3danimation.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_3danimation_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_3dcore.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_3dcore_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_3dextras.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_3dextras_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_3dinput.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_3dinput_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_3dlogic.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_3dlogic_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_3dquick.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_3dquick_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_3dquickanimation.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_3dquickanimation_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_3dquickextras.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_3dquickextras_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_3dquickinput.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_3dquickinput_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_3dquickrender.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_3dquickrender_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_3dquickscene2d.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_3dquickscene2d_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_3drender.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_3drender_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_accessibility_support_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_bluetooth.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_bluetooth_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_bootstrap_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_concurrent.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_concurrent_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_core.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_core_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_dbus.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_dbus_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_designer.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_designer_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_designercomponents_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_devicediscovery_support_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_edid_support_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_egl_support_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_eglfs_kms_support_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_eglfsdeviceintegration_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_eventdispatcher_support_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_fb_support_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_fontdatabase_support_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_gamepad.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_gamepad_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_glx_support_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_gui.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_gui_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_help.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_help_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_input_support_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_kms_support_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_linuxaccessibility_support_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_location.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_location_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_multimedia.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_multimedia_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_multimediagsttools_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_multimediawidgets.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_multimediawidgets_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_network.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_network_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_nfc.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_nfc_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_opengl.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_opengl_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_openglextensions.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_openglextensions_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_packetprotocol_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_platformcompositor_support_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_positioning.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_positioning_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_positioningquick.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_positioningquick_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_printsupport.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_printsupport_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_qml.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_qml_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_qmldebug_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_qmldevtools_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_qmlmodels.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_qmlmodels_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_qmltest.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_qmltest_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_qmlworkerscript.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_qmlworkerscript_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_qtmultimediaquicktools_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_quick.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_quick_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_quickcontrols2.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_quickcontrols2_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_quickparticles_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_quickshapes_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_quicktemplates2.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_quicktemplates2_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_quickwidgets.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_quickwidgets_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_remoteobjects.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_remoteobjects_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_repparser.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_repparser_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_scxml.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_scxml_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_sensors.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_sensors_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_serialbus.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_serialbus_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_serialport.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_serialport_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_service_support_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_sql.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_sql_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_svg.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_svg_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_testlib.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_testlib_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_texttospeech.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_texttospeech_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_theme_support_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_uiplugin.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_uitools.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_uitools_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_vulkan_support_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_waylandclient.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_waylandclient_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_webchannel.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_webchannel_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_websockets.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_websockets_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_webview.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_webview_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_widgets.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_widgets_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_x11extras.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_x11extras_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_xcb_qpa_lib_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_xkbcommon_support_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_xml.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_xml_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_xmlpatterns.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/modules/qt_lib_xmlpatterns_private.pri \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/features/qt_functions.prf \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/features/qt_config.prf \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/linux-g++/qmake.conf \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/features/spec_post.prf \
-=======
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/mkspecs/features/spec_pre.prf \
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/mkspecs/qdevice.pri \
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/mkspecs/features/device_config.prf \
@@ -468,7 +310,6 @@ DIST          = brush/README_BRUSH \
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/mkspecs/features/qt_config.prf \
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/mkspecs/macx-clang/qmake.conf \
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/mkspecs/features/spec_post.prf \
->>>>>>> f7dba44e2c048b5475d1226a182ebf7f157b33ed
 		.qmake.stash \
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/mkspecs/features/exclusive_builds.prf \
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/mkspecs/features/mac/sdk.prf \
@@ -1012,15 +853,9 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents resources.qrc $(DISTDIR)/
-<<<<<<< HEAD
-	$(COPY_FILE) --parents /home/ian/Qt5.14.2/5.14.2/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents /Users/wtauten/Qt5.14.2/5.14.2/clang_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents marble/Marble.h camera/Camera.h camera/OrbitingCamera.h camera/CamtransCamera.h camera/QuaternionCamera.h marble/MetalMarble.h marble/WoodMarble.h scenegraph/MarbleScene.h scenegraph/Scene.h scenegraph/OpenGLScene.h scenegraph/ShapesScene.h scenegraph/SceneviewScene.h scenegraph/RayScene.h shapes/Box.h shapes/Cone.h shapes/Cube.h shapes/Cylinder.h shapes/Shape.h shapes/ShapeUtils.h shapes/Sphere.h ui/Canvas2D.h ui/SupportCanvas2D.h ui/SupportCanvas3D.h ui/Settings.h ui/mainwindow.h ui/Databinding.h ui_mainwindow.h gl/shaders/Shader.h gl/GLDebug.h gl/shaders/ShaderAttribLocations.h gl/datatype/VBOAttribMarker.h gl/datatype/VBO.h gl/datatype/IBO.h gl/datatype/VAO.h gl/datatype/FBO.h gl/textures/Texture.h gl/textures/Texture2D.h gl/textures/TextureParameters.h gl/textures/TextureParametersBuilder.h gl/textures/RenderBuffer.h gl/textures/DepthBuffer.h gl/shaders/CS123Shader.h gl/util/FullScreenQuad.h lib/CS123XmlSceneParser.h lib/CS123SceneData.h lib/CS123ISceneParser.h lib/ResourceLoader.h glew-1.10.0/include/GL/glew.h lib/RGBA.h $(DISTDIR)/
 	$(COPY_FILE) --parents marble/Marble.cpp camera/OrbitingCamera.cpp camera/CamtransCamera.cpp camera/QuaternionCamera.cpp marble/MetalMarble.cpp marble/WoodMarble.cpp scenegraph/MarbleScene.cpp scenegraph/Scene.cpp scenegraph/OpenGLScene.cpp scenegraph/ShapesScene.cpp scenegraph/SceneviewScene.cpp scenegraph/RayScene.cpp shapes/Box.cpp shapes/Cone.cpp shapes/Cube.cpp shapes/Cylinder.cpp shapes/Shape.cpp shapes/ShapeUtils.cpp shapes/Sphere.cpp ui/Canvas2D.cpp ui/SupportCanvas2D.cpp ui/SupportCanvas3D.cpp ui/Settings.cpp ui/mainwindow.cpp ui/Databinding.cpp lib/CS123XmlSceneParser.cpp lib/ResourceLoader.cpp gl/shaders/Shader.cpp gl/GLDebug.cpp gl/datatype/VBOAttribMarker.cpp gl/datatype/VBO.cpp gl/datatype/IBO.cpp gl/datatype/VAO.cpp gl/datatype/FBO.cpp gl/textures/Texture.cpp gl/textures/Texture2D.cpp gl/textures/TextureParameters.cpp gl/textures/TextureParametersBuilder.cpp gl/textures/RenderBuffer.cpp gl/textures/DepthBuffer.cpp gl/shaders/CS123Shader.cpp gl/util/FullScreenQuad.cpp main.cpp glew-1.10.0/src/glew.c lib/RGBA.cpp $(DISTDIR)/
-=======
-	$(COPY_FILE) --parents /Users/wtauten/Qt5.14.2/5.14.2/clang_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents marble/Marble.h camera/Camera.h camera/OrbitingCamera.h camera/CamtransCamera.h camera/QuaternionCamera.h marble/MetalMarble.h marble/WoodMarble.h scenegraph/MarbleScene.h scenegraph/Scene.h scenegraph/OpenGLScene.h scenegraph/ShapesScene.h scenegraph/SceneviewScene.h scenegraph/RayScene.h shapes/Box.h shapes/Cone.h shapes/Cube.h shapes/Cylinder.h shapes/ExampleShape.h shapes/Shape.h shapes/ShapeUtils.h shapes/Sphere.h ui/Canvas2D.h ui/SupportCanvas2D.h ui/SupportCanvas3D.h ui/Settings.h ui/mainwindow.h ui/Databinding.h ui_mainwindow.h gl/shaders/Shader.h gl/GLDebug.h gl/shaders/ShaderAttribLocations.h gl/datatype/VBOAttribMarker.h gl/datatype/VBO.h gl/datatype/IBO.h gl/datatype/VAO.h gl/datatype/FBO.h gl/textures/Texture.h gl/textures/Texture2D.h gl/textures/TextureParameters.h gl/textures/TextureParametersBuilder.h gl/textures/RenderBuffer.h gl/textures/DepthBuffer.h gl/shaders/CS123Shader.h gl/util/FullScreenQuad.h lib/CS123XmlSceneParser.h lib/CS123SceneData.h lib/CS123ISceneParser.h lib/ResourceLoader.h glew-1.10.0/include/GL/glew.h lib/RGBA.h $(DISTDIR)/
-	$(COPY_FILE) --parents marble/Marble.cpp camera/OrbitingCamera.cpp camera/CamtransCamera.cpp camera/QuaternionCamera.cpp marble/MetalMarble.cpp marble/WoodMarble.cpp scenegraph/MarbleScene.cpp scenegraph/Scene.cpp scenegraph/OpenGLScene.cpp scenegraph/ShapesScene.cpp scenegraph/SceneviewScene.cpp scenegraph/RayScene.cpp shapes/Box.cpp shapes/Cone.cpp shapes/Cube.cpp shapes/Cylinder.cpp shapes/ExampleShape.cpp shapes/Shape.cpp shapes/ShapeUtils.cpp shapes/Sphere.cpp ui/Canvas2D.cpp ui/SupportCanvas2D.cpp ui/SupportCanvas3D.cpp ui/Settings.cpp ui/mainwindow.cpp ui/Databinding.cpp lib/CS123XmlSceneParser.cpp lib/ResourceLoader.cpp gl/shaders/Shader.cpp gl/GLDebug.cpp gl/datatype/VBOAttribMarker.cpp gl/datatype/VBO.cpp gl/datatype/IBO.cpp gl/datatype/VAO.cpp gl/datatype/FBO.cpp gl/textures/Texture.cpp gl/textures/Texture2D.cpp gl/textures/TextureParameters.cpp gl/textures/TextureParametersBuilder.cpp gl/textures/RenderBuffer.cpp gl/textures/DepthBuffer.cpp gl/shaders/CS123Shader.cpp gl/util/FullScreenQuad.cpp main.cpp glew-1.10.0/src/glew.c lib/RGBA.cpp $(DISTDIR)/
->>>>>>> f7dba44e2c048b5475d1226a182ebf7f157b33ed
 	$(COPY_FILE) --parents ui/mainwindow.ui $(DISTDIR)/
 
 
@@ -2047,64 +1882,10 @@ generated_files/ShapesScene.o: scenegraph/ShapesScene.cpp scenegraph/ShapesScene
 		shapes/ShapeUtils.h \
 		camera/Camera.h \
 		ui/SupportCanvas3D.h \
-<<<<<<< HEAD
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtOpenGL/QGLWidget \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtOpenGL/qgl.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qopengl.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qt_windows.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qopengles2ext.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qopenglext.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtWidgets/qwidget.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtWidgets/qtwidgets-config.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qpalette.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qbrush.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qpixmap.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qsharedpointer.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qshareddata.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qhash.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qsharedpointer_impl.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qfont.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qfontmetrics.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qfontinfo.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtWidgets/qsizepolicy.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qcursor.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qkeysequence.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qevent.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qvariant.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qmap.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qdebug.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qtextstream.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qlocale.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qset.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qcontiguouscache.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qurl.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qurlquery.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qfile.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qfiledevice.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qvector2d.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qtouchdevice.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qpaintengine.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qpainter.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qtextoption.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qpen.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtOpenGL/qglcolormap.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtOpenGL/qtopenglglobal.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtGui/QSurfaceFormat \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qsurfaceformat.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtWidgets/QFileDialog \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtWidgets/qfiledialog.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qdir.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qfileinfo.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtWidgets/qdialog.h \
-=======
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtOpenGL.framework/Headers/QGLWidget \
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtOpenGL.framework/Headers/qgl.h \
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtWidgets.framework/Headers/QFileDialog \
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtWidgets.framework/Headers/qfiledialog.h \
-		gl/shaders/ShaderAttribLocations.h \
-		shapes/ExampleShape.h \
->>>>>>> f7dba44e2c048b5475d1226a182ebf7f157b33ed
 		shapes/Cube.h \
 		shapes/Cone.h \
 		shapes/Cylinder.h \
@@ -2407,79 +2188,8 @@ generated_files/Box.o: shapes/Box.cpp shapes/Box.h \
 		gl/datatype/VBOAttribMarker.h \
 		gl/shaders/ShaderAttribLocations.h \
 		shapes/ShapeUtils.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qimage.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qtguiglobal.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qglobal.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qconfig-bootstrapped.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qconfig.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qtcore-config.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qsystemdetection.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qprocessordetection.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qcompilerdetection.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qtypeinfo.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qsysinfo.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qlogging.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qflags.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qatomic.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qbasicatomic.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qatomic_bootstrap.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qgenericatomic.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qatomic_cxx11.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qatomic_msvc.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qglobalstatic.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qmutex.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qnumeric.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qversiontagging.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qtgui-config.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qcolor.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qrgb.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qnamespace.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qstringlist.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qlist.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qalgorithms.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qiterator.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qrefcount.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qarraydata.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qhashfunctions.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qstring.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qchar.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qbytearray.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qstringliteral.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qstringalgorithms.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qstringview.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qstringbuilder.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qpair.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qvector.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qcontainertools_impl.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qpoint.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qbytearraylist.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qregexp.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qstringmatcher.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qrgba64.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qpaintdevice.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qwindowdefs.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qobjectdefs.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qobjectdefs_impl.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qwindowdefs_win.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qrect.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qmargins.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qsize.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qpixelformat.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qtransform.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qmatrix.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qpolygon.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qregion.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qdatastream.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qscopedpointer.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qiodevice.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qobject.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qcoreevent.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qmetatype.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qvarlengtharray.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qcontainerfwd.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qobject_impl.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtCore/qline.h \
-		/home/ian/Qt5.14.2/5.14.2/gcc_64/include/QtGui/qpainterpath.h
+		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtGui.framework/Headers/qimage.h \
+		gl/GLDebug.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o generated_files/Box.o shapes/Box.cpp
 
 generated_files/Cone.o: shapes/Cone.cpp shapes/Cone.h \
@@ -3273,15 +2983,9 @@ generated_files/mainwindow.o: ui/mainwindow.cpp ui/mainwindow.h \
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
 		ui_mainwindow.h \
-		ui/Canvas2D.h \
-		ui/SupportCanvas2D.h \
-		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtWidgets.framework/Headers/QWidget \
-		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
-		ui/Settings.h \
+		ui/Databinding.h \
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtCore.framework/Headers/QObject \
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtCore.framework/Headers/qobject.h \
-		lib/RGBA.h \
-		ui/Databinding.h \
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtCore.framework/Headers/QVariant \
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtCore.framework/Headers/qvariant.h \
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtWidgets.framework/Headers/QSlider \
@@ -3392,6 +3096,12 @@ generated_files/mainwindow.o: ui/mainwindow.cpp ui/mainwindow.h \
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtGui.framework/Headers/qimage.h \
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtCore.framework/Headers/QString \
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtCore.framework/Headers/qstring.h \
+		ui/Canvas2D.h \
+		ui/SupportCanvas2D.h \
+		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtWidgets.framework/Headers/QWidget \
+		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		ui/Settings.h \
+		lib/RGBA.h \
 		camera/Camera.h \
 		scenegraph/ShapesScene.h \
 		scenegraph/OpenGLScene.h \

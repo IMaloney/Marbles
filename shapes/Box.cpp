@@ -14,7 +14,11 @@ Box::Box(float size) :
     m_size(size),
     m_textureID(0)
 {
-    m_texture = QImage("../textures/real_marble.png");
+    // TODO
+//    m_texture = QImage("../textures/real_marble.png");
+    QString qstring = QString("/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/textures/wood.jpg");
+//    QString qstring = QString("../textures/real_marble.png");
+    m_texture = QImage(qstring);
     std::cout<< "width: " << m_texture.width() << std::endl;
     this->buildBox();
     this->buildVAO();
@@ -28,37 +32,42 @@ Box::~Box() {
 
 }
 
+GLuint Box::getTextureID() {
+    return m_textureID;
+}
+
 
 
 void Box::buildBox() {
     glm::mat4 mat;
 
     GLfloat ogFace []= {
+
         // TRIANGLE 1
         // p1
-        -m_size, m_size, m_size,
+        -m_size, m_size, -m_size,
         // uv1
-        0.f, 1.f,
+        0.f, 0.f,
+
         //p2
-        m_size, m_size, m_size,
-        1.f, 1.f,
+        -m_size, -m_size, -m_size,
+        0.f, 1.f,
 
         // p3
-        m_size, -m_size, m_size,
+        m_size, m_size, -m_size,
         1.f, 0.f,
+
 
         // TRIANGLE 2
-        // p1
-        -m_size, m_size, m_size,
-        0.f, 1.f,
-
-        // p2
-        m_size, -m_size, m_size,
+        m_size, m_size, -m_size,
         1.f, 0.f,
 
-        // p3
-        -m_size, -m_size, m_size,
-        0.f, 0.f
+        -m_size, -m_size, -m_size,
+        0.f, 1.f,
+
+        m_size, -m_size, -m_size,
+        1.f, 1.f
+
 
     };
 
@@ -106,6 +115,7 @@ void Box::initializeTexture() {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
     // no tiling
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-
+    std::cout << "checkpoint 1" << std::endl;
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_texture.width(), m_texture.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, m_texture.bits());
+    std::cout << "checkpoint 2" << std::endl;
 }

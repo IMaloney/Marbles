@@ -86,7 +86,7 @@ private:
     //    bool drawNormals;
 
     // essentially an OpenGLShape from lab 1
-    std::unique_ptr<Shape> m_shape;
+    std::unique_ptr<Box> m_shape;
 
     int m_width;
     int m_height;

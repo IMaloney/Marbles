@@ -17,6 +17,8 @@ public:
     virtual ~Box();
     void draw();
 
+    GLuint getTextureID();
+
 // using m_vertexData from shape to store points
 // methods to add: wall shading etc...
 private:
