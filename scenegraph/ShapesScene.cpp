@@ -27,7 +27,8 @@ using namespace CS123::GL;
 ShapesScene::ShapesScene(int width, int height) :
     m_shape(nullptr),
     m_width(width),
-    m_height(height)
+    m_height(height),
+    m_marbles()
 {
     initializeSceneMaterial();
     initializeSceneLight();
@@ -38,6 +39,7 @@ ShapesScene::ShapesScene(int width, int height) :
 
     //TODO: [SHAPES] Allocate any additional memory you need...
     this->loadBoxShader();
+    m_nextMarble = 0;
 }
 
 ShapesScene::~ShapesScene()
@@ -178,11 +180,11 @@ void ShapesScene::loadBoxShader() {
 void ShapesScene::renderGeometry() {
     // TODO: [SHAPES] Render the shape. Lab 1 seems like it'll come in handy...
     if (m_shape) {
-        m_boxShader->bind();
-        glBindTexture(m_shape->getTextureID(), GL_TEXTURE_2D);
+//        m_boxShader->bind();
+//        glBindTexture(m_shape->getTextureID(), GL_TEXTURE_2D);
         std::cout << "checkpoint 3" << std::endl;
         m_shape->draw();
-        m_boxShader->unbind();
+//        m_boxShader->unbind();
     }
 }
 
@@ -210,6 +212,15 @@ void ShapesScene::settingsChanged() {
     // TODO: [SHAPES] Fill this in, for now default to an example shape
     // issue in box
     m_shape = std::make_unique<Box>(1.5f);
+}
 
+void ShapesScene::dropMarble() {
+    float radius = settings.marbleRadius / 100.0f;
+
+    // Add extra marble types
+    switch(settings.marbleType) {
+        default:
+            m_marbles[m_nextMarble] = std::make_unique<WoodMarble>(settings.gravity, radius, settings.marbleWeight);
+    }
 
 }

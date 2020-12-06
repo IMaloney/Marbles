@@ -1,6 +1,7 @@
 #include "MarbleScene.h"
 
-MarbleScene::MarbleScene()
+MarbleScene::MarbleScene() :
+    m_marbles()
 {
 
 }

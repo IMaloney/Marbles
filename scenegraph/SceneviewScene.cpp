@@ -103,7 +103,7 @@ void SceneviewScene::setLevelOfDetail() {
     m_cone = std::make_shared<Cone>(param1, param2);
     m_cube = std::make_shared<Cube>(param1, param2);
     m_cylinder = std::make_shared<Cylinder>(param1, param2);
-    m_sphere = std::make_shared<Sphere>(param1, param2);
+    m_sphere = std::make_shared<Sphere>(param1, param2, 0.5f);
 //    m_torus = std::make_shared<Torus>(param1, param2, param3);
 }
 

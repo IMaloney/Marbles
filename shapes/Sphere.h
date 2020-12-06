@@ -8,13 +8,16 @@ class Sphere : public Shape
 {
 public:
     Sphere();
-    Sphere(int param1, int param2);
+    Sphere(float radius);
+    Sphere(int param1, int param2, float radius);
     ~Sphere();
 
 private:
     int m_param1;
     int m_param2;
     Cylinder m_cylinder;
+
+    float m_radius;
 
     std::vector<GLfloat> generateVertexData(int param1, int param2) override;
 

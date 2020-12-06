@@ -9,9 +9,13 @@
 
 #include "gl/datatype/FBO.h"
 #include "Settings.h"
+#include <QTimer>
 
 
 #include "shapes/Box.h"
+#include "marble/Marble.h"
+#include "marble/MetalMarble.h"
+#include "marble/WoodMarble.h"
 
 namespace CS123 { namespace GL {
 
@@ -88,8 +92,22 @@ private:
     // essentially an OpenGLShape from lab 1
     std::unique_ptr<Box> m_shape;
 
+    std::vector<std::unique_ptr<Marble>> m_marbles;
+
+    int m_nextMarble;
+
     int m_width;
     int m_height;
+
+    /** Timer calls tick() 60 times per second. */
+    QTimer m_timer;
+    float m_fps;
+
+    float m_tick;
+    float m_angle;
+
+    /** Incremented on every call to paintGL. */
+    int m_increment;
 
     void clearLights();
     void loadPhongShader();
@@ -111,6 +129,8 @@ private:
     void setSceneUniforms(SupportCanvas3D *context);
 
     void dropMarble();
+
+    void setActiveMarble();
 
 };
 

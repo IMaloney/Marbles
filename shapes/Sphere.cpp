@@ -4,11 +4,24 @@ Sphere::Sphere()
 {
 }
 
-Sphere::Sphere(int param1, int param2) :
+Sphere::Sphere(float radius) :
+    Shape(),
+    m_param1(10),
+    m_param2(10),
+    m_cylinder(),
+    m_radius(radius)
+{
+    m_vertexData = generateVertexData(m_param1, m_param2);
+    /** build the VAO so that the shape is ready to be drawn */
+    buildVAO();
+}
+
+Sphere::Sphere(int param1, int param2, float radius) :
     Shape(),
     m_param1(param1),
     m_param2(param2),
-    m_cylinder()
+    m_cylinder(),
+    m_radius(radius)
 {
     m_vertexData = generateVertexData(param1, param2);
     /** build the VAO so that the shape is ready to be drawn */
@@ -41,9 +54,9 @@ std::vector<GLfloat> Sphere::generateVertexData(int param1, int param2) {
 
 
             if (i == 0) {
-                glm::vec3 point1 = sphereToCartesian(.5, anglesLat[0], angleLon1);
-                glm::vec3 point2 = sphereToCartesian(.5, anglesLat[1], angleLon1);
-                glm::vec3 point3 = sphereToCartesian(.5, anglesLat[1], angleLon2);
+                glm::vec3 point1 = sphereToCartesian(m_radius, anglesLat[0], angleLon1);
+                glm::vec3 point2 = sphereToCartesian(m_radius, anglesLat[1], angleLon1);
+                glm::vec3 point3 = sphereToCartesian(m_radius, anglesLat[1], angleLon2);
 
                 addPointAndNorm(&data, point3);
 //                addUVCoords(&data, point3);
@@ -54,9 +67,9 @@ std::vector<GLfloat> Sphere::generateVertexData(int param1, int param2) {
 
 
             } else if (i == param1 - 1) {
-                glm::vec3 point1 = sphereToCartesian(.5, anglesLat[param1 - 1], angleLon1);
-                glm::vec3 point2 = sphereToCartesian(.5, anglesLat[param1], angleLon1);
-                glm::vec3 point3 = sphereToCartesian(.5, anglesLat[param1 - 1], angleLon2);
+                glm::vec3 point1 = sphereToCartesian(m_radius, anglesLat[param1 - 1], angleLon1);
+                glm::vec3 point2 = sphereToCartesian(m_radius, anglesLat[param1], angleLon1);
+                glm::vec3 point3 = sphereToCartesian(m_radius, anglesLat[param1 - 1], angleLon2);
 
                 addPointAndNorm(&data, point3);
 //                addUVCoords(&data, point3);
@@ -65,10 +78,10 @@ std::vector<GLfloat> Sphere::generateVertexData(int param1, int param2) {
                 addPointAndNorm(&data, point1);
 //                addUVCoords(&data, point1);
             } else {
-                glm::vec3 point1 = sphereToCartesian(.5, anglesLat[i], angleLon1);
-                glm::vec3 point2 = sphereToCartesian(.5, anglesLat[i+1], angleLon1);
-                glm::vec3 point3 = sphereToCartesian(.5, anglesLat[i], angleLon2);
-                glm::vec3 point4 = sphereToCartesian(.5, anglesLat[i+1], angleLon2);
+                glm::vec3 point1 = sphereToCartesian(m_radius, anglesLat[i], angleLon1);
+                glm::vec3 point2 = sphereToCartesian(m_radius, anglesLat[i+1], angleLon1);
+                glm::vec3 point3 = sphereToCartesian(m_radius, anglesLat[i], angleLon2);
+                glm::vec3 point4 = sphereToCartesian(m_radius, anglesLat[i+1], angleLon2);
 
                 addPointAndNorm(&data, point3);
 //                addUVCoords(&data, point3);
@@ -131,8 +144,8 @@ void Sphere::addUVCoords(std::vector<GLfloat>* data, glm::vec3 point) {
         u = -angle / (2*M_PI);
     }
 
-    float latitude = asin(point.y/0.5f);
-    v = (latitude/M_PI) + 0.5f;
+    float latitude = asin(point.y/m_radius);
+    v = (latitude/M_PI) + 0.5f; // I THINK - per lecture notes its just +0.5 not +radius
 
     data->push_back(u);
     data->push_back(v);

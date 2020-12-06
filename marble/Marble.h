@@ -6,6 +6,7 @@
 #include <vector>
 #include <glm/glm.hpp>
 #include "GL/glew.h"
+#include "shapes/Sphere.h"
 
 class Marble
 {
@@ -28,6 +29,7 @@ public:
     bool checkBoxCollision();
 
 protected:
+    std::unique_ptr<Sphere> m_sphere;
     float m_gravity;
     int m_radius;
     int m_weight;
@@ -41,7 +43,7 @@ protected:
     glm::vec4 m_boundingBoxTopLeftFront;
     // may not need this method, but just in case changing the gravity changes other aspects of the marble
     // just have a protected method that all marble types will overwrite
-    virtual void updateMarble() = 0;
+//    virtual void updateMarble() = 0;
 
 };
 
