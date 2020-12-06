@@ -25,7 +25,7 @@ public:
     virtual void render(SupportCanvas3D *context) override;
     virtual void settingsChanged() override;
 
-    bool checkMarbleCollision(Marble m1, Marble m2);
+    bool checkMarbleCollision(Marble *m1, Marble *m2);
 
 
 private:
