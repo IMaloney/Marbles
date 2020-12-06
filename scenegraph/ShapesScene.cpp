@@ -46,6 +46,11 @@ ShapesScene::ShapesScene(int width, int height) :
     //TODO: [SHAPES] Allocate any additional memory you need...
     this->loadBoxShader();
     m_nextMarble = 0;
+
+    QString qstring = QString("/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/textures/real_marble.png");
+    m_boxTexture = QGLWidget::convertToGLFormat(QImage(qstring));
+    qstring = QString("/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/textures/wood.jpg");
+    m_woodMarbleTexture = QGLWidget::convertToGLFormat(QImage(qstring));
 }
 
 ShapesScene::~ShapesScene()
@@ -186,10 +191,8 @@ void ShapesScene::loadBoxShader() {
 void ShapesScene::renderGeometry() {
     // TODO: [SHAPES] Render the shape. Lab 1 seems like it'll come in handy...
     if (m_shape) {
-        QString qstring = QString("/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/textures/real_marble.png");
-        QImage image = QGLWidget::convertToGLFormat(QImage(qstring));
 
-        CS123::GL::Texture2D texture(image.bits(), image.width(), image.height());
+        CS123::GL::Texture2D texture(m_boxTexture.bits(), m_boxTexture.width(), m_boxTexture.height());
         CS123::GL::TextureParametersBuilder builder;
         builder.setFilter(CS123::GL::TextureParameters::FILTER_METHOD::LINEAR);
         builder.setWrap(CS123::GL::TextureParameters::WRAP_METHOD::REPEAT);
@@ -200,20 +203,30 @@ void ShapesScene::renderGeometry() {
         glm::vec2 uv = glm::vec2(1, 1);
         m_phongShader->setUniform("useTexture", 1);
         m_phongShader->setUniform("repeatUV", uv);
-        m_phongShader->setTexture("/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/textures/wood.jpg",
+        m_phongShader->setTexture("marble_texture",
                                   texture);
-//        m_phongShader->setTexture("tex", m_shape->getTexture());
-//        m_phongShader->setTexture("tex", texture);
+//        m_phongShader->setTexture("/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/textures/wood.jpg",
+//                                  texture);
 
-//        m_boxShader->bind();
-//        glBindTexture(m_shape->getTextureID(), GL_TEXTURE_2D);
         m_shape->draw();
-//        m_boxShader->unbind();
     }
 
     if (m_tempMable) {
          std::cout << "checkpoint 3" << std::endl;
-//         m_tempMable->draw();
+         CS123::GL::Texture2D texture(m_woodMarbleTexture.bits(), m_woodMarbleTexture.width(), m_woodMarbleTexture.height());
+         CS123::GL::TextureParametersBuilder builder;
+         builder.setFilter(CS123::GL::TextureParameters::FILTER_METHOD::LINEAR);
+         builder.setWrap(CS123::GL::TextureParameters::WRAP_METHOD::REPEAT);
+         CS123::GL::TextureParameters parameters = builder.build();
+         parameters.applyTo(texture);
+
+
+         glm::vec2 uv = glm::vec2(1, 1);
+         m_phongShader->setUniform("useTexture", 1);
+         m_phongShader->setUniform("repeatUV", uv);
+         m_phongShader->setTexture("wood_texture",
+                                   texture);
+         m_tempMable->draw();
 
     }
 }

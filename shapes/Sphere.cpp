@@ -6,8 +6,8 @@ Sphere::Sphere()
 
 Sphere::Sphere(float radius) :
     Shape(),
-    m_param1(10),
-    m_param2(10),
+    m_param1(25),
+    m_param2(25),
     m_cylinder(),
     m_radius(radius)
 {

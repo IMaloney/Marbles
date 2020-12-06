@@ -23,20 +23,20 @@ Box::Box(float size) :
     // TODO
 //    QString qstring = QString(":/textures/real_marble.png");
 //    m_texture = QImage(qstring);
-    QString qstring = QString("/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/textures/wood.jpg");
-    m_texture = QGLWidget::convertToGLFormat(QImage(qstring));
+//    QString qstring = QString("/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/textures/wood.jpg");
+//    m_texture = QGLWidget::convertToGLFormat(QImage(qstring));
 
-    CS123::GL::Texture2D texture(m_texture.bits(), m_texture.width(), m_texture.height());
-    CS123::GL::TextureParametersBuilder builder;
-    builder.setFilter(CS123::GL::TextureParameters::FILTER_METHOD::LINEAR);
-    builder.setWrap(CS123::GL::TextureParameters::WRAP_METHOD::REPEAT);
-    CS123::GL::TextureParameters parameters = builder.build();
-    m_textureTexture = std::move(texture);
-    parameters.applyTo(m_textureTexture);
+//    CS123::GL::Texture2D texture(m_texture.bits(), m_texture.width(), m_texture.height());
+//    CS123::GL::TextureParametersBuilder builder;
+//    builder.setFilter(CS123::GL::TextureParameters::FILTER_METHOD::LINEAR);
+//    builder.setWrap(CS123::GL::TextureParameters::WRAP_METHOD::REPEAT);
+//    CS123::GL::TextureParameters parameters = builder.build();
+//    m_textureTexture = std::move(texture);
+//    parameters.applyTo(m_textureTexture);
 
 
-    std::cout<< "width: " << m_texture.width() << std::endl;
-    std::cout<< "height: " << m_texture.height() << std::endl;
+//    std::cout<< "width: " << m_texture.width() << std::endl;
+//    std::cout<< "height: " << m_texture.height() << std::endl;
     this->buildBox();
 //    this->buildVAO();
 //    this->initializeTexture();

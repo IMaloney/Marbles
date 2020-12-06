@@ -101,6 +101,9 @@ private:
     int m_width;
     int m_height;
 
+    QImage m_boxTexture;
+    QImage m_woodMarbleTexture;
+
     /** Timer calls tick() 60 times per second. */
     QTimer m_timer;
     float m_fps;
