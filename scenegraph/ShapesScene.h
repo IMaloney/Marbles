@@ -91,6 +91,8 @@ private:
 
     // essentially an OpenGLShape from lab 1
     std::unique_ptr<Box> m_shape;
+//    std::unique_ptr<WoodMarble> m_tempMable;
+    std::unique_ptr<Sphere> m_tempMable;
 
     std::vector<std::unique_ptr<Marble>> m_marbles;
 

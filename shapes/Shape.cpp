@@ -19,10 +19,15 @@ Shape::~Shape()
 // TODO: update this to reflect the comment inside
 void Shape::draw() {
     // this may need to be updated since the textures will depend on the order of drawing
+    std::cout << "checkpoint 5" << std::endl;
+    this->buildVAO();
     if (m_VAO) {
+        std::cout << "checkpoint 6" << std::endl;
         m_VAO->bind();
+        std::cout << "checkpoint 7" << std::endl;
         m_VAO->draw();
         m_VAO->unbind();
+        std::cout << "checkpoint 8" << std::endl;
     }
 }
 
@@ -39,13 +44,11 @@ void Shape::setDrawMode(CS123::GL::VBO::GEOMETRY_LAYOUT mode){
 // this shape needs to be more extensible
 void Shape::buildVAO() {
     // commenting out the normals for testing (will need them for lighting)
-    const int numFloatsPerVertex = 3;
+    const int numFloatsPerVertex = 5;
     const int numVertices = m_vertexData.size() / numFloatsPerVertex;
 
     std::vector<VBOAttribMarker> markers;
     markers.push_back(VBOAttribMarker(ShaderAttrib::POSITION, 3, 0));
-//    markers.push_back(VBOAttribMarker(ShaderAttrib::NORMAL, 3, 3*sizeof(float)));
-//    markers.push_back(VBOAttribMarker(ShaderAttrib::POSITION, 3, 0));
 //    markers.push_back(VBOAttribMarker(ShaderAttrib::NORMAL, 3, 3*sizeof(float)));
     markers.push_back(VBOAttribMarker(ShaderAttrib::TEXCOORD0, 2, 3*sizeof(float)));
     VBO vbo = VBO(m_vertexData.data(), m_vertexData.size(), markers, m_drawMode);

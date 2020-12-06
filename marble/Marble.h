@@ -28,6 +28,8 @@ public:
 
     bool checkBoxCollision();
 
+    void draw();
+
 protected:
     std::unique_ptr<Sphere> m_sphere;
     float m_gravity;

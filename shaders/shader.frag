@@ -9,7 +9,7 @@ uniform int useTexture = 0;
 uniform vec2 repeatUV;
 
 void main(){
-    vec3 texColor = texture(tex, texc*repeatUV).rgb;
+    vec3 texColor = texture(tex, texc*repeatUV).rgb; // could use just texc instead of texc*repeatUV
     texColor = clamp(texColor + vec3(1-useTexture), vec3(0), vec3(1));
     fragColor = vec4(color * texColor, 1);
 }

@@ -7,7 +7,7 @@ WoodMarble::WoodMarble(float gravity, int radius, int weight) :
 {
     m_woodTexture = QImage("../textures/wood.jpg");
     m_textureID = 0;
-    this->initializeTexture();
+//    this->initializeTexture();
 }
 
 WoodMarble::~WoodMarble() {

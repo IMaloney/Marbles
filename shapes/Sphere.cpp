@@ -59,11 +59,11 @@ std::vector<GLfloat> Sphere::generateVertexData(int param1, int param2) {
                 glm::vec3 point3 = sphereToCartesian(m_radius, anglesLat[1], angleLon2);
 
                 addPointAndNorm(&data, point3);
-//                addUVCoords(&data, point3);
+                addUVCoords(&data, point3);
                 addPointAndNorm(&data, point2);
-//                addUVCoords(&data, point2);
+                addUVCoords(&data, point2);
                 addPointAndNorm(&data, point1);
-//                addUVCoords(&data, point1);
+                addUVCoords(&data, point1);
 
 
             } else if (i == param1 - 1) {
@@ -72,11 +72,11 @@ std::vector<GLfloat> Sphere::generateVertexData(int param1, int param2) {
                 glm::vec3 point3 = sphereToCartesian(m_radius, anglesLat[param1 - 1], angleLon2);
 
                 addPointAndNorm(&data, point3);
-//                addUVCoords(&data, point3);
+                addUVCoords(&data, point3);
                 addPointAndNorm(&data, point2);
-//                addUVCoords(&data, point2);
+                addUVCoords(&data, point2);
                 addPointAndNorm(&data, point1);
-//                addUVCoords(&data, point1);
+                addUVCoords(&data, point1);
             } else {
                 glm::vec3 point1 = sphereToCartesian(m_radius, anglesLat[i], angleLon1);
                 glm::vec3 point2 = sphereToCartesian(m_radius, anglesLat[i+1], angleLon1);
@@ -84,18 +84,18 @@ std::vector<GLfloat> Sphere::generateVertexData(int param1, int param2) {
                 glm::vec3 point4 = sphereToCartesian(m_radius, anglesLat[i+1], angleLon2);
 
                 addPointAndNorm(&data, point3);
-//                addUVCoords(&data, point3);
+                addUVCoords(&data, point3);
                 addPointAndNorm(&data, point2);
-//                addUVCoords(&data, point2);
+                addUVCoords(&data, point2);
                 addPointAndNorm(&data, point1);
-//                addUVCoords(&data, point1);
+                addUVCoords(&data, point1);
 
                 addPointAndNorm(&data, point4);
-//                addUVCoords(&data, point4);
+                addUVCoords(&data, point4);
                 addPointAndNorm(&data, point2);
-//                addUVCoords(&data, point2);
+                addUVCoords(&data, point2);
                 addPointAndNorm(&data, point3);
-//                addUVCoords(&data, point3);
+                addUVCoords(&data, point3);
             }
         }
     }
@@ -127,9 +127,9 @@ void Sphere::addPointAndNorm(std::vector<GLfloat>* data, glm::vec3 point) {
     data->push_back(point.y);
     data->push_back(point.z);
     // Normal is the same as the point!!!
-    data->push_back(point.x);
-    data->push_back(point.y);
-    data->push_back(point.z);
+//    data->push_back(point.x);
+//    data->push_back(point.y);
+//    data->push_back(point.z);
 }
 
 void Sphere::addUVCoords(std::vector<GLfloat>* data, glm::vec3 point) {

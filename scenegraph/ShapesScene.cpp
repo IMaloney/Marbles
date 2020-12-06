@@ -26,9 +26,11 @@ using namespace CS123::GL;
 
 ShapesScene::ShapesScene(int width, int height) :
     m_shape(nullptr),
+    m_tempMable(nullptr),
+    m_marbles(),
     m_width(width),
-    m_height(height),
-    m_marbles()
+    m_height(height)
+
 {
     initializeSceneMaterial();
     initializeSceneLight();
@@ -100,9 +102,9 @@ void ShapesScene::render(SupportCanvas3D *context) {
 
     renderPhongPass(context);
 
-    if (settings.drawWireframe) {
-        renderWireframePass(context);
-    }
+//    if (settings.drawWireframe) {
+//        renderWireframePass(context);
+//    }
 
     if (settings.drawNormals) {
         renderNormalsPass(context);
@@ -180,11 +182,23 @@ void ShapesScene::loadBoxShader() {
 void ShapesScene::renderGeometry() {
     // TODO: [SHAPES] Render the shape. Lab 1 seems like it'll come in handy...
     if (m_shape) {
+        glm::vec2 uv = glm::vec2(1, 1);
+        m_phongShader->setUniform("useTexture", 1);
+        m_phongShader->setUniform("repeatUV", uv);
+        m_phongShader->setTexture("/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/textures/wood.jpg",
+                                  m_shape->getTexture());
 //        m_boxShader->bind();
 //        glBindTexture(m_shape->getTextureID(), GL_TEXTURE_2D);
-        std::cout << "checkpoint 3" << std::endl;
         m_shape->draw();
 //        m_boxShader->unbind();
+    }
+
+    if (m_tempMable) {
+//         m_phongShader->bind();
+         std::cout << "checkpoint 3" << std::endl;
+//         m_tempMable->draw();
+//         m_phongShader->unbind();
+
     }
 }
 
@@ -211,7 +225,9 @@ void ShapesScene::settingsChanged() {
     // TODO: [SHAPES] Fill this in if applicable.
     // TODO: [SHAPES] Fill this in, for now default to an example shape
     // issue in box
-    m_shape = std::make_unique<Box>(1.5f);
+    float radius = settings.marbleRadius / 100.0f;
+    m_shape = std::make_unique<Box>(1.5f); //std::make_unique<Box>(1.5f);
+    m_tempMable = std::make_unique<Sphere>(1.5f);//std::make_unique<WoodMarble>(settings.gravity, radius, settings.marbleWeight); //
 }
 
 void ShapesScene::dropMarble() {

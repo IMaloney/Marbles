@@ -3,6 +3,11 @@
 // testing
 #include <iostream>
 #include "gl/GLDebug.h"
+#include <QGLWidget>
+#include "gl/textures/Texture2D.h"
+#include "gl/textures/TextureParameters.h"
+#include "gl/textures/TextureParametersBuilder.h"
+#include <utility>
 
 // not a fan of putting this file in the shapes but I guess its
 // inheriting from shape so
@@ -12,18 +17,29 @@
 // get larger than the initial box
 Box::Box(float size) :
     m_size(size),
-    m_textureID(0)
+    m_textureID(0),
+    m_textureTexture(nullptr, 0, 0)
 {
     // TODO
-//    m_texture = QImage("../textures/real_marble.png");
+//    QString qstring = QString(":/textures/real_marble.png");
+//    m_texture = QImage(qstring);
     QString qstring = QString("/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/textures/wood.jpg");
-//    QString qstring = QString("../textures/real_marble.png");
-    m_texture = QImage(qstring);
+    m_texture = QGLWidget::convertToGLFormat(QImage(qstring));
+
+    CS123::GL::Texture2D texture(m_texture.bits(), m_texture.width(), m_texture.height());
+    CS123::GL::TextureParametersBuilder builder;
+    builder.setFilter(CS123::GL::TextureParameters::FILTER_METHOD::LINEAR);
+    builder.setWrap(CS123::GL::TextureParameters::WRAP_METHOD::REPEAT);
+    CS123::GL::TextureParameters parameters = builder.build();
+    m_textureTexture = std::move(texture);
+    parameters.applyTo(m_textureTexture);
+
+
     std::cout<< "width: " << m_texture.width() << std::endl;
     std::cout<< "height: " << m_texture.height() << std::endl;
     this->buildBox();
-    this->buildVAO();
-    this->initializeTexture();
+//    this->buildVAO();
+//    this->initializeTexture();
 }
 
 
@@ -33,9 +49,15 @@ Box::~Box() {
 
 }
 
+CS123::GL::Texture2D Box::getTexture() {
+    return std::move(m_textureTexture);
+}
+
 GLuint Box::getTextureID() {
     return m_textureID;
 }
+
+
 
 
 
@@ -116,12 +138,10 @@ void Box::initializeTexture() {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
     // no tiling
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-<<<<<<< HEAD
 
 //    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_texture.width(), m_texture.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, m_texture.bits());
-=======
+
     std::cout << "checkpoint 1" << std::endl;
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_texture.width(), m_texture.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, m_texture.bits());
     std::cout << "checkpoint 2" << std::endl;
->>>>>>> 158267c031bd3d32f99ba60411338e02f1d923e1
 }
