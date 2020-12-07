@@ -14,7 +14,7 @@ public:
 
     std::vector<GLfloat> getVetexData() { return m_vertexData; }
 
-private:
+protected:
     int m_param1;
     int m_param2;
     Cylinder m_cylinder;
@@ -22,6 +22,8 @@ private:
     float m_radius;
 
     std::vector<GLfloat> generateVertexData(int param1, int param2) override;
+
+private:
 
     std::vector<GLfloat> generateLatitudeAngleVector(int param1);
     glm::vec3 sphereToCartesian(float radius, float lat, float lon);

@@ -155,6 +155,11 @@ void SupportCanvas3D::setSceneToShapes() {
     m_currentScene = m_shapesScene.get();
 }
 
+void SupportCanvas3D::dropMarble() {
+    std::cout << "ASDGASDGASDGLASJGAGASKDNGASG" << std::endl;
+    m_shapesScene->dropMarble(this);
+}
+
 void SupportCanvas3D::copyPixels(int width, int height, RGBA *data) {
     glReadPixels(0, 0, width, height, GL_BGRA, GL_UNSIGNED_BYTE, data);
     std::cout << "copied " << width << "x" << height << std::endl;

@@ -264,8 +264,9 @@ void MainWindow::uncheckAllRayFeatures() {
 void MainWindow::dropMarble() {
     // Disable the UI so the user can't interfere with the filtering
     setAllEnabled(false);
+    std::cout << "STEP 1 WOWOWOWOWOW" << std::endl;
 
-//    m_canvas3D->
+    m_canvas3D->dropMarble();
 
     // Enable the UI again
     setAllEnabled(true);

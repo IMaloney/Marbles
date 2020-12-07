@@ -52,6 +52,8 @@ public:
     virtual void render(SupportCanvas3D *context) override;
     virtual void settingsChanged() override;
 
+    void dropMarble(SupportCanvas3D *context);
+
 
 protected:
     // Set the light uniforms for the lights in the scene. (The view matrix is used so that the
@@ -104,12 +106,8 @@ private:
     QImage m_boxTexture;
     QImage m_woodMarbleTexture;
 
-    /** Timer calls tick() 60 times per second. */
-    QTimer m_timer;
-    float m_fps;
-
-    float m_tick;
-    float m_angle;
+    float m_yMove;
+    glm::mat4x4 m_marbleTrans;
 
     /** Incremented on every call to paintGL. */
     int m_increment;
@@ -132,8 +130,6 @@ private:
     void renderNormals();
     void renderWireframe();
     void setSceneUniforms(SupportCanvas3D *context);
-
-    void dropMarble();
 
     void setActiveMarble();
 

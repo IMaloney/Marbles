@@ -33,15 +33,13 @@ ShapesScene::ShapesScene(int width, int height) :
     m_tempMable(nullptr),
     m_marbles(),
     m_width(width),
-    m_height(height)
+    m_height(height),
+    m_yMove(0.0f),
+    m_marbleTrans()
 
 
 {
-//    QTimer m_timer;
-//    float m_fps;
 
-//    float m_tick;
-//    float m_angle;
     initializeSceneMaterial();
     initializeSceneLight();
     loadPhongShader();
@@ -117,6 +115,7 @@ void ShapesScene::render(SupportCanvas3D *context) {
 
     renderPhongPass(context);
 
+
 //    if (settings.drawWireframe) {
 //        renderWireframePass(context);
 //    }
@@ -153,6 +152,7 @@ void ShapesScene::setMatrixUniforms(Shader *shader, SupportCanvas3D *context) {
 
 void ShapesScene::renderGeometryAsFilledPolygons() {
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
     renderGeometry();
 }
 
@@ -218,6 +218,7 @@ void ShapesScene::renderGeometry() {
     }
 
     if (m_tempMable) {
+
          std::cout << "checkpoint 3" << std::endl;
          CS123::GL::Texture2D texture(m_woodMarbleTexture.bits(), m_woodMarbleTexture.width(), m_woodMarbleTexture.height());
          CS123::GL::TextureParametersBuilder builder;
@@ -236,6 +237,9 @@ void ShapesScene::renderGeometry() {
          std::vector<GLfloat> data = m_tempMable->getVetexData();
 
          std::cout << "size: " << data.size() << std::endl;
+         m_tempMable->draw();
+
+         m_phongShader->setUniform("m" , m_marbleTrans);
          m_tempMable->draw();
 
     }
@@ -266,18 +270,51 @@ void ShapesScene::settingsChanged() {
     // issue in box
     float radius = settings.marbleRadius / 100.0f;
     m_shape = std::make_unique<Box>(1.5f); //std::make_unique<Box>(1.5f);
-    m_tempMable = std::make_unique<WoodMarble>(settings.gravity, .5, settings.marbleWeight);//std::make_unique<Sphere>(10, 10, .25); //
+    m_tempMable = std::make_unique<Sphere>(10, 10, .25); //std::make_unique<WoodMarble>(settings.gravity, .5, settings.marbleWeight);//
     //std::make_unique<WoodMarble>(settings.gravity, .5, settings.marbleWeight);
     //std::make_unique<WoodMarble>(settings.gravity, radius, settings.marbleWeight); //
 }
 
-void ShapesScene::dropMarble() {
+void ShapesScene::dropMarble(SupportCanvas3D *context) {
     float radius = settings.marbleRadius / 100.0f;
+    std::cout << "POOOOOO" << std::endl;
 
     // Add extra marble types
-    switch(settings.marbleType) {
-        default:
-            m_marbles[m_nextMarble] = std::make_unique<WoodMarble>(settings.gravity, radius, settings.marbleWeight);
+//    switch(settings.marbleType) {
+//        default:
+//            m_marbles[m_nextMarble] = std::make_unique<WoodMarble>(settings.gravity, radius, settings.marbleWeight);
+//    }
+    m_phongShader->bind();
+    setPhongSceneUniforms();
+    setMatrixUniforms(m_normalsShader.get(), context);
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    if (m_tempMable) {
+        std::cout << "WOOOOOO" << std::endl;
+
+         std::cout << "checkpoint 3" << std::endl;
+         CS123::GL::Texture2D texture(m_woodMarbleTexture.bits(), m_woodMarbleTexture.width(), m_woodMarbleTexture.height());
+         CS123::GL::TextureParametersBuilder builder;
+         builder.setFilter(CS123::GL::TextureParameters::FILTER_METHOD::LINEAR);
+         builder.setWrap(CS123::GL::TextureParameters::WRAP_METHOD::REPEAT);
+         CS123::GL::TextureParameters parameters = builder.build();
+         parameters.applyTo(texture);
+
+
+         glm::vec2 uv = glm::vec2(1, 1);
+         m_phongShader->setUniform("useTexture", 1);
+         m_phongShader->setUniform("repeatUV", uv);
+         m_phongShader->setTexture("wood_texture",
+                                   texture);
+
+         std::vector<GLfloat> data = m_tempMable->getVetexData();
+
+         std::cout << "size: " << data.size() << std::endl;
+         m_tempMable->draw();
+
+         m_phongShader->setUniform("m" , m_marbleTrans);
+         m_tempMable->draw();
+
     }
+    m_phongShader->unbind();
 
 }
