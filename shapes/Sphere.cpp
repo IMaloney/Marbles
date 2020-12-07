@@ -13,7 +13,7 @@ Sphere::Sphere(float radius) :
 {
     m_vertexData = generateVertexData(m_param1, m_param2);
     /** build the VAO so that the shape is ready to be drawn */
-    buildVAO();
+//    buildVAO();
 }
 
 Sphere::Sphere(int param1, int param2, float radius) :
@@ -25,7 +25,7 @@ Sphere::Sphere(int param1, int param2, float radius) :
 {
     m_vertexData = generateVertexData(param1, param2);
     /** build the VAO so that the shape is ready to be drawn */
-    buildVAO();
+//    buildVAO();
 }
 
 Sphere::~Sphere()
@@ -37,6 +37,8 @@ std::vector<GLfloat> Sphere::generateVertexData(int param1, int param2) {
 
     std::vector<GLfloat> anglesLat = generateLatitudeAngleVector(param1);
     std::vector<GLfloat> anglesLon = m_cylinder.generateAngleVector(param2);
+
+    std::cout << "YEEEEEEE" << std::endl;
 
     for (int i = 0; i < param1; i++) {
         for (int j = 0; j < param2; j++) {

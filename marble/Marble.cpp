@@ -1,24 +1,22 @@
 #include "Marble.h"
 
+Marble::Marble()
+{
+}
 
 Marble::Marble(float gravity, int radius, int weight) :
+    Sphere(25, 25, radius),
     m_gravity(gravity),
     m_radius(radius),
     m_weight(weight)
     //m_sphere()
 {
-    m_sphere = std::make_unique<Sphere>(radius);
+//    m_sphere = std::make_unique<Sphere>(radius);
 }
 
 
 Marble::~Marble() {
 
-}
-
-void Marble::draw() {
-    // this may need to be updated since the textures will depend on the order of drawing
-    std::cout << "checkpoint 4" << std::endl;
-    m_sphere->draw();
 }
 
 // make sure it calls the proper updateMarble when this function is run

@@ -28,6 +28,8 @@ public:
     bool checkMarbleCollision(Marble *m1, Marble *m2);
 
 
+
+
 private:
     // keep a vector of all the created marbles --> depending on how bad the memory gets(put it on the heap or just store a pointer)
     std::unique_ptr<CS123::GL::Shader> m_boxShader;

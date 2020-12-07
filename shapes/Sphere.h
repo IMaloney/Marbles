@@ -12,6 +12,8 @@ public:
     Sphere(int param1, int param2, float radius);
     ~Sphere();
 
+    std::vector<GLfloat> getVetexData() { return m_vertexData; }
+
 private:
     int m_param1;
     int m_param2;

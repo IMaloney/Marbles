@@ -35,7 +35,13 @@ ShapesScene::ShapesScene(int width, int height) :
     m_width(width),
     m_height(height)
 
+
 {
+//    QTimer m_timer;
+//    float m_fps;
+
+//    float m_tick;
+//    float m_angle;
     initializeSceneMaterial();
     initializeSceneLight();
     loadPhongShader();
@@ -226,6 +232,10 @@ void ShapesScene::renderGeometry() {
          m_phongShader->setUniform("repeatUV", uv);
          m_phongShader->setTexture("wood_texture",
                                    texture);
+
+         std::vector<GLfloat> data = m_tempMable->getVetexData();
+
+         std::cout << "size: " << data.size() << std::endl;
          m_tempMable->draw();
 
     }
@@ -256,7 +266,9 @@ void ShapesScene::settingsChanged() {
     // issue in box
     float radius = settings.marbleRadius / 100.0f;
     m_shape = std::make_unique<Box>(1.5f); //std::make_unique<Box>(1.5f);
-    m_tempMable = std::make_unique<Sphere>(1.5f);//std::make_unique<WoodMarble>(settings.gravity, radius, settings.marbleWeight); //
+    m_tempMable = std::make_unique<WoodMarble>(settings.gravity, .5, settings.marbleWeight);//std::make_unique<Sphere>(10, 10, .25); //
+    //std::make_unique<WoodMarble>(settings.gravity, .5, settings.marbleWeight);
+    //std::make_unique<WoodMarble>(settings.gravity, radius, settings.marbleWeight); //
 }
 
 void ShapesScene::dropMarble() {

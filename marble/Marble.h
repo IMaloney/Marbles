@@ -8,9 +8,10 @@
 #include "GL/glew.h"
 #include "shapes/Sphere.h"
 
-class Marble
+class Marble : public Sphere
 {
 public:
+    Marble();
     Marble(float gravity, int radius, int weight);
     virtual ~Marble();
 
@@ -28,10 +29,8 @@ public:
 
     bool checkBoxCollision();
 
-    void draw();
-
 protected:
-    std::unique_ptr<Sphere> m_sphere;
+//    std::unique_ptr<Sphere> m_sphere;
     float m_gravity;
     int m_radius;
     int m_weight;
