@@ -49,12 +49,12 @@ void OrbitingCamera::mouseDown(int x, int y) {
 }
 
 void OrbitingCamera::mouseDragged(int x, int y) {
-    m_angleY += x - m_oldX;
-    m_angleX += y - m_oldY;
-    m_oldX = x;
-    m_oldY = y;
-    if (m_angleX < -90) m_angleX = -90;
-    if (m_angleX > 90) m_angleX = 90;
+//    m_angleY += x - m_oldX;
+//    m_angleX += y - m_oldY;
+//    m_oldX = x;
+//    m_oldY = y;
+//    if (m_angleX < -90) m_angleX = -90;
+//    if (m_angleX > 90) m_angleX = 90;
 
     updateViewMatrix();
 }

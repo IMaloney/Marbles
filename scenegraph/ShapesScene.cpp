@@ -306,9 +306,6 @@ void ShapesScene::dropMarble(SupportCanvas3D *context) {
          m_phongShader->setTexture("wood_texture",
                                    texture);
 
-         std::vector<GLfloat> data = m_tempMable->getVetexData();
-
-         std::cout << "size: " << data.size() << std::endl;
          m_tempMable->draw();
 
          m_phongShader->setUniform("m" , m_marbleTrans);
