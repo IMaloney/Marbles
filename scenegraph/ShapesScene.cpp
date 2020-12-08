@@ -26,6 +26,8 @@ using namespace CS123::GL;
 #include "gl/shaders/CS123Shader.h"
 #include "gl/shaders/Shader.h"
 
+#include "gl/GLDebug.h"
+
 #include "ResourceLoader.h"
 
 ShapesScene::ShapesScene(int width, int height) :
@@ -48,7 +50,7 @@ ShapesScene::ShapesScene(int width, int height) :
     loadNormalsArrowShader();
 
     //TODO: [SHAPES] Allocate any additional memory you need...
-    this->loadBoxShader();
+//    this->loadBoxShader();
     m_nextMarble = 0;
 
     QString qstring = QString("/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/textures/real_marble.png");
@@ -209,17 +211,15 @@ void ShapesScene::renderGeometry() {
         glm::vec2 uv = glm::vec2(1, 1);
         m_phongShader->setUniform("useTexture", 1);
         m_phongShader->setUniform("repeatUV", uv);
-        m_phongShader->setTexture("marble_texture",
-                                  texture);
-//        m_phongShader->setTexture("/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/textures/wood.jpg",
+//        m_phongShader->setTexture("marble_texture",
 //                                  texture);
+        m_phongShader->setTexture("tex",
+                                  texture);
 
         m_shape->draw();
     }
 
     if (m_tempMable) {
-
-         std::cout << "checkpoint 3" << std::endl;
          CS123::GL::Texture2D texture(m_woodMarbleTexture.bits(), m_woodMarbleTexture.width(), m_woodMarbleTexture.height());
          CS123::GL::TextureParametersBuilder builder;
          builder.setFilter(CS123::GL::TextureParameters::FILTER_METHOD::LINEAR);
@@ -231,13 +231,13 @@ void ShapesScene::renderGeometry() {
          glm::vec2 uv = glm::vec2(1, 1);
          m_phongShader->setUniform("useTexture", 1);
          m_phongShader->setUniform("repeatUV", uv);
-         m_phongShader->setTexture("wood_texture",
+
+         m_phongShader->setTexture("tex",
                                    texture);
+//         m_phongShader->setTexture("wood_texture",
+//                                   texture);
 
          std::vector<GLfloat> data = m_tempMable->getVetexData();
-
-         std::cout << "size: " << data.size() << std::endl;
-         m_tempMable->draw();
 
          m_phongShader->setUniform("m" , m_marbleTrans);
          m_tempMable->draw();
@@ -251,6 +251,7 @@ void ShapesScene::clearLights() {
         os << i;
         std::string indexString = "[" + os.str() + "]"; // e.g. [0], [1], etc.
         m_phongShader->setUniform("lightColors" + indexString, glm::vec3(0.0f, 0.0f, 0.0f));
+        CS123::GL::checkError();
     }
 }
 
@@ -290,8 +291,6 @@ void ShapesScene::dropMarble(SupportCanvas3D *context) {
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     if (m_tempMable) {
         std::cout << "WOOOOOO" << std::endl;
-
-         std::cout << "checkpoint 3" << std::endl;
          CS123::GL::Texture2D texture(m_woodMarbleTexture.bits(), m_woodMarbleTexture.width(), m_woodMarbleTexture.height());
          CS123::GL::TextureParametersBuilder builder;
          builder.setFilter(CS123::GL::TextureParameters::FILTER_METHOD::LINEAR);

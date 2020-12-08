@@ -19,15 +19,11 @@ Shape::~Shape()
 // TODO: update this to reflect the comment inside
 void Shape::draw() {
     // this may need to be updated since the textures will depend on the order of drawing
-    std::cout << "checkpoint 5" << std::endl;
     this->buildVAO();
     if (m_VAO) {
-        std::cout << "checkpoint 6" << std::endl;
         m_VAO->bind();
-        std::cout << "checkpoint 7" << std::endl;
         m_VAO->draw();
         m_VAO->unbind();
-        std::cout << "checkpoint 8" << std::endl;
     }
 }
 
