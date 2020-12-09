@@ -305,7 +305,6 @@ public:
         pushButton = new QPushButton(marbleButton);
         pushButton->setObjectName(QString::fromUtf8("pushButton"));
 
-
         horizontalLayout_5->addWidget(pushButton);
 
         marbleDock->setWidget(marblDockContents);
@@ -340,7 +339,6 @@ public:
         QObject::connect(actionClear, SIGNAL(triggered()), MainWindow, SLOT(clearImage()));
         QObject::connect(actionRevert, SIGNAL(triggered()), MainWindow, SLOT(revertImage()));
 
-        // ATTEMPT TO CONNECT BUTTON TO CODE!!!
         QObject::connect(pushButton, SIGNAL(clicked()), MainWindow, SLOT(dropMarble()));
 
         tabWidget->setCurrentIndex(0);

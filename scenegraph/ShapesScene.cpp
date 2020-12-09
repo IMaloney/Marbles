@@ -17,10 +17,6 @@
 #include "shapes/Cylinder.h"
 #include "shapes/Sphere.h"
 
-#include "gl/textures/Texture2D.h"
-#include "gl/textures/TextureParameters.h"
-#include "gl/textures/TextureParametersBuilder.h"
-
 
 using namespace CS123::GL;
 #include "gl/shaders/CS123Shader.h"
@@ -32,12 +28,13 @@ using namespace CS123::GL;
 
 ShapesScene::ShapesScene(int width, int height) :
     m_shape(nullptr),
-    m_tempMable(nullptr),
+    m_modelMable(nullptr),
     m_marbles(),
     m_width(width),
     m_height(height),
     m_yMove(0.0f),
-    m_marbleTrans()
+    m_marbleTrans(),
+    m_vecTrans()
 
 
 {
@@ -52,6 +49,10 @@ ShapesScene::ShapesScene(int width, int height) :
     //TODO: [SHAPES] Allocate any additional memory you need...
 //    this->loadBoxShader();
     m_nextMarble = 0;
+
+    float radius = settings.marbleRadius / 100.0f;
+    m_shape = std::make_unique<Box>(1.5f); //std::make_unique<Box>(1.5f);
+    m_modelMable = std::make_unique<Sphere>(10, 10, .25); //std::make_unique<WoodMarble>(settings.gravity, .5, settings.marbleWeight);//
 
     QString qstring = QString("/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/textures/real_marble.png");
     m_boxTexture = QGLWidget::convertToGLFormat(QImage(qstring));
@@ -197,51 +198,57 @@ void ShapesScene::loadBoxShader() {
 
 
 void ShapesScene::renderGeometry() {
-    // TODO: [SHAPES] Render the shape. Lab 1 seems like it'll come in handy...
+
+    CS123::GL::TextureParametersBuilder builder;
+    builder.setFilter(CS123::GL::TextureParameters::FILTER_METHOD::LINEAR);
+    builder.setWrap(CS123::GL::TextureParameters::WRAP_METHOD::REPEAT);
+    CS123::GL::TextureParameters parameters = builder.build();
+
+
     if (m_shape) {
 
         CS123::GL::Texture2D texture(m_boxTexture.bits(), m_boxTexture.width(), m_boxTexture.height());
-        CS123::GL::TextureParametersBuilder builder;
-        builder.setFilter(CS123::GL::TextureParameters::FILTER_METHOD::LINEAR);
-        builder.setWrap(CS123::GL::TextureParameters::WRAP_METHOD::REPEAT);
-        CS123::GL::TextureParameters parameters = builder.build();
         parameters.applyTo(texture);
 
 
         glm::vec2 uv = glm::vec2(1, 1);
         m_phongShader->setUniform("useTexture", 1);
         m_phongShader->setUniform("repeatUV", uv);
-//        m_phongShader->setTexture("marble_texture",
-//                                  texture);
         m_phongShader->setTexture("tex",
                                   texture);
 
+        m_phongShader->setUniform("m" , glm::mat4x4());
         m_shape->draw();
     }
 
-    if (m_tempMable) {
-         CS123::GL::Texture2D texture(m_woodMarbleTexture.bits(), m_woodMarbleTexture.width(), m_woodMarbleTexture.height());
-         CS123::GL::TextureParametersBuilder builder;
-         builder.setFilter(CS123::GL::TextureParameters::FILTER_METHOD::LINEAR);
-         builder.setWrap(CS123::GL::TextureParameters::WRAP_METHOD::REPEAT);
-         CS123::GL::TextureParameters parameters = builder.build();
-         parameters.applyTo(texture);
+    if (m_modelMable) {
+
+        for (int i = 0; i < (int) m_marbles.size(); i++) {
+
+            CS123::GL::Texture2D texture(m_woodMarbleTexture.bits(), m_woodMarbleTexture.width(), m_woodMarbleTexture.height());
+            parameters.applyTo(texture);
 
 
-         glm::vec2 uv = glm::vec2(1, 1);
-         m_phongShader->setUniform("useTexture", 1);
-         m_phongShader->setUniform("repeatUV", uv);
+            glm::vec2 uv = glm::vec2(1, 1);
+            m_phongShader->setUniform("useTexture", 1);
+            m_phongShader->setUniform("repeatUV", uv);
 
-         m_phongShader->setTexture("tex",
-                                   texture);
-//         m_phongShader->setTexture("wood_texture",
-//                                   texture);
+            m_phongShader->setTexture("tex",
+                                      texture);
 
-         std::vector<GLfloat> data = m_tempMable->getVetexData();
+            MarbleBoxIntersect xIntersect = checkBoxXCollision(m_marbles[i]);
+            MarbleBoxIntersect yIntersect = checkBoxYCollision(m_marbles[i]);
+            MarbleBoxIntersect zIntersect = checkBoxZCollision(m_marbles[i]);
 
-         m_phongShader->setUniform("m" , m_marbleTrans);
-         m_tempMable->draw();
+            if (!yIntersect.intersect) {
+                translateMarble(i, glm::vec3(0.0f, -0.01f, 0.0f));
+            }
 
+            glm::mat4x4 translation = glm::translate(m_marbles[i].cumulativeTransformation);
+
+            m_phongShader->setUniform("m" , translation);
+            m_modelMable->draw();
+        }
     }
 }
 
@@ -251,7 +258,6 @@ void ShapesScene::clearLights() {
         os << i;
         std::string indexString = "[" + os.str() + "]"; // e.g. [0], [1], etc.
         m_phongShader->setUniform("lightColors" + indexString, glm::vec3(0.0f, 0.0f, 0.0f));
-        CS123::GL::checkError();
     }
 }
 
@@ -266,51 +272,86 @@ void ShapesScene::setLights(const glm::mat4 viewMatrix) {
 
 void ShapesScene::settingsChanged() {
 
-    // TODO: [SHAPES] Fill this in if applicable.
-    // TODO: [SHAPES] Fill this in, for now default to an example shape
-    // issue in box
-    float radius = settings.marbleRadius / 100.0f;
-    m_shape = std::make_unique<Box>(1.5f); //std::make_unique<Box>(1.5f);
-    m_tempMable = std::make_unique<Sphere>(10, 10, .25); //std::make_unique<WoodMarble>(settings.gravity, .5, settings.marbleWeight);//
-    //std::make_unique<WoodMarble>(settings.gravity, .5, settings.marbleWeight);
-    //std::make_unique<WoodMarble>(settings.gravity, radius, settings.marbleWeight); //
 }
 
 void ShapesScene::dropMarble(SupportCanvas3D *context) {
-    float radius = settings.marbleRadius / 100.0f;
-    std::cout << "POOOOOO" << std::endl;
+    float radius = settings.marbleRadius; // 100.0f;
 
-    // Add extra marble types
-//    switch(settings.marbleType) {
-//        default:
-//            m_marbles[m_nextMarble] = std::make_unique<WoodMarble>(settings.gravity, radius, settings.marbleWeight);
-//    }
-    m_phongShader->bind();
-    setPhongSceneUniforms();
-    setMatrixUniforms(m_normalsShader.get(), context);
-    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-    if (m_tempMable) {
-        std::cout << "WOOOOOO" << std::endl;
-         CS123::GL::Texture2D texture(m_woodMarbleTexture.bits(), m_woodMarbleTexture.width(), m_woodMarbleTexture.height());
-         CS123::GL::TextureParametersBuilder builder;
-         builder.setFilter(CS123::GL::TextureParameters::FILTER_METHOD::LINEAR);
-         builder.setWrap(CS123::GL::TextureParameters::WRAP_METHOD::REPEAT);
-         CS123::GL::TextureParameters parameters = builder.build();
-         parameters.applyTo(texture);
+    MarbleData marble = MarbleData();
+    marble.radius = radius;
+    marble.weight = settings.marbleWeight;
+    marble.gravity = settings.gravity;
+    marble.marbleType = settings.marbleType;
+    marble.centerPosition = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+    marble.currDirection =  glm::vec4(0.0f, -1.0f, 0.0f, 0.0f);
+    marble.cumulativeTransformation = glm::vec3(0.0f, 0.0f, 0.0f);
+    marble.velocity = 0.0f; // NEED TO UPDATE THIS
 
+    m_marbles.push_back(marble);
 
-         glm::vec2 uv = glm::vec2(1, 1);
-         m_phongShader->setUniform("useTexture", 1);
-         m_phongShader->setUniform("repeatUV", uv);
-         m_phongShader->setTexture("wood_texture",
-                                   texture);
+}
 
-         m_tempMable->draw();
+MarbleBoxIntersect ShapesScene::checkBoxXCollision(MarbleData marble) {
+    MarbleBoxIntersect intersect = MarbleBoxIntersect();
+    intersect.intersect = false;
 
-         m_phongShader->setUniform("m" , m_marbleTrans);
-         m_tempMable->draw();
+    glm::vec4 center = marble.centerPosition;
 
+    // Intersects -x face of box
+    if ((-1.5f + epsilon) > (center.x - marble.radius)) {
+        intersect.intersect = true;
+        intersect.spherePoint = glm::vec4(center.x - marble.radius, center.y, center.z, 1.0f);
+
+    // Intersects +x face of box
+    } else if ((1.5f - epsilon) < (center.x + marble.radius)) {
+        intersect.intersect = true;
+        intersect.spherePoint = glm::vec4(center.x + marble.radius, center.y, center.z, 1.0f);
     }
-    m_phongShader->unbind();
 
+    return intersect;
+}
+
+MarbleBoxIntersect ShapesScene::checkBoxYCollision(MarbleData marble) {
+    MarbleBoxIntersect intersect = MarbleBoxIntersect();
+    intersect.intersect = false;
+
+    glm::vec4 center = marble.centerPosition;
+
+    // Intersects -y face of box
+    if ((-1.5f + epsilon) > (center.y - marble.radius)) {
+        intersect.intersect = true;
+        intersect.spherePoint = glm::vec4(center.x, center.y - marble.radius, center.z, 1.0f);
+
+    // Intersects +y face of box
+    } else if ((1.5f - epsilon) < (center.y + marble.radius)) {
+        intersect.intersect = true;
+        intersect.spherePoint = glm::vec4(center.x, center.y + marble.radius, center.z, 1.0f);
+    }
+
+    return intersect;
+}
+
+MarbleBoxIntersect ShapesScene::checkBoxZCollision(MarbleData marble) {
+    MarbleBoxIntersect intersect = MarbleBoxIntersect();
+    intersect.intersect = false;
+
+    glm::vec4 center = marble.centerPosition;
+
+    // Intersects -z face of box
+    if ((-1.5f + epsilon) > (center.z - marble.radius)) {
+        intersect.intersect = true;
+        intersect.spherePoint = glm::vec4(center.x, center.y, center.z - marble.radius, 1.0f);
+
+    // Intersects +z face of box
+    } else if ((1.5f - epsilon) < (center.z + marble.radius)) {
+        intersect.intersect = true;
+        intersect.spherePoint = glm::vec4(center.x, center.y, center.z + marble.radius, 1.0f);
+    }
+
+    return intersect;
+}
+
+void ShapesScene::translateMarble(int i, glm::vec3 step) {
+    m_marbles[i].cumulativeTransformation += step;
+    m_marbles[i].centerPosition += glm::vec4(step, 1.0f);
 }

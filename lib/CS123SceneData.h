@@ -171,5 +171,21 @@ struct CS123FlatSceneNode {
    glm::vec4 boundingBoxMin;
 };
 
+struct MarbleData {
+    float gravity;
+    float radius;
+    int weight;
+    float velocity;
+    glm::vec4 centerPosition;
+    glm::vec4 currDirection;
+    int marbleType;
+    glm::vec3 cumulativeTransformation;
+};
+
+struct MarbleBoxIntersect {
+    bool intersect;
+    glm::vec4 spherePoint;
+};
+
 #endif
 

@@ -120,8 +120,8 @@ void MainWindow::dataBind() {
     // max radius set to 50
     BIND(FloatBinding::bindSliderAndTextbox(
         ui->marbleGravitySlider, ui->marbleGravityTextbox, settings.gravity, 0, 100))
-    BIND(IntBinding::bindSliderAndTextbox(
-        ui->marbleRadiusSlider, ui->marbleRadiusTextbox, settings.marbleRadius, 1, 50))
+    BIND(FloatBinding::bindSliderAndTextbox(
+        ui->marbleRadiusSlider, ui->marbleRadiusTextbox, settings.marbleRadius, 0.1f, 0.5f)) //1, 50
     BIND(IntBinding::bindSliderAndTextbox(
         ui->marbleWeightSlider, ui->marbleWeightTextbox, settings.marbleWeight, 0, 255))
 
@@ -264,7 +264,6 @@ void MainWindow::uncheckAllRayFeatures() {
 void MainWindow::dropMarble() {
     // Disable the UI so the user can't interfere with the filtering
     setAllEnabled(false);
-    std::cout << "STEP 1 WOWOWOWOWOW" << std::endl;
 
     m_canvas3D->dropMarble();
 

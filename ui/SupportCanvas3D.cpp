@@ -21,8 +21,11 @@ SupportCanvas3D::SupportCanvas3D(QGLFormat format, QWidget *parent) : QGLWidget(
     m_settingsDirty(true),
     m_defaultPerspectiveCamera(new CamtransCamera()),
     m_defaultOrbitingCamera(new OrbitingCamera()),
-    m_currentScene(nullptr)
+    m_currentScene(nullptr),
+    m_timer(this)
 {
+    connect(&m_timer, SIGNAL(timeout()), this, SLOT(update()));
+    m_timer.start(1000.0f/60.0f); // CHANGE DENOMINATOR TO CHANGE FPS!!!
 }
 
 SupportCanvas3D::~SupportCanvas3D()
@@ -156,7 +159,6 @@ void SupportCanvas3D::setSceneToShapes() {
 }
 
 void SupportCanvas3D::dropMarble() {
-    std::cout << "ASDGASDGASDGLASJGAGASKDNGASG" << std::endl;
     m_shapesScene->dropMarble(this);
 }
 

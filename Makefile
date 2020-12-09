@@ -932,8 +932,12 @@ generated_files/moc_SupportCanvas2D.cpp: ui/SupportCanvas2D.h \
 
 generated_files/moc_SupportCanvas3D.cpp: ui/SupportCanvas3D.h \
 		glew-1.10.0/include/GL/glew.h \
+		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtCore.framework/Headers/QObject \
+		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtCore.framework/Headers/qobject.h \
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtOpenGL.framework/Headers/QGLWidget \
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtOpenGL.framework/Headers/qgl.h \
+		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtCore.framework/Headers/QTimer \
+		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtCore.framework/Headers/qtimer.h \
 		glm/glm.hpp \
 		glm/detail/_fixes.hpp \
 		glm/fwd.hpp \
@@ -1919,11 +1923,14 @@ generated_files/ShapesScene.o: scenegraph/ShapesScene.cpp scenegraph/ShapesScene
 		gl/datatype/VBOAttribMarker.h \
 		gl/shaders/ShaderAttribLocations.h \
 		shapes/ShapeUtils.h \
+		gl/textures/Texture2D.h \
+		gl/textures/Texture.h \
 		marble/Marble.h \
 		shapes/Sphere.h \
 		shapes/Cylinder.h \
 		marble/MetalMarble.h \
 		marble/WoodMarble.h \
+		gl/textures/TextureParametersBuilder.h \
 		camera/Camera.h \
 		ui/SupportCanvas3D.h \
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtOpenGL.framework/Headers/QGLWidget \
@@ -1934,6 +1941,7 @@ generated_files/ShapesScene.o: scenegraph/ShapesScene.cpp scenegraph/ShapesScene
 		shapes/Cone.h \
 		gl/shaders/CS123Shader.h \
 		gl/shaders/Shader.h \
+		gl/GLDebug.h \
 		lib/ResourceLoader.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o generated_files/ShapesScene.o scenegraph/ShapesScene.cpp
 
@@ -2043,6 +2051,8 @@ generated_files/SceneviewScene.o: scenegraph/SceneviewScene.cpp scenegraph/Scene
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtCore.framework/Headers/qobject.h \
 		lib/RGBA.h \
 		ui/SupportCanvas3D.h \
+		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtCore.framework/Headers/QTimer \
+		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtCore.framework/Headers/qtimer.h \
 		lib/ResourceLoader.h \
 		gl/shaders/CS123Shader.h \
 		gl/shaders/Shader.h
@@ -2231,7 +2241,13 @@ generated_files/Box.o: shapes/Box.cpp shapes/Box.h \
 		gl/shaders/ShaderAttribLocations.h \
 		shapes/ShapeUtils.h \
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtGui.framework/Headers/qimage.h \
-		gl/GLDebug.h
+		gl/textures/Texture2D.h \
+		gl/textures/Texture.h \
+		gl/GLDebug.h \
+		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtOpenGL.framework/Headers/QGLWidget \
+		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtOpenGL.framework/Headers/qgl.h \
+		gl/textures/TextureParameters.h \
+		gl/textures/TextureParametersBuilder.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o generated_files/Box.o shapes/Box.cpp
 
 generated_files/Cone.o: shapes/Cone.cpp shapes/Cone.h \
@@ -2880,8 +2896,12 @@ generated_files/SupportCanvas2D.o: ui/SupportCanvas2D.cpp ui/SupportCanvas2D.h \
 
 generated_files/SupportCanvas3D.o: ui/SupportCanvas3D.cpp ui/SupportCanvas3D.h \
 		glew-1.10.0/include/GL/glew.h \
+		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtCore.framework/Headers/QObject \
+		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtCore.framework/Headers/qobject.h \
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtOpenGL.framework/Headers/QGLWidget \
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtOpenGL.framework/Headers/qgl.h \
+		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtCore.framework/Headers/QTimer \
+		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtCore.framework/Headers/qtimer.h \
 		glm/glm.hpp \
 		glm/detail/_fixes.hpp \
 		glm/fwd.hpp \
@@ -2992,18 +3012,17 @@ generated_files/SupportCanvas3D.o: ui/SupportCanvas3D.cpp ui/SupportCanvas3D.h \
 		shapes/Cube.h \
 		shapes/Sphere.h \
 		ui/Settings.h \
-		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtCore.framework/Headers/QObject \
-		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtCore.framework/Headers/qobject.h \
 		scenegraph/ShapesScene.h \
 		gl/datatype/FBO.h \
 		gl/textures/TextureParameters.h \
-		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtCore.framework/Headers/QTimer \
-		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtCore.framework/Headers/qtimer.h \
 		shapes/Box.h \
 		shapes/ShapeUtils.h \
+		gl/textures/Texture2D.h \
+		gl/textures/Texture.h \
 		marble/Marble.h \
 		marble/MetalMarble.h \
 		marble/WoodMarble.h \
+		gl/textures/TextureParametersBuilder.h \
 		gl/GLDebug.h \
 		lib/CS123XmlSceneParser.h \
 		lib/CS123ISceneParser.h \
@@ -3053,6 +3072,8 @@ generated_files/mainwindow.o: ui/mainwindow.cpp ui/mainwindow.h \
 		glew-1.10.0/include/GL/glew.h \
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtOpenGL.framework/Headers/QGLWidget \
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtOpenGL.framework/Headers/qgl.h \
+		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtCore.framework/Headers/QTimer \
+		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtCore.framework/Headers/qtimer.h \
 		glm/glm.hpp \
 		glm/detail/_fixes.hpp \
 		glm/fwd.hpp \
@@ -3154,8 +3175,6 @@ generated_files/mainwindow.o: ui/mainwindow.cpp ui/mainwindow.h \
 		scenegraph/OpenGLScene.h \
 		gl/datatype/FBO.h \
 		gl/textures/TextureParameters.h \
-		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtCore.framework/Headers/QTimer \
-		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtCore.framework/Headers/qtimer.h \
 		shapes/Box.h \
 		shapes/Shape.h \
 		glm/gtx/transform.hpp \
@@ -3167,11 +3186,14 @@ generated_files/mainwindow.o: ui/mainwindow.cpp ui/mainwindow.h \
 		gl/datatype/VBOAttribMarker.h \
 		gl/shaders/ShaderAttribLocations.h \
 		shapes/ShapeUtils.h \
+		gl/textures/Texture2D.h \
+		gl/textures/Texture.h \
 		marble/Marble.h \
 		shapes/Sphere.h \
 		shapes/Cylinder.h \
 		marble/MetalMarble.h \
 		marble/WoodMarble.h \
+		gl/textures/TextureParametersBuilder.h \
 		scenegraph/SceneviewScene.h \
 		shapes/Cone.h \
 		shapes/Cube.h \

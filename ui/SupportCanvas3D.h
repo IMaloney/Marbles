@@ -4,7 +4,9 @@
 #include <memory>
 
 #include "GL/glew.h"
+#include <QObject>
 #include <QGLWidget>
+#include <QTimer>
 
 #include "glm/glm.hpp"
 
@@ -111,6 +113,16 @@ private:
     OpenGLScene *m_currentScene;
     std::unique_ptr<ShapesScene> m_shapesScene;
     std::unique_ptr<SceneviewScene> m_sceneviewScene;
+
+    /** Timer calls tick() 60 times per second. */
+    QTimer m_timer;
+    float m_fps;
+
+    float m_tick;
+    float m_angle;
+
+    /** Incremented on every call to paintGL. */
+    int m_increment;
 
 };
 

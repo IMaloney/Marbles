@@ -38,8 +38,6 @@ std::vector<GLfloat> Sphere::generateVertexData(int param1, int param2) {
     std::vector<GLfloat> anglesLat = generateLatitudeAngleVector(param1);
     std::vector<GLfloat> anglesLon = m_cylinder.generateAngleVector(param2);
 
-    std::cout << "YEEEEEEE" << std::endl;
-
     for (int i = 0; i < param1; i++) {
         for (int j = 0; j < param2; j++) {
 

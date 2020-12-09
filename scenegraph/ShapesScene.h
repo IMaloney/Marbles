@@ -17,6 +17,10 @@
 #include "marble/MetalMarble.h"
 #include "marble/WoodMarble.h"
 
+#include "gl/textures/Texture2D.h"
+#include "gl/textures/TextureParameters.h"
+#include "gl/textures/TextureParametersBuilder.h"
+
 namespace CS123 { namespace GL {
 
     class Shader;
@@ -79,6 +83,8 @@ private:
 
     void loadBoxShader();
 
+    const float epsilon = 0.00005f;
+
 
     glm::vec4 m_lightDirection = glm::normalize(glm::vec4(1.f, -1.f, -1.f, 0.f));
 
@@ -94,9 +100,9 @@ private:
     // essentially an OpenGLShape from lab 1
     std::unique_ptr<Box> m_shape;
 //    std::unique_ptr<WoodMarble> m_tempMable;
-    std::unique_ptr<Sphere> m_tempMable;
+    std::unique_ptr<Sphere> m_modelMable;
 
-    std::vector<std::unique_ptr<Marble>> m_marbles;
+    std::vector<MarbleData> m_marbles;
 
     int m_nextMarble;
 
@@ -108,6 +114,7 @@ private:
 
     float m_yMove;
     glm::mat4x4 m_marbleTrans;
+    glm::vec3 m_vecTrans;
 
     /** Incremented on every call to paintGL. */
     int m_increment;
@@ -132,6 +139,12 @@ private:
     void setSceneUniforms(SupportCanvas3D *context);
 
     void setActiveMarble();
+
+    void translateMarble(int i, glm::vec3 step);
+
+    MarbleBoxIntersect checkBoxXCollision(MarbleData marble);
+    MarbleBoxIntersect checkBoxYCollision(MarbleData marble);
+    MarbleBoxIntersect checkBoxZCollision(MarbleData marble);
 
 };
 

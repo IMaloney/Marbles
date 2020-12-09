@@ -70,7 +70,7 @@ struct Settings {
 
     // marbles
     int marbleType;
-    int marbleRadius;
+    float marbleRadius;
     int marbleWeight;
     float gravity;
     // Shapes
