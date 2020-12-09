@@ -25,7 +25,7 @@ SupportCanvas3D::SupportCanvas3D(QGLFormat format, QWidget *parent) : QGLWidget(
     m_timer(this)
 {
     connect(&m_timer, SIGNAL(timeout()), this, SLOT(update()));
-    m_timer.start(1000.0f/60.0f); // CHANGE DENOMINATOR TO CHANGE FPS!!!
+    m_timer.start(1000.0f/24.0f); // CHANGE DENOMINATOR TO CHANGE FPS!!!
 }
 
 SupportCanvas3D::~SupportCanvas3D()

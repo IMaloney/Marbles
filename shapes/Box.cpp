@@ -69,26 +69,32 @@ void Box::buildBox() {
         // TRIANGLE 1
         // p1
         -m_size, m_size, -m_size,
+        0.0f, 0.0f, 1.0f,
         // uv1
         0.f, 0.f,
 
         //p2
         -m_size, -m_size, -m_size,
+        0.0f, 0.0f, 1.0f,
         0.f, 1.f,
 
         // p3
         m_size, m_size, -m_size,
+        0.0f, 0.0f, 1.0f,
         1.f, 0.f,
 
 
         // TRIANGLE 2
         m_size, m_size, -m_size,
+        0.0f, 0.0f, 1.0f,
         1.f, 0.f,
 
         -m_size, -m_size, -m_size,
+        0.0f, 0.0f, 1.0f,
         0.f, 1.f,
 
         m_size, -m_size, -m_size,
+        0.0f, 0.0f, 1.0f,
         1.f, 1.f
 
 

@@ -127,9 +127,9 @@ void Sphere::addPointAndNorm(std::vector<GLfloat>* data, glm::vec3 point) {
     data->push_back(point.y);
     data->push_back(point.z);
     // Normal is the same as the point!!!
-//    data->push_back(point.x);
-//    data->push_back(point.y);
-//    data->push_back(point.z);
+    data->push_back(point.x);
+    data->push_back(point.y);
+    data->push_back(point.z);
 }
 
 void Sphere::addUVCoords(std::vector<GLfloat>* data, glm::vec3 point) {

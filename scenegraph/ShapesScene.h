@@ -84,6 +84,7 @@ private:
     void loadBoxShader();
 
     const float epsilon = 0.00005f;
+    const float frameDuration = 1.0f / 24.0f;
 
 
     glm::vec4 m_lightDirection = glm::normalize(glm::vec4(1.f, -1.f, -1.f, 0.f));
@@ -141,6 +142,8 @@ private:
     void setActiveMarble();
 
     void translateMarble(int i, glm::vec3 step);
+
+    void gravity(int i);
 
     MarbleBoxIntersect checkBoxXCollision(MarbleData marble);
     MarbleBoxIntersect checkBoxYCollision(MarbleData marble);

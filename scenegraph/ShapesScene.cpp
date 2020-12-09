@@ -46,11 +46,6 @@ ShapesScene::ShapesScene(int width, int height) :
     loadNormalsShader();
     loadNormalsArrowShader();
 
-    //TODO: [SHAPES] Allocate any additional memory you need...
-//    this->loadBoxShader();
-    m_nextMarble = 0;
-
-    float radius = settings.marbleRadius / 100.0f;
     m_shape = std::make_unique<Box>(1.5f); //std::make_unique<Box>(1.5f);
     m_modelMable = std::make_unique<Sphere>(10, 10, .25); //std::make_unique<WoodMarble>(settings.gravity, .5, settings.marbleWeight);//
 
@@ -142,7 +137,7 @@ void ShapesScene::renderPhongPass(SupportCanvas3D *context) {
 }
 
 void ShapesScene::setPhongSceneUniforms() {
-    m_phongShader->setUniform("useLighting", settings.useLighting);
+    m_phongShader->setUniform("useLighting", true); // true used to be settings.useLighting
     m_phongShader->setUniform("useArrowOffsets", false);
     m_phongShader->applyMaterial(m_material);
 }
@@ -240,9 +235,12 @@ void ShapesScene::renderGeometry() {
             MarbleBoxIntersect yIntersect = checkBoxYCollision(m_marbles[i]);
             MarbleBoxIntersect zIntersect = checkBoxZCollision(m_marbles[i]);
 
-            if (!yIntersect.intersect) {
-                translateMarble(i, glm::vec3(0.0f, -0.01f, 0.0f));
+            if (yIntersect.intersect) {
+                //translateMarble(i, glm::vec3(0.0f, -0.01f, 0.0f));
+                m_marbles[i].velocity.y = -1.0f * (m_marbles[i].velocity.y / 2.0f);
             }
+
+            gravity(i);
 
             glm::mat4x4 translation = glm::translate(m_marbles[i].cumulativeTransformation);
 
@@ -280,12 +278,12 @@ void ShapesScene::dropMarble(SupportCanvas3D *context) {
     MarbleData marble = MarbleData();
     marble.radius = radius;
     marble.weight = settings.marbleWeight;
-    marble.gravity = settings.gravity;
+    marble.gravity = -1 * settings.gravity;
     marble.marbleType = settings.marbleType;
     marble.centerPosition = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
     marble.currDirection =  glm::vec4(0.0f, -1.0f, 0.0f, 0.0f);
     marble.cumulativeTransformation = glm::vec3(0.0f, 0.0f, 0.0f);
-    marble.velocity = 0.0f; // NEED TO UPDATE THIS
+    marble.velocity = glm::vec4(0.0f, marble.gravity * frameDuration, 0.0f, 0.0f);
 
     m_marbles.push_back(marble);
 
@@ -354,4 +352,11 @@ MarbleBoxIntersect ShapesScene::checkBoxZCollision(MarbleData marble) {
 void ShapesScene::translateMarble(int i, glm::vec3 step) {
     m_marbles[i].cumulativeTransformation += step;
     m_marbles[i].centerPosition += glm::vec4(step, 1.0f);
+}
+
+void ShapesScene::gravity(int i) {
+    m_marbles[i].centerPosition.y = m_marbles[i].centerPosition.y + (m_marbles[i].velocity.y * frameDuration); // update position
+    m_marbles[i].cumulativeTransformation.y = m_marbles[i].cumulativeTransformation.y + (m_marbles[i].velocity.y * frameDuration); // update position
+
+    m_marbles[i].velocity.y = m_marbles[i].velocity.y + (m_marbles[i].gravity * frameDuration); // update velocity
 }
