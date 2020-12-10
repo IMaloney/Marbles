@@ -64,6 +64,7 @@ ShapesScene::ShapesScene(int width, int height) :
     marble.cumulativeTransformation = marble.centerPosition.xyz();
     marble.velocity = glm::vec4(0.5f, 0.0, 0.5f, 0.0f);
     marble.scaleTransformation = glm::scale(glm::vec3(marble.radius/0.5f));
+    marble.angle = glm::vec3(0.0f);
 
     m_marbles.push_back(marble);
 
@@ -76,6 +77,7 @@ ShapesScene::ShapesScene(int width, int height) :
     marble.cumulativeTransformation = marble.centerPosition.xyz();
     marble.velocity = glm::vec4(-0.5f, 0.0, -0.5f, 0.0f);
     marble.scaleTransformation = glm::scale(glm::vec3(marble.radius/0.5f));
+    marble.angle = glm::vec3(0.0f);
 
     m_marbles.push_back(marble);
 }
@@ -246,15 +248,14 @@ void ShapesScene::renderGeometry() {
 
         for (int i = 0; i < size; i++) {
 
-            CS123::GL::Texture2D texture(m_woodMarbleTexture.bits(), m_woodMarbleTexture.width(), m_woodMarbleTexture.height());
-            parameters.applyTo(texture);
+//            CS123::GL::Texture2D texture(m_woodMarbleTexture.bits(), m_woodMarbleTexture.width(), m_woodMarbleTexture.height());
+//            parameters.applyTo(texture);
 
-
-            glm::vec2 uv = glm::vec2(1, 1);
-            m_phongShader->setUniform("useTexture", 1);
-            m_phongShader->setUniform("repeatUV", uv);
-            m_phongShader->setTexture("tex",
-                                      texture);
+//            glm::vec2 uv = glm::vec2(1, 1);
+//            m_phongShader->setUniform("useTexture", 1);
+//            m_phongShader->setUniform("repeatUV", uv);
+//            m_phongShader->setTexture("tex",
+//                                      texture);
 
             gravity(i);
             checkMarbleCollisions();
@@ -276,12 +277,24 @@ void ShapesScene::renderGeometry() {
                 //m_marbles[i].velocity.y = -1.0f * (m_marbles[i].velocity.y / 2.0f);
             }
 
-            m_marbles[i].centerPosition = m_marbles[i].centerPosition + (m_marbles[i].velocity * frameDuration); // update position
+            glm::vec4 distance = m_marbles[i].velocity * frameDuration;
+
+            float xRot = distance.x / (2.0f * M_PI * m_marbles[i].radius);
+            float zRot = distance.z / (2.0f * M_PI * m_marbles[i].radius);
+
+            m_marbles[i].angle.x += xRot;
+            m_marbles[i].angle.z -= zRot;
+
+            glm::mat4x4 rotMat = glm::rotate(m_marbles[i].angle.x, glm::vec3(1,0,0));
+            rotMat = glm::rotate(rotMat, m_marbles[i].angle.z, glm::vec3(0,0,1));
+
+
+            m_marbles[i].centerPosition = m_marbles[i].centerPosition + distance; // update position
             m_marbles[i].cumulativeTransformation = glm::vec3(m_marbles[i].centerPosition.xyz());
 
             glm::mat4x4 translation = glm::translate(m_marbles[i].cumulativeTransformation);
 
-            m_phongShader->setUniform("m" , translation * m_marbles[i].scaleTransformation);
+            m_phongShader->setUniform("m" , translation * rotMat * m_marbles[i].scaleTransformation);
             m_modelMable->draw();
         }
     }
@@ -321,6 +334,7 @@ void ShapesScene::dropMarble(SupportCanvas3D *context) {
     marble.cumulativeTransformation = glm::vec3(0.0f, 0.0f, 0.0f);
     marble.velocity = glm::vec4(0.0f, marble.gravity * frameDuration, 0.0f, 0.0f);
     marble.scaleTransformation = glm::scale(glm::vec3(settings.marbleRadius/0.5f));
+    marble.angle = glm::vec3(0.0f);
 
     m_marbles.push_back(marble);
 
@@ -437,36 +451,35 @@ MarbleCollision ShapesScene::checkMarbleCollisions() {
                     || (m2ZMax >= m1ZMin && m2ZMax <= m1ZMax) || (m2ZMin >= m1ZMin && m2ZMin <= m1ZMax);
 
             if (xOverlap && yOverlap && zOverlap) {
-//                float dist = sqrt(pow(m1Pos.x - m2Pos.x, 2) + pow(m1Pos.y - m2Pos.y, 2) + pow(m1Pos.z - m2Pos.z, 2));
+                float dist = sqrt(pow(m1Pos.x - m2Pos.x, 2) + pow(m1Pos.y - m2Pos.y, 2) + pow(m1Pos.z - m2Pos.z, 2));
 
-//                if (dist < (m1Rad + m2Rad)) {
+                if (dist <= (m1Rad + m2Rad)) {
+                    std::cout << "Overlap found!" << std::endl;
+                    // CAN DO DISTANCE CHECK HERE IF COLLISIONS ARE TOO LIBERAL
+                    glm::vec4 basis = glm::normalize(m1Pos - m2Pos);
+                    glm::vec4 m1Vel = m1.velocity;
+                    float x1 = glm::dot(basis, m1Vel);
+                    glm::vec4 m1VelX = basis * x1;
+                    glm::vec4 m1VelZ = m1Vel - m1VelX;
+                    float m1Weight = m1.weight;
 
-//                }
-                std::cout << "Overlap found!" << std::endl;
-                // CAN DO DISTANCE CHECK HERE IF COLLISIONS ARE TOO LIBERAL
-                glm::vec4 basis = glm::normalize(m1Pos - m2Pos);
-                glm::vec4 m1Vel = m1.velocity;
-                float x1 = glm::dot(basis, m1Vel);
-                glm::vec4 m1VelX = basis * x1;
-                glm::vec4 m1VelZ = m1Vel - m1VelX;
-                float m1Weight = m1.weight;
+                    basis = -1.0f * basis;
+                    glm::vec4 m2Vel = m2.velocity;
+                    float x2 = glm::dot(basis, m2Vel);
+                    glm::vec4 m2VelX = basis * x2;
+                    glm::vec4 m2VelZ = m2Vel - m2VelX;
+                    float m2Weight = m2.weight;
 
-                basis = -1.0f * basis;
-                glm::vec4 m2Vel = m2.velocity;
-                float x2 = glm::dot(basis, m2Vel);
-                glm::vec4 m2VelX = basis * x2;
-                glm::vec4 m2VelZ = m2Vel - m2VelX;
-                float m2Weight = m2.weight;
+                    glm::vec4 m1FinalVel
+                            = m1VelX * (m1Weight - m2Weight) / (m1Weight + m2Weight)
+                            + m2VelX * (2.0f * m2Weight) / (m1Weight + m2Weight) + m1VelZ;
+                    glm::vec4 m2FinalVel
+                            = m1VelX * (2.0f * m1Weight) / (m1Weight + m2Weight)
+                            + m2VelX * (m2Weight - m1Weight) / (m1Weight + m2Weight) + m2VelZ;
 
-                glm::vec4 m1FinalVel
-                        = m1VelX * (m1Weight - m2Weight) / (m1Weight + m2Weight)
-                        + m2VelX * (2.0f * m2Weight) / (m1Weight + m2Weight) + m1VelZ;
-                glm::vec4 m2FinalVel
-                        = m1VelX * (2.0f * m1Weight) / (m1Weight + m2Weight)
-                        + m2VelX * (m2Weight - m1Weight) / (m1Weight + m2Weight) + m2VelZ;
-
-                m_marbles[i].velocity = m1FinalVel;
-                m_marbles[j].velocity = m2FinalVel;
+                    m_marbles[i].velocity = m1FinalVel;
+                    m_marbles[j].velocity = m2FinalVel;
+                }
             }
         }
     }
