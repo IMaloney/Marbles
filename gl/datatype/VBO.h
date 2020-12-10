@@ -34,7 +34,7 @@ public:
     GEOMETRY_LAYOUT triangleLayout() const;
     int numberOfVertices() const;
     int numberOfFloatsPerVertex() const;
-
+    inline void setDrawMode(GEOMETRY_LAYOUT drawMode) {m_triangleLayout = drawMode; }
     void unbind() const;
 
 private:

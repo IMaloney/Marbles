@@ -176,6 +176,8 @@ struct MarbleData {
     float radius;
     int weight;
     glm::vec4 velocity;
+    // adding prevVelocity member
+    glm::vec4 prevVelocity;
     glm::vec4 centerPosition;
     glm::vec4 currDirection;
     int marbleType;

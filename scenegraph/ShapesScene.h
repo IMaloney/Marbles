@@ -24,6 +24,10 @@
 #include "gl/textures/TextureParameters.h"
 #include "gl/textures/TextureParametersBuilder.h"
 
+static constexpr float youngMod = 70.f;
+static constexpr float epsilon = 0.00005f;
+static constexpr float frameDuration = 1.0f / 24.0f;
+
 namespace CS123 { namespace GL {
 
     class Shader;
@@ -86,8 +90,6 @@ private:
 
     void makeMap();
 
-    const float epsilon = 0.00005f;
-    const float frameDuration = 1.0f / 24.0f;
 
 
     glm::vec4 m_lightDirection = glm::normalize(glm::vec4(1.f, -1.f, -1.f, 0.f));
@@ -156,7 +158,15 @@ private:
 
     void checkWallCollisions(int i, MarbleBoxIntersect x, MarbleBoxIntersect z);
 
+
     glm::vec4 calculateReflectionVector(glm::vec4 normal, glm::vec4 incoming);
+
+    // glass shattering stuff
+    inline bool shouldShatter(const glm::vec4 &curVel, const glm::vec4 &prevVel,const int &colliderMass, const float &collideeRadius, const int &collideeMass);
+    inline float area(const float &radius);
+    inline float hookesLaw(const float &r, const float &f);
+    inline float getForce(const glm::vec4 &curVel, const glm::vec4 &prevVel, const int &mass);
+    inline float getAcceleration(const glm::vec4 &curVel, const glm::vec4 &prevVel);
 
 };
 
