@@ -484,32 +484,42 @@ void ShapesScene::checkMarbleCollisions() {
 
                 if (dist <= (m1Rad + m2Rad)) {
                     std::cout << "Overlap found!" << std::endl;
-                    // CAN DO DISTANCE CHECK HERE IF COLLISIONS ARE TOO LIBERAL
-                    glm::vec4 basis = glm::normalize(m1Pos - m2Pos);
-                    glm::vec4 m1Vel = m1.velocity;
-                    float x1 = glm::dot(basis, m1Vel);
-                    glm::vec4 m1VelX = basis * x1;
-                    glm::vec4 m1VelZ = m1Vel - m1VelX;
-                    float m1Weight = m1.weight;
 
-                    basis = -1.0f * basis;
-                    glm::vec4 m2Vel = m2.velocity;
-                    float x2 = glm::dot(basis, m2Vel);
-                    glm::vec4 m2VelX = basis * x2;
-                    glm::vec4 m2VelZ = m2Vel - m2VelX;
-                    float m2Weight = m2.weight;
+                    bool noXVel = (m1.velocity.x > -epsilon) && (m1.velocity.x < epsilon);
+                    bool noZVel = (m1.velocity.z > -epsilon) && (m1.velocity.z < epsilon);
 
-                    glm::vec4 m1FinalVel
-                            = m1VelX * (m1Weight - m2Weight) / (m1Weight + m2Weight)
-                            + m2VelX * (2.0f * m2Weight) / (m1Weight + m2Weight) + m1VelZ;
-                    glm::vec4 m2FinalVel
-                            = m1VelX * (2.0f * m1Weight) / (m1Weight + m2Weight)
-                            + m2VelX * (m2Weight - m1Weight) / (m1Weight + m2Weight) + m2VelZ;
+                    // Case where one marble dropped directly on another marble
+                    if (noXVel && noZVel) {
 
-                    m_marbles[i].velocity = m1FinalVel;
-                    m_marbles[j].velocity = m2FinalVel;
-                    m_marbles[i].quatAngle = -m_marbles[i].quatAngle;
-                    m_marbles[j].quatAngle = -m_marbles[j].quatAngle;
+
+
+                    } else {
+                        glm::vec4 basis = glm::normalize(m1Pos - m2Pos);
+                        glm::vec4 m1Vel = m1.velocity;
+                        float x1 = glm::dot(basis, m1Vel);
+                        glm::vec4 m1VelX = basis * x1;
+                        glm::vec4 m1VelZ = m1Vel - m1VelX;
+                        float m1Weight = m1.weight;
+
+                        basis = -1.0f * basis;
+                        glm::vec4 m2Vel = m2.velocity;
+                        float x2 = glm::dot(basis, m2Vel);
+                        glm::vec4 m2VelX = basis * x2;
+                        glm::vec4 m2VelZ = m2Vel - m2VelX;
+                        float m2Weight = m2.weight;
+
+                        glm::vec4 m1FinalVel
+                                = m1VelX * (m1Weight - m2Weight) / (m1Weight + m2Weight)
+                                + m2VelX * (2.0f * m2Weight) / (m1Weight + m2Weight) + m1VelZ;
+                        glm::vec4 m2FinalVel
+                                = m1VelX * (2.0f * m1Weight) / (m1Weight + m2Weight)
+                                + m2VelX * (m2Weight - m1Weight) / (m1Weight + m2Weight) + m2VelZ;
+
+                        m_marbles[i].velocity = m1FinalVel;
+                        m_marbles[j].velocity = m2FinalVel;
+                        m_marbles[i].quatAngle = -m_marbles[i].quatAngle;
+                        m_marbles[j].quatAngle = -m_marbles[j].quatAngle;
+                    }
                 }
             }
         }
