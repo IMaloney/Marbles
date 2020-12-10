@@ -180,6 +180,7 @@ struct MarbleData {
     glm::vec4 currDirection;
     int marbleType;
     glm::vec3 cumulativeTransformation;
+    glm::mat4x4 scaleTransformation;
 };
 
 struct MarbleBoxIntersect {

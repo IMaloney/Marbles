@@ -47,7 +47,7 @@ ShapesScene::ShapesScene(int width, int height) :
     loadNormalsArrowShader();
 
     m_shape = std::make_unique<Box>(1.5f); //std::make_unique<Box>(1.5f);
-    m_modelMable = std::make_unique<Sphere>(10, 10, .25); //std::make_unique<WoodMarble>(settings.gravity, .5, settings.marbleWeight);//
+    m_modelMable = std::make_unique<Sphere>(8, 8, .5); //std::make_unique<WoodMarble>(settings.gravity, .5, settings.marbleWeight);//
 
     QString qstring = QString("/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/textures/real_marble.png");
     m_boxTexture = QGLWidget::convertToGLFormat(QImage(qstring));
@@ -231,20 +231,28 @@ void ShapesScene::renderGeometry() {
             m_phongShader->setTexture("tex",
                                       texture);
 
+            gravity(i);
+
             MarbleBoxIntersect xIntersect = checkBoxXCollision(m_marbles[i]);
             MarbleBoxIntersect yIntersect = checkBoxYCollision(m_marbles[i]);
             MarbleBoxIntersect zIntersect = checkBoxZCollision(m_marbles[i]);
 
             if (yIntersect.intersect) {
                 //translateMarble(i, glm::vec3(0.0f, -0.01f, 0.0f));
-                m_marbles[i].velocity.y = -1.0f * (m_marbles[i].velocity.y / 2.0f);
-            }
+                if (yIntersect.spherePoint.y < 0) {
+                    m_marbles[i].velocity.y = 0.0f;
+                    m_marbles[i].centerPosition.y = -1.5f + m_marbles[i].radius;
+                    m_marbles[i].cumulativeTransformation.y = -1.5f + m_marbles[i].radius;
+                }
 
-            gravity(i);
+
+                // IF RUBBER:
+                //m_marbles[i].velocity.y = -1.0f * (m_marbles[i].velocity.y / 2.0f);
+            }
 
             glm::mat4x4 translation = glm::translate(m_marbles[i].cumulativeTransformation);
 
-            m_phongShader->setUniform("m" , translation);
+            m_phongShader->setUniform("m" , translation * m_marbles[i].scaleTransformation);
             m_modelMable->draw();
         }
     }
@@ -273,10 +281,9 @@ void ShapesScene::settingsChanged() {
 }
 
 void ShapesScene::dropMarble(SupportCanvas3D *context) {
-    float radius = settings.marbleRadius; // 100.0f;
 
     MarbleData marble = MarbleData();
-    marble.radius = radius;
+    marble.radius = settings.marbleRadius;
     marble.weight = settings.marbleWeight;
     marble.gravity = -1 * settings.gravity;
     marble.marbleType = settings.marbleType;
@@ -284,6 +291,7 @@ void ShapesScene::dropMarble(SupportCanvas3D *context) {
     marble.currDirection =  glm::vec4(0.0f, -1.0f, 0.0f, 0.0f);
     marble.cumulativeTransformation = glm::vec3(0.0f, 0.0f, 0.0f);
     marble.velocity = glm::vec4(0.0f, marble.gravity * frameDuration, 0.0f, 0.0f);
+    marble.scaleTransformation = glm::scale(glm::vec3(settings.marbleRadius/0.5f));
 
     m_marbles.push_back(marble);
 
