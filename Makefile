@@ -1912,6 +1912,14 @@ generated_files/ShapesScene.o: scenegraph/ShapesScene.cpp scenegraph/ShapesScene
 		lib/RGBA.h \
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtCore.framework/Headers/QTimer \
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtCore.framework/Headers/qtimer.h \
+		glm/gtc/quaternion.hpp \
+		glm/gtc/constants.hpp \
+		glm/gtc/constants.inl \
+		glm/gtc/quaternion.inl \
+		glm/gtx/quaternion.hpp \
+		glm/gtx/norm.hpp \
+		glm/gtx/norm.inl \
+		glm/gtx/quaternion.inl \
 		shapes/Box.h \
 		shapes/Shape.h \
 		glm/gtx/transform.hpp \
@@ -3015,6 +3023,14 @@ generated_files/SupportCanvas3D.o: ui/SupportCanvas3D.cpp ui/SupportCanvas3D.h \
 		scenegraph/ShapesScene.h \
 		gl/datatype/FBO.h \
 		gl/textures/TextureParameters.h \
+		glm/gtc/quaternion.hpp \
+		glm/gtc/constants.hpp \
+		glm/gtc/constants.inl \
+		glm/gtc/quaternion.inl \
+		glm/gtx/quaternion.hpp \
+		glm/gtx/norm.hpp \
+		glm/gtx/norm.inl \
+		glm/gtx/quaternion.inl \
 		shapes/Box.h \
 		shapes/ShapeUtils.h \
 		gl/textures/Texture2D.h \
@@ -3175,6 +3191,14 @@ generated_files/mainwindow.o: ui/mainwindow.cpp ui/mainwindow.h \
 		scenegraph/OpenGLScene.h \
 		gl/datatype/FBO.h \
 		gl/textures/TextureParameters.h \
+		glm/gtc/quaternion.hpp \
+		glm/gtc/constants.hpp \
+		glm/gtc/constants.inl \
+		glm/gtc/quaternion.inl \
+		glm/gtx/quaternion.hpp \
+		glm/gtx/norm.hpp \
+		glm/gtx/norm.inl \
+		glm/gtx/quaternion.inl \
 		shapes/Box.h \
 		shapes/Shape.h \
 		glm/gtx/transform.hpp \

@@ -35,7 +35,10 @@ ShapesScene::ShapesScene(int width, int height) :
     m_yMove(0.0f),
     m_marbleTrans(),
     m_vecTrans()
+
+
 {
+
 
     initializeSceneMaterial();
     initializeSceneLight();
@@ -44,19 +47,21 @@ ShapesScene::ShapesScene(int width, int height) :
     loadNormalsShader();
     loadNormalsArrowShader();
 
+    this->makeMap();
     m_shape = std::make_unique<Box>(1.5f); //std::make_unique<Box>(1.5f);
-    m_modelMable = std::make_unique<Sphere>(8, 8, .5); //std::make_unique<WoodMarble>(settings.gravity, .5, settings.marbleWeight);//
+    m_modelMable = std::make_unique<Sphere>(10, 10, .5); //std::make_unique<WoodMarble>(settings.gravity, .5, settings.marbleWeight);//
+
     const char *marbleTexture = "/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/textures/real_marble.png";
     const char *woodTexture = "/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/textures/wood.jpg";
 //    const char *marbleTexture = "../textures/real_marble.png";
 //    const char *woodTexture = "../textures/wood.jpg";
-    m_boxTexture = QGLWidget::convertToGLFormat(QImage(marbleTexture));
-    m_woodMarbleTexture = QGLWidget::convertToGLFormat(QImage(woodTexture));
+//    m_boxTexture = QGLWidget::convertToGLFormat(QImage(marbleTexture));
+//    m_woodMarbleTexture = QGLWidget::convertToGLFormat(QImage(woodTexture));
 
 
 
     MarbleData marble = MarbleData();
-    marble.radius = .25f;
+    marble.radius = .5f;
     marble.weight = 54;
     marble.gravity = -1 * 11.51;
     marble.centerPosition = glm::vec4(-0.5f, -1.25f, -0.5f, 1.0f);
@@ -65,11 +70,13 @@ ShapesScene::ShapesScene(int width, int height) :
     marble.velocity = glm::vec4(0.5f, 0.0, 0.5f, 0.0f);
     marble.scaleTransformation = glm::scale(glm::vec3(marble.radius/0.5f));
     marble.angle = glm::vec3(0.0f);
+    marble.marbleType = MARBLE_WOOD;
+    marble.quatAngle = 0.0f;
 
     m_marbles.push_back(marble);
 
     marble = MarbleData();
-    marble.radius = .25f;
+    marble.radius = .5f;
     marble.weight = 54;
     marble.gravity = -1 * 11.51;
     marble.centerPosition = glm::vec4(0.5f, -1.25f, 0.5f, 1.0f);
@@ -78,8 +85,16 @@ ShapesScene::ShapesScene(int width, int height) :
     marble.velocity = glm::vec4(-0.5f, 0.0, -0.5f, 0.0f);
     marble.scaleTransformation = glm::scale(glm::vec3(marble.radius/0.5f));
     marble.angle = glm::vec3(0.0f);
+    marble.marbleType = MARBLE_WOOD;
+    marble.quatAngle = 0.0f;
 
     m_marbles.push_back(marble);
+
+//        const char *marbleTexture = "../textures/real_marble.png";
+//        const char *woodTexture = "../textures/wood.jpg";
+//        m_boxTexture = QGLWidget::convertToGLFormat(QImage(marbleTexture));
+//        m_woodMarbleTexture = QGLWidget::convertToGLFormat(QImage(woodTexture));
+
 }
 
 ShapesScene::~ShapesScene()
@@ -154,8 +169,8 @@ void ShapesScene::renderPhongPass(SupportCanvas3D *context) {
     m_phongShader->bind();
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-//    clearLights();
-//    setLights(context->getCamera()->getViewMatrix());
+    clearLights();
+    setLights(context->getCamera()->getViewMatrix());
     setPhongSceneUniforms();
     setMatrixUniforms(m_phongShader.get(), context);
     renderGeometryAsFilledPolygons();
@@ -207,18 +222,6 @@ void ShapesScene::renderNormalsPass (SupportCanvas3D *context) {
     m_normalsArrowShader->unbind();
 }
 
-
-void ShapesScene::loadBoxShader() {
-    // TODO
-//    std::string vertexSource = ResourceLoader::loadResourceFileToString("../shaders/box/box.vert");
-//    std::string fragmentSource = ResourceLoader::loadResourceFileToString("../shaders/box/box.frag");
-    std::string vertexSource = ResourceLoader::loadResourceFileToString("/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/shaders/box/box.vert");
-    std::string fragmentSource = ResourceLoader::loadResourceFileToString("/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/shaders/box/box.frag");
-//    /Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/shaders/box
-    m_boxShader = std::make_unique<CS123::GL::Shader>(vertexSource, fragmentSource);
-}
-
-
 void ShapesScene::renderGeometry() {
 
     CS123::GL::TextureParametersBuilder builder;
@@ -229,33 +232,38 @@ void ShapesScene::renderGeometry() {
 
     if (m_shape) {
 
-        CS123::GL::Texture2D texture(m_boxTexture.bits(), m_boxTexture.width(), m_boxTexture.height());
-        parameters.applyTo(texture);
+//        CS123::GL::Texture2D texture(m_boxTexture.bits(), m_boxTexture.width(), m_boxTexture.height());
+        parameters.applyTo(*m_boxTexture);
 
 
         glm::vec2 uv = glm::vec2(1, 1);
         m_phongShader->setUniform("useTexture", 1);
         m_phongShader->setUniform("repeatUV", uv);
-        m_phongShader->setTexture("tex",
-                                  texture);
+        m_phongShader->setTexture("tex", *m_boxTexture);
 
         m_phongShader->setUniform("m" , glm::mat4x4());
         m_shape->draw();
     }
 
     if (m_modelMable) {
-        int size = (int) m_marbles.size();
-
+        int size = m_marbles.size();
+        std::map<int, std::shared_ptr<CS123::GL::Texture2D>>::iterator it;
         for (int i = 0; i < size; i++) {
 
-//            CS123::GL::Texture2D texture(m_woodMarbleTexture.bits(), m_woodMarbleTexture.width(), m_woodMarbleTexture.height());
-//            parameters.applyTo(texture);
+            int t = m_marbles[i].marbleType;
 
-//            glm::vec2 uv = glm::vec2(1, 1);
-//            m_phongShader->setUniform("useTexture", 1);
-//            m_phongShader->setUniform("repeatUV", uv);
-//            m_phongShader->setTexture("tex",
-//                                      texture);
+            it = m_marbleTextureMap.find(t);
+
+            if (it != m_marbleTextureMap.end()) {
+                parameters.applyTo(*(it->second));
+                glm::vec2 uv = glm::vec2(1, 1);
+                m_phongShader->setUniform("useTexture", 1);
+                m_phongShader->setUniform("repeatUV", uv);
+
+                m_phongShader->setTexture("tex", *(it->second));
+                checkError();
+            }
+
 
             gravity(i);
             checkMarbleCollisions();
@@ -263,6 +271,8 @@ void ShapesScene::renderGeometry() {
             MarbleBoxIntersect xIntersect = checkBoxXCollision(m_marbles[i]);
             MarbleBoxIntersect yIntersect = checkBoxYCollision(m_marbles[i]);
             MarbleBoxIntersect zIntersect = checkBoxZCollision(m_marbles[i]);
+
+            checkWallCollisions(i, xIntersect, zIntersect);
 
             if (yIntersect.intersect) {
                 //translateMarble(i, glm::vec3(0.0f, -0.01f, 0.0f));
@@ -279,15 +289,32 @@ void ShapesScene::renderGeometry() {
 
             glm::vec4 distance = m_marbles[i].velocity * frameDuration;
 
-            float xRot = distance.x / (2.0f * M_PI * m_marbles[i].radius);
-            float zRot = distance.z / (2.0f * M_PI * m_marbles[i].radius);
+            glm::mat4x4 rotMat = glm::mat4x4();
 
-            m_marbles[i].angle.x += xRot;
-            m_marbles[i].angle.z -= zRot;
+            bool ballOnFloor = m_marbles[i].centerPosition.y <= -1.5f + m_marbles[i].radius + epsilon;
+            bool ballRolling = m_marbles[i].velocity.x != 0.0f || m_marbles[i].velocity.z;
 
-            glm::mat4x4 rotMat = glm::rotate(m_marbles[i].angle.x, glm::vec3(1,0,0));
-            rotMat = glm::rotate(rotMat, m_marbles[i].angle.z, glm::vec3(0,0,1));
+            // Rotational physics
+            if (ballOnFloor && ballRolling) {
+                glm::vec4 floorNormal = glm::vec4(0.0f, 1.0f, 0.0f, 0.0f);
+                glm::vec4 ballDirectionNormal = glm::normalize(m_marbles[i].velocity);
 
+                glm::vec3 rotationAxis = glm::normalize(glm::cross(floorNormal.xyz(), ballDirectionNormal.xyz()));
+
+                float velocity = glm::length(m_marbles[i].velocity);
+
+                float angle = velocity*frameDuration/m_marbles[i].radius; // try adding frameduration
+
+                m_marbles[i].quatAngle += angle;
+
+                glm::quat rotQuat = glm::angleAxis(m_marbles[i].quatAngle, rotationAxis);
+                rotMat = glm::toMat4(rotQuat);
+            }
+
+            std::cout << "pos " << i << ": "
+                      << m_marbles[i].centerPosition.x << ", "
+                      << m_marbles[i].centerPosition.y << ", "
+                      << m_marbles[i].centerPosition.z << std::endl;
 
             m_marbles[i].centerPosition = m_marbles[i].centerPosition + distance; // update position
             m_marbles[i].cumulativeTransformation = glm::vec3(m_marbles[i].centerPosition.xyz());
@@ -334,7 +361,7 @@ void ShapesScene::dropMarble(SupportCanvas3D *context) {
     marble.cumulativeTransformation = glm::vec3(0.0f, 0.0f, 0.0f);
     marble.velocity = glm::vec4(0.0f, marble.gravity * frameDuration, 0.0f, 0.0f);
     marble.scaleTransformation = glm::scale(glm::vec3(settings.marbleRadius/0.5f));
-    marble.angle = glm::vec3(0.0f);
+    marble.quatAngle = 0.0f;
 
     m_marbles.push_back(marble);
 
@@ -406,16 +433,18 @@ void ShapesScene::translateMarble(int i, glm::vec3 step) {
 }
 
 void ShapesScene::gravity(int i) {
+    m_marbles[i].centerPosition.y = m_marbles[i].centerPosition.y + (m_marbles[i].velocity.y * frameDuration); // update position
+    m_marbles[i].cumulativeTransformation.y = m_marbles[i].cumulativeTransformation.y + (m_marbles[i].velocity.y * frameDuration); // update position
+
     m_marbles[i].velocity.y = m_marbles[i].velocity.y + (m_marbles[i].gravity * frameDuration); // update velocity
 }
 
-MarbleCollision ShapesScene::checkMarbleCollisions() {
+
+void ShapesScene::checkMarbleCollisions() {
     int size = (int) m_marbles.size();
 
     for (int i = 0; i < size; i++) {
-        std::cout << "Checking marble: " << i << std::endl;
         for (int j = i+1; j < size; j++) {
-            std::cout << " against marble: " << j << std::endl;
             MarbleData m1 = m_marbles[i];
             MarbleData m2 = m_marbles[j];
 
@@ -479,17 +508,77 @@ MarbleCollision ShapesScene::checkMarbleCollisions() {
 
                     m_marbles[i].velocity = m1FinalVel;
                     m_marbles[j].velocity = m2FinalVel;
+                    m_marbles[i].quatAngle = -m_marbles[i].quatAngle;
+                    m_marbles[j].quatAngle = -m_marbles[j].quatAngle;
                 }
             }
         }
     }
-//    float dist = sqrt(pow(m1Pos.x - m2Pos.x, 2) + pow(m1Pos.y - m2Pos.y, 2) + pow(m1Pos.z - m2Pos.z, 2));
+}
 
-//    float m1Rad = (float) m1->getRadius();
-//    float m2Rad = (float) m2->getRadius();
+void ShapesScene::makeMap() {
+    // box texture
+//    const char *tex = "../textures/real_marble.png";
+    const char *tex = "/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/textures/real_marble.png";
+    QImage img = QGLWidget::convertToGLFormat(QImage(tex));
+    m_boxTexture = std::make_shared<CS123::GL::Texture2D>(img.bits(), img.width(), img.height());
 
-//    if (dist < (m1Rad + m2Rad)) {
-//        return true;
-//    }
-//    return false;
+    // wood texture
+//     tex =  "../textures/wood.jpg";
+    tex = "/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/textures/wood.jpg";
+    img = QGLWidget::convertToGLFormat(QImage(tex));
+    std::shared_ptr<CS123::GL::Texture2D> texture = std::make_shared<CS123::GL::Texture2D>(img.bits(), img.width(), img.height());
+    m_marbleTextureMap.insert(std::pair<int, std::shared_ptr<CS123::GL::Texture2D>>(static_cast<int>(MARBLE_WOOD), texture));
+
+    // rubber texture
+//    tex = "../textures/rubber_texture.jpg";
+    tex = "/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/textures/real_marble.png";
+    img = QGLWidget::convertToGLFormat(QImage(tex));
+    texture = std::make_shared<CS123::GL::Texture2D>(img.bits(), img.width(), img.height());
+    m_marbleTextureMap.insert(std::pair<int, std::shared_ptr<CS123::GL::Texture2D>>(static_cast<int>(MARBLE_RUBBER), texture));
+
+}
+
+void ShapesScene::checkWallCollisions(int i, MarbleBoxIntersect x, MarbleBoxIntersect z) {
+    // ball hit a corner
+    if (x.intersect && z.intersect) {
+
+        m_marbles[i].velocity = -0.5f * m_marbles[i].velocity; // reverse direction with half the velocity
+        m_marbles[i].quatAngle = -m_marbles[i].quatAngle;
+
+    } else if (x.intersect) {
+        if (x.spherePoint.x < 0) {
+
+            glm::vec4 normal = glm::vec4(1.0f, 0.0f, 0.0f, 0.0f);
+            m_marbles[i].velocity = calculateReflectionVector(normal, m_marbles[i].velocity);
+            m_marbles[i].quatAngle = -m_marbles[i].quatAngle;
+
+        } else {
+
+            glm::vec4 normal = glm::vec4(-1.0f, 0.0f, 0.0f, 0.0f);
+            m_marbles[i].velocity = calculateReflectionVector(normal, m_marbles[i].velocity);
+            m_marbles[i].quatAngle = -m_marbles[i].quatAngle;
+
+        }
+
+    } else if (z.intersect) {
+        if (z.spherePoint.z < 0) {
+
+            glm::vec4 normal = glm::vec4(0.0f, 0.0f, 1.0f, 0.0f);
+            m_marbles[i].velocity = calculateReflectionVector(normal, m_marbles[i].velocity);
+            m_marbles[i].quatAngle = -m_marbles[i].quatAngle;
+
+        } else {
+
+            glm::vec4 normal = glm::vec4(0.0f, 0.0f, -1.0f, 0.0f);
+            m_marbles[i].velocity = calculateReflectionVector(normal, m_marbles[i].velocity);
+            m_marbles[i].quatAngle = -m_marbles[i].quatAngle;
+
+        }
+    }
+}
+
+glm::vec4 ShapesScene::calculateReflectionVector(glm::vec4 normal, glm::vec4 incoming) {
+    glm::vec4 reflect = -1.0f * (2.0f * glm::dot(normal, incoming) * normal - incoming);
+    return reflect;
 }

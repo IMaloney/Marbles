@@ -11,6 +11,9 @@
 #include "Settings.h"
 #include <QTimer>
 
+#include <glm/gtc/quaternion.hpp>
+#include <glm/gtx/quaternion.hpp>
+
 
 #include "shapes/Box.h"
 #include "marble/Marble.h"
@@ -81,7 +84,7 @@ private:
 
     std::unique_ptr<CS123::GL::Shader> m_boxShader;
 
-    void loadBoxShader();
+    void makeMap();
 
     const float epsilon = 0.00005f;
     const float frameDuration = 1.0f / 24.0f;
@@ -100,18 +103,18 @@ private:
 
     // essentially an OpenGLShape from lab 1
     std::unique_ptr<Box> m_shape;
-//    std::unique_ptr<WoodMarble> m_tempMable;
     std::unique_ptr<Sphere> m_modelMable;
-
     std::vector<MarbleData> m_marbles;
+
+    std::map<int, std::shared_ptr<CS123::GL::Texture2D>> m_marbleTextureMap;
 
     int m_nextMarble;
 
     int m_width;
     int m_height;
 
-    QImage m_boxTexture;
-    QImage m_woodMarbleTexture;
+    std::shared_ptr<CS123::GL::Texture2D> m_boxTexture;
+//    QImage m_woodMarbleTexture;
 
     float m_yMove;
     glm::mat4x4 m_marbleTrans;
@@ -149,7 +152,11 @@ private:
     MarbleBoxIntersect checkBoxYCollision(MarbleData marble);
     MarbleBoxIntersect checkBoxZCollision(MarbleData marble);
 
-    MarbleCollision checkMarbleCollisions();
+    void checkMarbleCollisions();
+
+    void checkWallCollisions(int i, MarbleBoxIntersect x, MarbleBoxIntersect z);
+
+    glm::vec4 calculateReflectionVector(glm::vec4 normal, glm::vec4 incoming);
 
 };
 
