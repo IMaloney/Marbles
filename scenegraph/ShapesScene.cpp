@@ -48,11 +48,12 @@ ShapesScene::ShapesScene(int width, int height) :
 
     m_shape = std::make_unique<Box>(1.5f); //std::make_unique<Box>(1.5f);
     m_modelMable = std::make_unique<Sphere>(8, 8, .5); //std::make_unique<WoodMarble>(settings.gravity, .5, settings.marbleWeight);//
-
-    QString qstring = QString("/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/textures/real_marble.png");
-    m_boxTexture = QGLWidget::convertToGLFormat(QImage(qstring));
-    qstring = QString("/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/textures/wood.jpg");
-    m_woodMarbleTexture = QGLWidget::convertToGLFormat(QImage(qstring));
+    //    const char *marbleTexture = "/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/textures/real_marble.png";
+    //    const char *woodTexture = "/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/textures/wood.jpg";
+        const char *marbleTexture = "../textures/real_marble.png";
+        const char *woodTexture = "../textures/wood.jpg";
+        m_boxTexture = QGLWidget::convertToGLFormat(QImage(marbleTexture));
+        m_woodMarbleTexture = QGLWidget::convertToGLFormat(QImage(woodTexture));
 }
 
 ShapesScene::~ShapesScene()
