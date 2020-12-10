@@ -4,10 +4,10 @@
 #include <memory>
 
 #include "GL/glew.h"
-
+#include "VBO.h"
 namespace CS123 { namespace GL {
 
-class VBO;
+//class VBO;
 class IBO;
 
 class VAO {
@@ -26,6 +26,7 @@ public:
     void draw();
     void draw(int count);
     DRAW_METHOD drawMethod();
+    void setDrawMode(VBO::GEOMETRY_LAYOUT drawMode);
     void unbind();
 
 private:

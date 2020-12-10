@@ -6,10 +6,12 @@ Sphere::Sphere()
 
 Sphere::Sphere(float radius) :
     Shape(),
-    m_param1(25),
-    m_param2(25),
+    // changed it to be a multiple of four for the quadrants
+    m_param1(24),
+    m_param2(24),
     m_cylinder(),
-    m_radius(radius)
+    m_radius(radius),
+    m_broken(false)
 {
     m_vertexData = generateVertexData(m_param1, m_param2);
     /** build the VAO so that the shape is ready to be drawn */
@@ -33,14 +35,21 @@ Sphere::~Sphere()
 }
 
 std::vector<GLfloat> Sphere::generateVertexData(int param1, int param2) {
+//    std::cout << "param 2: " << param2 << std::endl;
     std::vector<GLfloat> data = std::vector<GLfloat>();
-
+    int switchQuad = m_param2 / 4;
     std::vector<GLfloat> anglesLat = generateLatitudeAngleVector(param1);
     std::vector<GLfloat> anglesLon = m_cylinder.generateAngleVector(param2);
-
+    int quad = -2;
     for (int i = 0; i < param1; i++) {
         for (int j = 0; j < param2; j++) {
-
+            if ((j) && !((j) % switchQuad)) {
+                quad += 1;
+                // skip zero so the quads are -2, -1, 1, 2 --> rotate the point to find what normal you will use
+                if (!quad) quad += 1;
+            }
+            std::cout << "current quad: " << quad << std::endl;
+            std::cout << "j value: " << j << std::endl;
             // Save the two longitude angles for this slice
             float angleLon1 = anglesLon[j];
             float angleLon2;
@@ -58,11 +67,11 @@ std::vector<GLfloat> Sphere::generateVertexData(int param1, int param2) {
                 glm::vec3 point2 = sphereToCartesian(m_radius, anglesLat[1], angleLon1);
                 glm::vec3 point3 = sphereToCartesian(m_radius, anglesLat[1], angleLon2);
 
-                addPointAndNorm(&data, point3);
+                addPointAndNorm(&data, point3, quad);
                 addUVCoords(&data, point3);
-                addPointAndNorm(&data, point2);
+                addPointAndNorm(&data, point2, quad);
                 addUVCoords(&data, point2);
-                addPointAndNorm(&data, point1);
+                addPointAndNorm(&data, point1, quad);
                 addUVCoords(&data, point1);
 
 
@@ -71,11 +80,11 @@ std::vector<GLfloat> Sphere::generateVertexData(int param1, int param2) {
                 glm::vec3 point2 = sphereToCartesian(m_radius, anglesLat[param1], angleLon1);
                 glm::vec3 point3 = sphereToCartesian(m_radius, anglesLat[param1 - 1], angleLon2);
 
-                addPointAndNorm(&data, point3);
+                addPointAndNorm(&data, point3, quad);
                 addUVCoords(&data, point3);
-                addPointAndNorm(&data, point2);
+                addPointAndNorm(&data, point2, quad);
                 addUVCoords(&data, point2);
-                addPointAndNorm(&data, point1);
+                addPointAndNorm(&data, point1, quad);
                 addUVCoords(&data, point1);
             } else {
                 glm::vec3 point1 = sphereToCartesian(m_radius, anglesLat[i], angleLon1);
@@ -83,21 +92,23 @@ std::vector<GLfloat> Sphere::generateVertexData(int param1, int param2) {
                 glm::vec3 point3 = sphereToCartesian(m_radius, anglesLat[i], angleLon2);
                 glm::vec3 point4 = sphereToCartesian(m_radius, anglesLat[i+1], angleLon2);
 
-                addPointAndNorm(&data, point3);
+                addPointAndNorm(&data, point3, quad);
                 addUVCoords(&data, point3);
-                addPointAndNorm(&data, point2);
+                addPointAndNorm(&data, point2, quad);
                 addUVCoords(&data, point2);
-                addPointAndNorm(&data, point1);
+                addPointAndNorm(&data, point1, quad);
                 addUVCoords(&data, point1);
 
-                addPointAndNorm(&data, point4);
+                addPointAndNorm(&data, point4, quad);
                 addUVCoords(&data, point4);
-                addPointAndNorm(&data, point2);
+                addPointAndNorm(&data, point2, quad);
                 addUVCoords(&data, point2);
-                addPointAndNorm(&data, point3);
+                addPointAndNorm(&data, point3, quad);
                 addUVCoords(&data, point3);
             }
         }
+        // reset since we gonna do another loop
+        quad = -2;
     }
     return data;
 }
@@ -122,7 +133,9 @@ glm::vec3 Sphere::sphereToCartesian(float radius, float lat, float lon) {
     return coords;
 }
 
-void Sphere::addPointAndNorm(std::vector<GLfloat>* data, glm::vec3 point) {
+void Sphere::addPointAndNorm(std::vector<GLfloat>* data, glm::vec3 point, int quad) {
+    std::map<int, std::vector<std::pair<int, int>>>::iterator qtrIt;
+    // this will store array at ->second
     data->push_back(point.x);
     data->push_back(point.y);
     data->push_back(point.z);
@@ -130,6 +143,22 @@ void Sphere::addPointAndNorm(std::vector<GLfloat>* data, glm::vec3 point) {
     data->push_back(point.x);
     data->push_back(point.y);
     data->push_back(point.z);
+    // keep track of size to optimize
+    int lastIdx = data->size() - 1;
+// iterators for maps:
+// (key: vec3 point --> value int quadrant)
+// (key: int --> value vector of ranges of points inside the original list quadrant)
+//    std::map<glm::vec3, int>::iterator ptqIt;
+    // to optimize, just pass a reference to this vector into the function
+    qtrIt = m_quadToRangeMap.find(quad);
+    if (qtrIt == m_quadToRangeMap.end()) {
+        std::pair<std::map<int, std::vector<std::pair<int, int>>>::iterator, bool> p;
+        // place a vector inside the map at quad that holds the pairs that will make up the range for the points (range will either just be the point or will include the uv points)
+        p = m_quadToRangeMap.insert(std::pair<int, std::vector<std::pair<int, int>>>(quad, std::vector<std::pair<int, int>>()));
+        qtrIt = std::get<0>(p);
+    }
+    qtrIt->second.push_back(std::pair<int, int>(lastIdx - 5, lastIdx));
+
 }
 
 void Sphere::addUVCoords(std::vector<GLfloat>* data, glm::vec3 point) {
@@ -151,4 +180,20 @@ void Sphere::addUVCoords(std::vector<GLfloat>* data, glm::vec3 point) {
     data->push_back(v);
 }
 
+// seems like triangles are already drawn individually so this may not be necessary
+void Sphere::isBroken(){
+    // if the sphere is broken, change the drawing mode so that there are individual triangles
+    if (m_broken) m_VAO->setDrawMode(CS123::GL::VBO::GEOMETRY_LAYOUT::LAYOUT_TRIANGLES);
+}
 
+
+void Sphere::printQuadInfo() {
+    std::cout << "size of full vertex array: " << m_vertexData.size() << std::endl;
+    for (auto const& x : m_quadToRangeMap)
+    {
+        std::cout << x.first  // key (-2,-1,1,2)
+                  << ':'
+                  << x.second.size() // value (len of array)
+                  << std::endl ;
+    }
+}

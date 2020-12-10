@@ -29,6 +29,7 @@ void Shape::draw() {
 
 void Shape::setDrawMode(CS123::GL::VBO::GEOMETRY_LAYOUT mode){
     m_drawMode = mode;
+    m_VAO->setDrawMode(mode);
 }
 
 //void Shape::setAttribute(GLuint name, GLuint numElementsPerVertex, int offset,

@@ -3065,9 +3065,15 @@ generated_files/mainwindow.o: ui/mainwindow.cpp ui/mainwindow.h \
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
 		ui_mainwindow.h \
-		ui/Databinding.h \
+		ui/Canvas2D.h \
+		ui/SupportCanvas2D.h \
+		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtWidgets.framework/Headers/QWidget \
+		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		ui/Settings.h \
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtCore.framework/Headers/QObject \
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtCore.framework/Headers/qobject.h \
+		lib/RGBA.h \
+		ui/Databinding.h \
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtCore.framework/Headers/QVariant \
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtCore.framework/Headers/qvariant.h \
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtWidgets.framework/Headers/QSlider \
@@ -3180,12 +3186,6 @@ generated_files/mainwindow.o: ui/mainwindow.cpp ui/mainwindow.h \
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtGui.framework/Headers/qimage.h \
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtCore.framework/Headers/QString \
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtCore.framework/Headers/qstring.h \
-		ui/Canvas2D.h \
-		ui/SupportCanvas2D.h \
-		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtWidgets.framework/Headers/QWidget \
-		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
-		ui/Settings.h \
-		lib/RGBA.h \
 		camera/Camera.h \
 		scenegraph/ShapesScene.h \
 		scenegraph/OpenGLScene.h \

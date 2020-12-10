@@ -24,6 +24,10 @@
 #include "gl/textures/TextureParameters.h"
 #include "gl/textures/TextureParametersBuilder.h"
 
+static constexpr float youngMod = 70.f;
+static constexpr float epsilon = 0.00005f;
+static constexpr float frameDuration = 1.0f / 24.0f;
+
 namespace CS123 { namespace GL {
 
     class Shader;
@@ -75,6 +79,8 @@ private:
     // need to be freed because they are VALUE types (not pointers) and the memory for them is
     // freed when the class itself is freed.
     std::unique_ptr<CS123::GL::CS123Shader> m_phongShader;
+    std::unique_ptr<CS123::GL::CS123Shader> m_glassShader;
+    std::unique_ptr<CS123::GL::CS123Shader> m_metalShader;
     std::unique_ptr<CS123::GL::Shader> m_wireframeShader;
     std::unique_ptr<CS123::GL::Shader> m_normalsShader;
     std::unique_ptr<CS123::GL::Shader> m_normalsArrowShader;
@@ -86,8 +92,6 @@ private:
 
     void makeMap();
 
-    const float epsilon = 0.00005f;
-    const float frameDuration = 1.0f / 24.0f;
 
 
     glm::vec4 m_lightDirection = glm::normalize(glm::vec4(1.f, -1.f, -1.f, 0.f));
@@ -128,6 +132,8 @@ private:
     void loadWireframeShader();
     void loadNormalsShader();
     void loadNormalsArrowShader();
+    void loadGlassShader();
+    void loadMetalShader();
     void renderPhongPass(SupportCanvas3D *context);
     void renderGeometryAsFilledPolygons();
     void renderWireframePass(SupportCanvas3D *context);
@@ -156,7 +162,15 @@ private:
 
     void checkWallCollisions(int i, MarbleBoxIntersect x, MarbleBoxIntersect z);
 
+
     glm::vec4 calculateReflectionVector(glm::vec4 normal, glm::vec4 incoming);
+
+    // glass shattering stuff
+    inline bool shouldShatter(const glm::vec4 &curVel, const glm::vec4 &prevVel,const int &colliderMass, const float &collideeRadius, const int &collideeMass);
+    inline float area(const float &radius);
+    inline float hookesLaw(const float &r, const float &f);
+    inline float getForce(const glm::vec4 &curVel, const glm::vec4 &prevVel, const int &mass);
+    inline float getAcceleration(const glm::vec4 &curVel, const glm::vec4 &prevVel);
 
 };
 

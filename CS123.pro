@@ -175,6 +175,12 @@ RESOURCES += \
 
 DISTFILES += \
     brush/README_BRUSH \
+    shaders/glass.frag \
+    shaders/glass.vars \
+    shaders/glass.vert \
+    shaders/metal.frag \
+    shaders/metal.vars \
+    shaders/metal.vert \
     shaders/normals/normals.vert \
     shaders/normals/normals.frag \
     shaders/normals/normals.gsh \

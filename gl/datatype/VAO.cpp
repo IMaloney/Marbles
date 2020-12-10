@@ -70,6 +70,10 @@ void VAO::draw() {
     draw(m_numVertices);
 }
 
+void VAO::setDrawMode(VBO::GEOMETRY_LAYOUT drawMode) {
+    m_triangleLayout = drawMode;
+}
+
 void VAO::draw(int count) {
     switch(m_drawMethod) {
         case VAO::DRAW_ARRAYS:
