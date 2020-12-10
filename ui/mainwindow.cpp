@@ -119,7 +119,7 @@ void MainWindow::dataBind() {
     // max gravity set to 100 here
     // max radius set to 50
     BIND(FloatBinding::bindSliderAndTextbox(
-        ui->marbleGravitySlider, ui->marbleGravityTextbox, settings.gravity, 0, 100))
+        ui->marbleGravitySlider, ui->marbleGravityTextbox, settings.gravity, 0.1f, 25.0f))
     BIND(FloatBinding::bindSliderAndTextbox(
         ui->marbleRadiusSlider, ui->marbleRadiusTextbox, settings.marbleRadius, 0.1f, 0.5f)) //1, 50
     BIND(IntBinding::bindSliderAndTextbox(
