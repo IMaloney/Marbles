@@ -136,7 +136,7 @@ public:
         scrollArea->setWidgetResizable(true);
         canvas2D = new Canvas2D();
         canvas2D->setObjectName(QString::fromUtf8("canvas2D"));
-        canvas2D->setGeometry(QRect(0, 0, 537, 3059));
+        canvas2D->setGeometry(QRect(0, 0, 531, 3061));
         scrollArea->setWidget(canvas2D);
 
         gridLayout_11->addWidget(scrollArea, 0, 0, 1, 1);
@@ -340,6 +340,7 @@ public:
         QObject::connect(actionRevert, SIGNAL(triggered()), MainWindow, SLOT(revertImage()));
 
         QObject::connect(pushButton, SIGNAL(clicked()), MainWindow, SLOT(dropMarble()));
+
 
         tabWidget->setCurrentIndex(0);
 

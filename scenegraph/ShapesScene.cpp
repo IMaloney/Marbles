@@ -60,35 +60,35 @@ ShapesScene::ShapesScene(int width, int height) :
 
 
 
-    MarbleData marble = MarbleData();
-    marble.radius = .5f;
-    marble.weight = 54;
-    marble.gravity = -1 * 11.51;
-    marble.centerPosition = glm::vec4(-0.5f, -1.25f, -0.5f, 1.0f);
-    marble.currDirection =  glm::vec4(0.0f, -1.0f, 0.0f, 0.0f);
-    marble.cumulativeTransformation = marble.centerPosition.xyz();
-    marble.velocity = glm::vec4(0.5f, 0.0, 0.5f, 0.0f);
-    marble.scaleTransformation = glm::scale(glm::vec3(marble.radius/0.5f));
-    marble.angle = glm::vec3(0.0f);
-    marble.marbleType = MARBLE_WOOD;
-    marble.quatAngle = 0.0f;
+//    MarbleData marble = MarbleData();
+//    marble.radius = .5f;
+//    marble.weight = 54;
+//    marble.gravity = -1 * 11.51;
+//    marble.centerPosition = glm::vec4(-0.5f, -1.25f, -0.5f, 1.0f);
+//    marble.currDirection =  glm::vec4(0.0f, -1.0f, 0.0f, 0.0f);
+//    marble.cumulativeTransformation = marble.centerPosition.xyz();
+//    marble.velocity = glm::vec4(0.5f, 0.0, 0.5f, 0.0f);
+//    marble.scaleTransformation = glm::scale(glm::vec3(marble.radius/0.5f));
+//    marble.angle = glm::vec3(0.0f);
+//    marble.marbleType = MARBLE_WOOD;
+//    marble.quatAngle = 0.0f;
 
-    m_marbles.push_back(marble);
+//    m_marbles.push_back(marble);
 
-    marble = MarbleData();
-    marble.radius = .5f;
-    marble.weight = 54;
-    marble.gravity = -1 * 11.51;
-    marble.centerPosition = glm::vec4(0.5f, -1.25f, 0.5f, 1.0f);
-    marble.currDirection =  glm::vec4(0.0f, -1.0f, 0.0f, 0.0f);
-    marble.cumulativeTransformation = marble.centerPosition.xyz();
-    marble.velocity = glm::vec4(-0.5f, 0.0, -0.5f, 0.0f);
-    marble.scaleTransformation = glm::scale(glm::vec3(marble.radius/0.5f));
-    marble.angle = glm::vec3(0.0f);
-    marble.marbleType = MARBLE_WOOD;
-    marble.quatAngle = 0.0f;
+//    marble = MarbleData();
+//    marble.radius = .5f;
+//    marble.weight = 54;
+//    marble.gravity = -1 * 11.51;
+//    marble.centerPosition = glm::vec4(0.5f, -1.25f, 0.5f, 1.0f);
+//    marble.currDirection =  glm::vec4(0.0f, -1.0f, 0.0f, 0.0f);
+//    marble.cumulativeTransformation = marble.centerPosition.xyz();
+//    marble.velocity = glm::vec4(-0.5f, 0.0, -0.5f, 0.0f);
+//    marble.scaleTransformation = glm::scale(glm::vec3(marble.radius/0.5f));
+//    marble.angle = glm::vec3(0.0f);
+//    marble.marbleType = MARBLE_WOOD;
+//    marble.quatAngle = 0.0f;
 
-    m_marbles.push_back(marble);
+//    m_marbles.push_back(marble);
 
 //        const char *marbleTexture = "../textures/real_marble.png";
 //        const char *woodTexture = "../textures/wood.jpg";
@@ -485,13 +485,53 @@ void ShapesScene::checkMarbleCollisions() {
                 if (dist <= (m1Rad + m2Rad)) {
                     std::cout << "Overlap found!" << std::endl;
 
-                    bool noXVel = (m1.velocity.x > -epsilon) && (m1.velocity.x < epsilon);
-                    bool noZVel = (m1.velocity.z > -epsilon) && (m1.velocity.z < epsilon);
+                    float overlap = ((m1Rad + m2Rad) - dist) / 2.0f + epsilon;
+
+                    m_marbles[i].centerPosition += glm::normalize(-m_marbles[i].velocity)*overlap;
+                    m_marbles[i].cumulativeTransformation = m_marbles[i].centerPosition.xyz();
+
+                    m_marbles[j].centerPosition += glm::normalize(-m_marbles[j].velocity)*overlap;
+                    m_marbles[j].cumulativeTransformation = m_marbles[j].centerPosition.xyz();
+
+                    // Only checking half
+                    bool noXVel = (m2.velocity.x > -epsilon) && (m2.velocity.x < epsilon);
+                    bool noZVel = (m2.velocity.z > -epsilon) && (m2.velocity.z < epsilon);
+
+                    bool m1Dropping = m1.velocity.y < 0.0f;
+                    bool m2Dropping = m2.velocity.y < 0.0f;
 
                     // Case where one marble dropped directly on another marble
-                    if (noXVel && noZVel) {
+                    if (m1Dropping) { //noXVel && noZVel
+                        std::cout << "BEEP" << std::endl;
+                        float downwardVelocity = glm::length(m1.velocity);
+
+                        float randF = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX));
+                        float randF2 = 1.0f - randF;
+
+                        m_marbles[i].velocity.y = -0.5f * m_marbles[i].velocity.y;
+
+                        m_marbles[i].velocity.x = randF * downwardVelocity;
+                        m_marbles[i].velocity.z = randF2 * downwardVelocity;
+
+                        m_marbles[j].velocity.x = -randF2 * downwardVelocity;
+                        m_marbles[j].velocity.z = -randF * downwardVelocity;
 
 
+                    } else if (m2Dropping) {
+                        std::cout << "BOOP" << std::endl;
+
+                        float downwardVelocity = glm::length(m2.velocity);
+
+                        float randF = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX));
+                        float randF2 = 1.0f - randF;
+
+                        m_marbles[j].velocity.y = -0.5f * m_marbles[j].velocity.y;
+
+                        m_marbles[j].velocity.x = randF * downwardVelocity;
+                        m_marbles[j].velocity.z = randF2 * downwardVelocity;
+
+                        m_marbles[i].velocity.x = -randF2 * downwardVelocity;
+                        m_marbles[i].velocity.z = -randF * downwardVelocity;
 
                     } else {
                         glm::vec4 basis = glm::normalize(m1Pos - m2Pos);
