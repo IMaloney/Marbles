@@ -35,8 +35,6 @@ ShapesScene::ShapesScene(int width, int height) :
     m_yMove(0.0f),
     m_marbleTrans(),
     m_vecTrans()
-
-
 {
 
     initializeSceneMaterial();
@@ -48,12 +46,38 @@ ShapesScene::ShapesScene(int width, int height) :
 
     m_shape = std::make_unique<Box>(1.5f); //std::make_unique<Box>(1.5f);
     m_modelMable = std::make_unique<Sphere>(8, 8, .5); //std::make_unique<WoodMarble>(settings.gravity, .5, settings.marbleWeight);//
-    //    const char *marbleTexture = "/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/textures/real_marble.png";
-    //    const char *woodTexture = "/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/textures/wood.jpg";
-        const char *marbleTexture = "../textures/real_marble.png";
-        const char *woodTexture = "../textures/wood.jpg";
-        m_boxTexture = QGLWidget::convertToGLFormat(QImage(marbleTexture));
-        m_woodMarbleTexture = QGLWidget::convertToGLFormat(QImage(woodTexture));
+    const char *marbleTexture = "/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/textures/real_marble.png";
+    const char *woodTexture = "/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/textures/wood.jpg";
+//    const char *marbleTexture = "../textures/real_marble.png";
+//    const char *woodTexture = "../textures/wood.jpg";
+    m_boxTexture = QGLWidget::convertToGLFormat(QImage(marbleTexture));
+    m_woodMarbleTexture = QGLWidget::convertToGLFormat(QImage(woodTexture));
+
+
+
+    MarbleData marble = MarbleData();
+    marble.radius = .25f;
+    marble.weight = 54;
+    marble.gravity = -1 * 11.51;
+    marble.centerPosition = glm::vec4(-0.5f, -1.25f, -0.5f, 1.0f);
+    marble.currDirection =  glm::vec4(0.0f, -1.0f, 0.0f, 0.0f);
+    marble.cumulativeTransformation = marble.centerPosition.xyz();
+    marble.velocity = glm::vec4(0.5f, 0.0, 0.5f, 0.0f);
+    marble.scaleTransformation = glm::scale(glm::vec3(marble.radius/0.5f));
+
+    m_marbles.push_back(marble);
+
+    marble = MarbleData();
+    marble.radius = .25f;
+    marble.weight = 54;
+    marble.gravity = -1 * 11.51;
+    marble.centerPosition = glm::vec4(0.5f, -1.25f, 0.5f, 1.0f);
+    marble.currDirection =  glm::vec4(0.0f, -1.0f, 0.0f, 0.0f);
+    marble.cumulativeTransformation = marble.centerPosition.xyz();
+    marble.velocity = glm::vec4(-0.5f, 0.0, -0.5f, 0.0f);
+    marble.scaleTransformation = glm::scale(glm::vec3(marble.radius/0.5f));
+
+    m_marbles.push_back(marble);
 }
 
 ShapesScene::~ShapesScene()
@@ -128,8 +152,8 @@ void ShapesScene::renderPhongPass(SupportCanvas3D *context) {
     m_phongShader->bind();
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    clearLights();
-    setLights(context->getCamera()->getViewMatrix());
+//    clearLights();
+//    setLights(context->getCamera()->getViewMatrix());
     setPhongSceneUniforms();
     setMatrixUniforms(m_phongShader.get(), context);
     renderGeometryAsFilledPolygons();
@@ -218,8 +242,9 @@ void ShapesScene::renderGeometry() {
     }
 
     if (m_modelMable) {
+        int size = (int) m_marbles.size();
 
-        for (int i = 0; i < (int) m_marbles.size(); i++) {
+        for (int i = 0; i < size; i++) {
 
             CS123::GL::Texture2D texture(m_woodMarbleTexture.bits(), m_woodMarbleTexture.width(), m_woodMarbleTexture.height());
             parameters.applyTo(texture);
@@ -228,11 +253,11 @@ void ShapesScene::renderGeometry() {
             glm::vec2 uv = glm::vec2(1, 1);
             m_phongShader->setUniform("useTexture", 1);
             m_phongShader->setUniform("repeatUV", uv);
-
             m_phongShader->setTexture("tex",
                                       texture);
 
             gravity(i);
+            checkMarbleCollisions();
 
             MarbleBoxIntersect xIntersect = checkBoxXCollision(m_marbles[i]);
             MarbleBoxIntersect yIntersect = checkBoxYCollision(m_marbles[i]);
@@ -250,6 +275,9 @@ void ShapesScene::renderGeometry() {
                 // IF RUBBER:
                 //m_marbles[i].velocity.y = -1.0f * (m_marbles[i].velocity.y / 2.0f);
             }
+
+            m_marbles[i].centerPosition = m_marbles[i].centerPosition + (m_marbles[i].velocity * frameDuration); // update position
+            m_marbles[i].cumulativeTransformation = glm::vec3(m_marbles[i].centerPosition.xyz());
 
             glm::mat4x4 translation = glm::translate(m_marbles[i].cumulativeTransformation);
 
@@ -364,8 +392,91 @@ void ShapesScene::translateMarble(int i, glm::vec3 step) {
 }
 
 void ShapesScene::gravity(int i) {
-    m_marbles[i].centerPosition.y = m_marbles[i].centerPosition.y + (m_marbles[i].velocity.y * frameDuration); // update position
-    m_marbles[i].cumulativeTransformation.y = m_marbles[i].cumulativeTransformation.y + (m_marbles[i].velocity.y * frameDuration); // update position
-
     m_marbles[i].velocity.y = m_marbles[i].velocity.y + (m_marbles[i].gravity * frameDuration); // update velocity
+}
+
+MarbleCollision ShapesScene::checkMarbleCollisions() {
+    int size = (int) m_marbles.size();
+
+    for (int i = 0; i < size; i++) {
+        std::cout << "Checking marble: " << i << std::endl;
+        for (int j = i+1; j < size; j++) {
+            std::cout << " against marble: " << j << std::endl;
+            MarbleData m1 = m_marbles[i];
+            MarbleData m2 = m_marbles[j];
+
+            glm::vec4 m1Pos = m_marbles[i].centerPosition;
+            float m1Rad = m_marbles[i].radius;
+
+            glm::vec4 m2Pos = m_marbles[j].centerPosition;
+            float m2Rad = m_marbles[j].radius;
+
+            // Bounding box calculations - MAY NEED TO ADD EPSILONS HERE!!!
+            float m1XMax = m1Pos.x + m1Rad;
+            float m1XMin = m1Pos.x - m1Rad;
+            float m2XMax = m2Pos.x + m2Rad;
+            float m2XMin = m2Pos.x - m2Rad;
+
+            bool xOverlap = (m1XMax >= m2XMin && m1XMax <= m2XMax) || (m1XMin >= m2XMin && m1XMin <= m2XMax)
+                    || (m2XMax >= m1XMin && m2XMax <= m1XMax) || (m2XMin >= m1XMin && m2XMin <= m1XMax);
+
+            float m1YMax = m1Pos.y + m1Rad;
+            float m1YMin = m1Pos.y - m1Rad;
+            float m2YMax = m2Pos.y + m2Rad;
+            float m2YMin = m2Pos.y - m2Rad;
+
+            bool yOverlap = (m1YMax >= m2YMin && m1YMax <= m2YMax) || (m1YMin >= m2YMin && m1YMin <= m2YMax)
+                    || (m2YMax >= m1YMin && m2YMax <= m1YMax) || (m2YMin >= m1YMin && m2YMin <= m1YMax);
+
+            float m1ZMax = m1Pos.z + m1Rad;
+            float m1ZMin = m1Pos.z - m1Rad;
+            float m2ZMax = m2Pos.z + m2Rad;
+            float m2ZMin = m2Pos.z - m2Rad;
+
+            bool zOverlap = (m1ZMax >= m2ZMin && m1ZMax <= m2ZMax) || (m1ZMin >= m2ZMin && m1ZMin <= m2ZMax)
+                    || (m2ZMax >= m1ZMin && m2ZMax <= m1ZMax) || (m2ZMin >= m1ZMin && m2ZMin <= m1ZMax);
+
+            if (xOverlap && yOverlap && zOverlap) {
+//                float dist = sqrt(pow(m1Pos.x - m2Pos.x, 2) + pow(m1Pos.y - m2Pos.y, 2) + pow(m1Pos.z - m2Pos.z, 2));
+
+//                if (dist < (m1Rad + m2Rad)) {
+
+//                }
+                std::cout << "Overlap found!" << std::endl;
+                // CAN DO DISTANCE CHECK HERE IF COLLISIONS ARE TOO LIBERAL
+                glm::vec4 basis = glm::normalize(m1Pos - m2Pos);
+                glm::vec4 m1Vel = m1.velocity;
+                float x1 = glm::dot(basis, m1Vel);
+                glm::vec4 m1VelX = basis * x1;
+                glm::vec4 m1VelZ = m1Vel - m1VelX;
+                float m1Weight = m1.weight;
+
+                basis = -1.0f * basis;
+                glm::vec4 m2Vel = m2.velocity;
+                float x2 = glm::dot(basis, m2Vel);
+                glm::vec4 m2VelX = basis * x2;
+                glm::vec4 m2VelZ = m2Vel - m2VelX;
+                float m2Weight = m2.weight;
+
+                glm::vec4 m1FinalVel
+                        = m1VelX * (m1Weight - m2Weight) / (m1Weight + m2Weight)
+                        + m2VelX * (2.0f * m2Weight) / (m1Weight + m2Weight) + m1VelZ;
+                glm::vec4 m2FinalVel
+                        = m1VelX * (2.0f * m1Weight) / (m1Weight + m2Weight)
+                        + m2VelX * (m2Weight - m1Weight) / (m1Weight + m2Weight) + m2VelZ;
+
+                m_marbles[i].velocity = m1FinalVel;
+                m_marbles[j].velocity = m2FinalVel;
+            }
+        }
+    }
+//    float dist = sqrt(pow(m1Pos.x - m2Pos.x, 2) + pow(m1Pos.y - m2Pos.y, 2) + pow(m1Pos.z - m2Pos.z, 2));
+
+//    float m1Rad = (float) m1->getRadius();
+//    float m2Rad = (float) m2->getRadius();
+
+//    if (dist < (m1Rad + m2Rad)) {
+//        return true;
+//    }
+//    return false;
 }

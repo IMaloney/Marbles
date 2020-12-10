@@ -149,6 +149,8 @@ private:
     MarbleBoxIntersect checkBoxYCollision(MarbleData marble);
     MarbleBoxIntersect checkBoxZCollision(MarbleData marble);
 
+    MarbleCollision checkMarbleCollisions();
+
 };
 
 #endif // SHAPESSCENE_H

@@ -188,5 +188,12 @@ struct MarbleBoxIntersect {
     glm::vec4 spherePoint;
 };
 
+struct MarbleCollision {
+    int m1;
+    int m2;
+    glm::vec4 m1Direction;
+    glm::vec4 m2Direction;
+};
+
 #endif
 
