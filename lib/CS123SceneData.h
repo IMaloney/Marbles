@@ -185,6 +185,7 @@ struct MarbleData {
     glm::mat4x4 scaleTransformation;
     glm::vec3 angle;
     float quatAngle;
+    bool broken;
 };
 
 struct MarbleBoxIntersect {

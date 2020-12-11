@@ -17,6 +17,8 @@ public:
     void isBroken();
 
     std::vector<GLfloat> getVetexData() { return m_vertexData; }
+    std::vector<GLfloat> *getVetexDataPTR() { return &m_vertexData; }
+    inline std::map<int, std::vector<std::pair<int, int>>> getMap() {return m_quadToRangeMap;}
 
     // test method
     void printQuadInfo();

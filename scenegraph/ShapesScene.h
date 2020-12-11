@@ -169,6 +169,7 @@ private:
     glm::vec4 calculateReflectionVector(glm::vec4 normal, glm::vec4 incoming);
 
     // glass shattering stuff
+    void shatter(int i);
     inline bool shouldShatter(const glm::vec4 &curVel, const glm::vec4 &prevVel,const int &colliderMass, const float &collideeRadius, const int &collideeMass);
     inline float area(const float &radius);
     inline float hookesLaw(const float &r, const float &f);

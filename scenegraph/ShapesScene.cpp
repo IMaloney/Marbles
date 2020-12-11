@@ -58,23 +58,23 @@ ShapesScene::ShapesScene(int width, int height) :
     // testing
 //    m_modelMable->printQuadInfo();
 
-    std::vector<std::string> faces = {
-        "/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/textures/marble.jpg",
-        "/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/textures/marble.jpg",
-        "/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/textures/marble.jpg",
-        "/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/textures/marble.jpg",
-        "/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/textures/marble.jpg",
-        "/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/textures/marble.jpg"
-    };
-
 //    std::vector<std::string> faces = {
-//        "../textures/marble.jpg",
-//        "../textures/marble.jpg",
-//        "../textures/marble.jpg",
-//        "../textures/marble.jpg",
-//        "../textures/marble.jpg",
-//        "../textures/marble.jpg"
+//        "/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/textures/marble.jpg",
+//        "/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/textures/marble.jpg",
+//        "/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/textures/marble.jpg",
+//        "/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/textures/marble.jpg",
+//        "/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/textures/marble.jpg",
+//        "/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/textures/marble.jpg"
 //    };
+
+    std::vector<std::string> faces = {
+        "../textures/marble.jpg",
+        "../textures/marble.jpg",
+        "../textures/marble.jpg",
+        "../textures/marble.jpg",
+        "../textures/marble.jpg",
+        "../textures/marble.jpg"
+    };
 
     m_textureID = loadCubemap(faces);
 
@@ -91,6 +91,7 @@ ShapesScene::ShapesScene(int width, int height) :
     marble.angle = glm::vec3(0.0f);
     marble.marbleType = MARBLE_GLASS;
     marble.quatAngle = 0.0f;
+    marble.broken = false;
 
     m_marbles.push_back(marble);
 
@@ -107,6 +108,7 @@ ShapesScene::ShapesScene(int width, int height) :
     marble.angle = glm::vec3(0.0f);
     marble.marbleType = MARBLE_GLASS;
     marble.quatAngle = 0.0f;
+    marble.broken = false;
 
     m_marbles.push_back(marble);
 
@@ -212,7 +214,7 @@ unsigned int ShapesScene::loadCubemap(std::vector<std::string> faces)
         }
         else
         {
-            std::cout << "Cubemap tex failed to load at path: " << faces[i] << std::endl;
+//            std::cout << "Cubemap tex failed to load at path: " << faces[i] << std::endl;
             stbi_image_free(data);
         }
     }
@@ -344,6 +346,8 @@ void ShapesScene::renderGeometry() {
 
 
             gravity(i);
+
+            // adding somewhere here
             checkMarbleCollisions();
 
             MarbleBoxIntersect xIntersect = checkBoxXCollision(m_marbles[i]);
@@ -353,7 +357,7 @@ void ShapesScene::renderGeometry() {
             checkWallCollisions(i, xIntersect, zIntersect);
 
             if (yIntersect.intersect) {
-                std::cout << "1: " << m_marbles[i].velocity.y << std::endl;
+//                std::cout << "1: " << m_marbles[i].velocity.y << std::endl;
                 //translateMarble(i, glm::vec3(0.0f, -0.01f, 0.0f));
                 float yVel = m_marbles[i].velocity.y;
                 if (yIntersect.spherePoint.y < 0) {
@@ -474,6 +478,7 @@ void ShapesScene::dropMarble(SupportCanvas3D *context) {
     marble.velocity = glm::vec4(0.0f, marble.gravity * frameDuration, 0.0f, 0.0f);
     marble.scaleTransformation = glm::scale(glm::vec3(settings.marbleRadius/0.5f));
     marble.quatAngle = 0.0f;
+    marble.broken = false;
 
     m_marbles.push_back(marble);
 
@@ -593,9 +598,19 @@ void ShapesScene::checkMarbleCollisions() {
 
             if (xOverlap && yOverlap && zOverlap) {
                 float dist = sqrt(pow(m1Pos.x - m2Pos.x, 2) + pow(m1Pos.y - m2Pos.y, 2) + pow(m1Pos.z - m2Pos.z, 2));
-
+                std::cout << "dist: " << dist << std::endl;
                 if (dist <= (m1Rad + m2Rad)) {
-
+                    bool m1Shatter = (m_marbles[i].marbleType == MARBLE_GLASS) ? this->shouldShatter(m_marbles[j].velocity, m_marbles[j].prevVelocity, m_marbles[j].weight, m_marbles[i].radius, m_marbles[i].weight) : false;
+                    bool m2Shatter = (m_marbles[j].marbleType == MARBLE_GLASS) ? this->shouldShatter(m_marbles[i].velocity, m_marbles[i].prevVelocity, m_marbles[i].weight, m_marbles[j].radius, m_marbles[j].weight) : false;
+                    if (m1Shatter) {
+                        //  remove data from
+                        this->shatter(i);
+                    }
+//
+                    if (m2Shatter) {
+                        this->shatter(j);
+                    }
+                    std::cout << this->shouldShatter(m_marbles[i].velocity, m_marbles[i].prevVelocity, m_marbles[i].weight, m_marbles[j].radius, m_marbles[j].weight) << std::endl;
                     float overlap = ((m1Rad + m2Rad) - dist) / 2.0f + epsilon;
 
                     m_marbles[i].centerPosition += glm::normalize(-m_marbles[i].velocity)*overlap;
@@ -683,21 +698,21 @@ void ShapesScene::checkMarbleCollisions() {
 
 void ShapesScene::makeMap() {
     // box texture
-//    const char *tex = "../textures/marble.jpg";
-    const char *tex = "/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/textures/marble.jpg";
+    const char *tex = "../textures/marble.jpg";
+////    const char *tex = "/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/textures/marble.jpg";
     QImage img = QGLWidget::convertToGLFormat(QImage(tex));
     m_boxTexture = std::make_shared<CS123::GL::Texture2D>(img.bits(), img.width(), img.height());
 
     // wood texture
-//     tex =  "../textures/wood.jpg";
-    tex = "/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/textures/wood.jpg";
+     tex =  "../textures/wood.jpg";
+//    tex = "/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/textures/wood.jpg";
     img = QGLWidget::convertToGLFormat(QImage(tex));
     std::shared_ptr<CS123::GL::Texture2D> texture = std::make_shared<CS123::GL::Texture2D>(img.bits(), img.width(), img.height());
     m_marbleTextureMap.insert(std::pair<int, std::shared_ptr<CS123::GL::Texture2D>>(static_cast<int>(MARBLE_WOOD), texture));
 
     // rubber texture
-//    tex = "../textures/rubber_texture.jpg";
-    tex = "/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/textures/rubber_texture.jpg";
+    tex = "../textures/rubber_texture.jpg";
+//    tex = "/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/textures/rubber_texture.jpg";
     img = QGLWidget::convertToGLFormat(QImage(tex));
     texture = std::make_shared<CS123::GL::Texture2D>(img.bits(), img.width(), img.height());
     m_marbleTextureMap.insert(std::pair<int, std::shared_ptr<CS123::GL::Texture2D>>(static_cast<int>(MARBLE_RUBBER), texture));
@@ -752,10 +767,29 @@ glm::vec4 ShapesScene::calculateReflectionVector(glm::vec4 normal, glm::vec4 inc
     return reflect;
 }
 
+void ShapesScene::shatter(int i) {
+    m_marbles[i].broken = true;
+    std::vector<GLfloat> *temp = m_modelMable->getVetexDataPTR();
+    std::map<int, std::vector<std::pair<int, int>>>::iterator qtrIt;
+    for (auto const& x : m_modelMable->getMap()) {
+        auto m = x.second;
+        int size = m.size();
+        for (int i = 0; i < size; i++) {
+            int start = std::get<0>(m[i]), end = std::get<1>(m[i])- 3;
+            for (int j = start; j < end; j++) {
+                (*temp)[j] +=  (*temp)[j + 3];
+            }
+
+        }
+    }
+}
+
 inline bool ShapesScene::shouldShatter(const glm::vec4 &curVel, const glm::vec4 &prevVel,const int &colliderMass, const float &collideeRadius, const int &collideeMass){
     float force = this->getForce(curVel, prevVel, colliderMass),
-          hlWeighted = static_cast<float>(collideeMass) * this->hookesLaw(collideeRadius, force);
-    return hlWeighted >= collideeRadius;
+          hlWeighted = this->hookesLaw(collideeRadius, force);
+    std::cout << hlWeighted << std::endl;
+    std::cout <<  collideeRadius * collideeMass << std::endl;
+    return hlWeighted >= (collideeRadius * collideeMass);
 }
 inline float ShapesScene::area(const float &radius) {
     return M_PI * pow(radius, 2.0);
