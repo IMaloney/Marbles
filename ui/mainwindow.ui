@@ -83,7 +83,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>531</width>
+             <width>316</width>
              <height>3061</height>
             </rect>
            </property>
@@ -401,6 +401,29 @@
        </widget>
       </item>
      </layout>
+    </widget>
+    <widget class="QWidget" name="clearMarbles" native="true">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>400</y>
+       <width>251</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <widget class="QPushButton" name="pushButton_2">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>221</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Clear Marbles</string>
+      </property>
+     </widget>
     </widget>
    </widget>
   </widget>

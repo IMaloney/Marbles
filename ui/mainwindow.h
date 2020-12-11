@@ -86,6 +86,7 @@ public slots:
 
     // Called when the user presses the "Filter Image" button in the Filter panel
     void dropMarble();
+    void clearMarbles();
 
     // Called when the user presses the "Render Image" button in the Ray panel
     void renderImage();

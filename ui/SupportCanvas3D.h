@@ -58,6 +58,7 @@ public:
     virtual void settingsChanged();
 
     void dropMarble();
+    void clearMarbles();
 
 public slots:
     // These will be called by the corresponding UI buttons on the Camtrans dock

@@ -296,6 +296,10 @@ void ShapesScene::renderNormalsPass (SupportCanvas3D *context) {
     m_normalsArrowShader->unbind();
 }
 
+void ShapesScene::clearMarbles() {
+    m_marbles.clear();
+}
+
 void ShapesScene::renderGeometry() {
 
     CS123::GL::TextureParametersBuilder builder;
@@ -349,7 +353,9 @@ void ShapesScene::renderGeometry() {
             checkWallCollisions(i, xIntersect, zIntersect);
 
             if (yIntersect.intersect) {
+                std::cout << "1: " << m_marbles[i].velocity.y << std::endl;
                 //translateMarble(i, glm::vec3(0.0f, -0.01f, 0.0f));
+                float yVel = m_marbles[i].velocity.y;
                 if (yIntersect.spherePoint.y < 0) {
                     m_marbles[i].prevVelocity = m_marbles[i].velocity;
                     m_marbles[i].velocity.y = 0.0f;
@@ -357,9 +363,16 @@ void ShapesScene::renderGeometry() {
                     m_marbles[i].cumulativeTransformation.y = -1.5f + m_marbles[i].radius;
                 }
 
+                if (m_marbles[i].marbleType == MARBLE_RUBBER) {
+                    m_marbles[i].velocity.y = -1.0f * (yVel / 2.0f);
+                    if (m_marbles[i].velocity.y < 1) {
+                        m_marbles[i].prevVelocity = m_marbles[i].velocity;
+                        m_marbles[i].velocity.y = 0.0f;
+                        m_marbles[i].centerPosition.y = -1.5f + m_marbles[i].radius;
+                        m_marbles[i].cumulativeTransformation.y = -1.5f + m_marbles[i].radius;
+                    }
+                }
 
-                // IF RUBBER:
-                //m_marbles[i].velocity.y = -1.0f * (m_marbles[i].velocity.y / 2.0f);
             }
 
             glm::vec4 distance = m_marbles[i].velocity * frameDuration;

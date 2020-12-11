@@ -64,6 +64,7 @@ public:
     virtual void settingsChanged() override;
 
     void dropMarble(SupportCanvas3D *context);
+    void clearMarbles();
 
 
 protected:

@@ -271,6 +271,10 @@ void MainWindow::dropMarble() {
     setAllEnabled(true);
 }
 
+void MainWindow::clearMarbles() {
+    m_canvas3D->clearMarbles();
+}
+
 void MainWindow::renderImage() {
     // Make sure OpenGL gets a chance to update the OrbitCamera, which can only be done when
     // that tab is active (because it needs the OpenGL context for its matrix transforms)

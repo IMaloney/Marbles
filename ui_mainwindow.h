@@ -80,6 +80,8 @@ public:
     QWidget *marbleButton;
     QHBoxLayout *horizontalLayout_5;
     QPushButton *pushButton;
+    QWidget *clearMarbles;
+    QPushButton *pushButton_2;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QMenu *menuToolbars;
@@ -136,7 +138,7 @@ public:
         scrollArea->setWidgetResizable(true);
         canvas2D = new Canvas2D();
         canvas2D->setObjectName(QString::fromUtf8("canvas2D"));
-        canvas2D->setGeometry(QRect(0, 0, 531, 3061));
+        canvas2D->setGeometry(QRect(0, 0, 316, 3061));
         scrollArea->setWidget(canvas2D);
 
         gridLayout_11->addWidget(scrollArea, 0, 0, 1, 1);
@@ -307,6 +309,12 @@ public:
 
         horizontalLayout_5->addWidget(pushButton);
 
+        clearMarbles = new QWidget(marblDockContents);
+        clearMarbles->setObjectName(QString::fromUtf8("clearMarbles"));
+        clearMarbles->setGeometry(QRect(10, 400, 251, 31));
+        pushButton_2 = new QPushButton(clearMarbles);
+        pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
+        pushButton_2->setGeometry(QRect(0, 0, 221, 32));
         marbleDock->setWidget(marblDockContents);
         MainWindow->addDockWidget(Qt::LeftDockWidgetArea, marbleDock);
         menuBar = new QMenuBar(MainWindow);
@@ -340,6 +348,8 @@ public:
         QObject::connect(actionRevert, SIGNAL(triggered()), MainWindow, SLOT(revertImage()));
 
         QObject::connect(pushButton, SIGNAL(clicked()), MainWindow, SLOT(dropMarble()));
+        QObject::connect(pushButton_2, SIGNAL(clicked()), MainWindow, SLOT(clearMarbles()));
+
 
         tabWidget->setCurrentIndex(0);
 
@@ -398,6 +408,7 @@ public:
         marbleWeightLabel->setText(QCoreApplication::translate("MainWindow", "Weight", nullptr));
         marbleWeightTextbox->setText(QString());
         pushButton->setText(QCoreApplication::translate("MainWindow", "Drop a Marble!", nullptr));
+        pushButton_2->setText(QCoreApplication::translate("MainWindow", "Clear Marbles", nullptr));
         menuFile->setTitle(QCoreApplication::translate("MainWindow", "&File", nullptr));
         menuToolbars->setTitle(QCoreApplication::translate("MainWindow", "&Toolbars", nullptr));
     } // retranslateUi
