@@ -48,8 +48,8 @@ std::vector<GLfloat> Sphere::generateVertexData(int param1, int param2) {
                 // skip zero so the quads are -2, -1, 1, 2 --> rotate the point to find what normal you will use
                 if (!quad) quad += 1;
             }
-            std::cout << "current quad: " << quad << std::endl;
-            std::cout << "j value: " << j << std::endl;
+//            std::cout << "current quad: " << quad << std::endl;
+//            std::cout << "j value: " << j << std::endl;
             // Save the two longitude angles for this slice
             float angleLon1 = anglesLon[j];
             float angleLon2;

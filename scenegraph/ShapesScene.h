@@ -92,7 +92,9 @@ private:
 
     void makeMap();
 
+    unsigned int loadCubemap(std::vector<std::string> faces);
 
+    unsigned int m_textureID;
 
     glm::vec4 m_lightDirection = glm::normalize(glm::vec4(1.f, -1.f, -1.f, 0.f));
 

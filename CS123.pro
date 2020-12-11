@@ -76,6 +76,7 @@ SOURCES += \
 
 
 HEADERS += \
+    gl/stb_image.h \
     marble/Marble.h \
     camera/Camera.h \
     camera/OrbitingCamera.h \

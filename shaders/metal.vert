@@ -9,20 +9,20 @@ out vec3 vertexToCamera;        // Vector from the vertex to the eye, which is t
 out vec3 eyeNormal;             // Normal in eye space
 
 //// Transformation matrices
-uniform mat4 model;             // model matrix
-uniform mat4 view;              // view matrix
-uniform mat4 projection;        // projection matrix
+uniform mat4 m;             // model matrix
+uniform mat4 v;              // view matrix
+uniform mat4 p;        // projection matrix
 
 uniform vec4 lightPosition;
 
 void main()
 {
 
-    vertex = ((view*model)*(vec4(position, 1.0))).xyz;
-    vec4 camLightPosition = view*model*lightPosition;           // Light position in camera space
+    vertex = ((v*m)*(vec4(position, 1.0))).xyz;
+    vec4 camLightPosition = v*m*lightPosition;           // Light position in camera space
     vertexToLight = normalize(camLightPosition.xyz - vertex);
     vertexToCamera = -normalize(vertex);
-    eyeNormal = normalize(mat3(transpose(inverse(view*model))) * normal);
-    gl_Position = projection*view*model*(vec4(position,1.0));
+    eyeNormal = normalize(mat3(transpose(inverse(v*m))) * normal);
+    gl_Position = p*v*m*(vec4(position,1.0));
 
 }

@@ -341,7 +341,6 @@ public:
 
         QObject::connect(pushButton, SIGNAL(clicked()), MainWindow, SLOT(dropMarble()));
 
-
         tabWidget->setCurrentIndex(0);
 
 

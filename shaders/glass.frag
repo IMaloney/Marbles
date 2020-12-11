@@ -8,8 +8,8 @@ uniform float r0;		// The R0 value to use in Schlick's approximation
 uniform float eta1D;		// The eta value to use initially
 uniform vec3  eta;              // Contains one eta for each channel (use eta.r, eta.g, eta.b in your code)
 
-uniform mat4 view;
-uniform mat4 model;
+uniform mat4 v;
+uniform mat4 m;
 
 uniform samplerCube envMap;
 
@@ -22,7 +22,7 @@ void main()
     vec3 vertexToCamera = normalize(vertexToCamera);
     // TODO: fill the rest in
 
-    mat4 matrix = inverse(view*model); // inverse(view*model)
+    mat4 matrix = inverse(v*m); // inverse(v*m)
 
     // Getting reflection color
     vec3 r = reflect(cameraToVertex, n);

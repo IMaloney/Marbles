@@ -17,6 +17,8 @@
 #include "shapes/Cylinder.h"
 #include "shapes/Sphere.h"
 
+#define STB_IMAGE_IMPLEMENTATION
+#include "gl/stb_image.h"
 
 using namespace CS123::GL;
 #include "gl/shaders/CS123Shader.h"
@@ -34,12 +36,11 @@ ShapesScene::ShapesScene(int width, int height) :
     m_height(height),
     m_yMove(0.0f),
     m_marbleTrans(),
-    m_vecTrans()
+    m_vecTrans(),
+    m_textureID()
 
 
 {
-
-
     initializeSceneMaterial();
     initializeSceneLight();
     loadPhongShader();
@@ -57,6 +58,26 @@ ShapesScene::ShapesScene(int width, int height) :
     // testing
 //    m_modelMable->printQuadInfo();
 
+    std::vector<std::string> faces = {
+        "/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/textures/marble.jpg",
+        "/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/textures/marble.jpg",
+        "/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/textures/marble.jpg",
+        "/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/textures/marble.jpg",
+        "/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/textures/marble.jpg",
+        "/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/textures/marble.jpg"
+    };
+
+//    std::vector<std::string> faces = {
+//        "../textures/marble.jpg",
+//        "../textures/marble.jpg",
+//        "../textures/marble.jpg",
+//        "../textures/marble.jpg",
+//        "../textures/marble.jpg",
+//        "../textures/marble.jpg"
+//    };
+
+    m_textureID = loadCubemap(faces);
+
     MarbleData marble = MarbleData();
     marble.radius = .25f;
     marble.weight = 54;
@@ -68,13 +89,13 @@ ShapesScene::ShapesScene(int width, int height) :
     marble.velocity = glm::vec4(0.5f, 0.0, 0.5f, 0.0f);
     marble.scaleTransformation = glm::scale(glm::vec3(marble.radius/0.5f));
     marble.angle = glm::vec3(0.0f);
-    marble.marbleType = MARBLE_WOOD;
+    marble.marbleType = MARBLE_GLASS;
     marble.quatAngle = 0.0f;
 
     m_marbles.push_back(marble);
 
     marble = MarbleData();
-    marble.radius = .32f;
+    marble.radius = .25f;
     marble.weight = 54;
     marble.gravity = -1 * 11.51;
     marble.centerPosition = glm::vec4(0.5f, -1.25f, 0.5f, 1.0f);
@@ -84,7 +105,7 @@ ShapesScene::ShapesScene(int width, int height) :
     marble.velocity = glm::vec4(-0.5f, 0.0, -0.5f, 0.0f);
     marble.scaleTransformation = glm::scale(glm::vec3(marble.radius/0.5f));
     marble.angle = glm::vec3(0.0f);
-    marble.marbleType = MARBLE_WOOD;
+    marble.marbleType = MARBLE_GLASS;
     marble.quatAngle = 0.0f;
 
     m_marbles.push_back(marble);
@@ -124,15 +145,15 @@ void ShapesScene::loadPhongShader() {
 }
 
 void ShapesScene::loadGlassShader() {
-    std::string vertexSource = ResourceLoader::loadResourceFileToString(":/shaders/glass.vert");
-    std::string fragmentSource = ResourceLoader::loadResourceFileToString(":/shaders/glass.frag");
-    m_phongShader = std::make_unique<CS123Shader>(vertexSource, fragmentSource);
+    std::string vertexSource = ResourceLoader::loadResourceFileToString(":/shaders/shaders/glass.vert");
+    std::string fragmentSource = ResourceLoader::loadResourceFileToString(":/shaders/shaders/glass.frag");
+    m_glassShader = std::make_unique<CS123Shader>(vertexSource, fragmentSource);
 }
 
 void ShapesScene::loadMetalShader() {
-    std::string vertexSource = ResourceLoader::loadResourceFileToString(":/shaders/metal.vert");
-    std::string fragmentSource = ResourceLoader::loadResourceFileToString(":/shaders/metal.frag");
-    m_phongShader = std::make_unique<CS123Shader>(vertexSource, fragmentSource);
+    std::string vertexSource = ResourceLoader::loadResourceFileToString(":/shaders/shaders/metal.vert");
+    std::string fragmentSource = ResourceLoader::loadResourceFileToString(":/shaders/shaders/metal.frag");
+    m_metalShader = std::make_unique<CS123Shader>(vertexSource, fragmentSource);
 }
 
 void ShapesScene::loadWireframeShader() {
@@ -162,7 +183,6 @@ void ShapesScene::render(SupportCanvas3D *context) {
 
     renderPhongPass(context);
 
-
 //    if (settings.drawWireframe) {
 //        renderWireframePass(context);
 //    }
@@ -172,7 +192,54 @@ void ShapesScene::render(SupportCanvas3D *context) {
 //    }
 }
 
+unsigned int ShapesScene::loadCubemap(std::vector<std::string> faces)
+{
+    unsigned int textureID;
+    glGenTextures(1, &textureID);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
+
+    int width, height, nrChannels;
+    for (unsigned int i = 0; i < faces.size(); i++)
+    {
+//        const char *tex = "/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/textures/real_marble.png";
+//        QImage img = QGLWidget::convertToGLFormat(QImage(tex));
+        unsigned char *data = stbi_load(faces[i].c_str(), &width, &height, &nrChannels, 0);
+
+        if (data)
+        {
+            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+            stbi_image_free(data);
+        }
+        else
+        {
+            std::cout << "Cubemap tex failed to load at path: " << faces[i] << std::endl;
+            stbi_image_free(data);
+        }
+    }
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+
+    return textureID;
+}
+
 void ShapesScene::renderPhongPass(SupportCanvas3D *context) {
+    // THIS COULD BE SUS
+    m_glassShader->bind();
+    setMatrixUniforms(m_glassShader.get(), context);
+    m_glassShader->setUniform("r0" , 0.8f);
+    m_glassShader->setUniform("eta" , glm::vec3(0.79f, 0.8f, 0.81f));
+    m_glassShader->unbind();
+
+    m_metalShader->bind();
+    setMatrixUniforms(m_metalShader.get(), context);
+    m_metalShader->setUniform("lightPosition" , glm::vec4(10.0f, 10.0f, 10.0f, 0.0f));
+    m_metalShader->setUniform("r0" , 0.7f);
+    m_metalShader->setUniform("rough" , 0.55f);
+    m_metalShader->unbind();
+
     m_phongShader->bind();
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -330,7 +397,30 @@ void ShapesScene::renderGeometry() {
             glm::mat4x4 translation = glm::translate(m_marbles[i].cumulativeTransformation);
 
             m_phongShader->setUniform("m" , translation * rotMat * m_marbles[i].scaleTransformation);
-            m_modelMable->draw();
+
+            if (m_marbles[i].marbleType == MARBLE_METAL) {
+                m_phongShader->unbind();
+                m_metalShader->bind();
+
+                glBindTexture(GL_TEXTURE_CUBE_MAP, m_textureID);
+                m_metalShader->setUniform("m" , translation * rotMat * m_marbles[i].scaleTransformation);
+                m_modelMable->draw();
+
+                m_metalShader->unbind();
+                m_phongShader->bind();
+            } else if (m_marbles[i].marbleType == MARBLE_GLASS) {
+                m_phongShader->unbind();
+                m_glassShader->bind();
+
+                glBindTexture(GL_TEXTURE_CUBE_MAP, m_textureID);
+                m_glassShader->setUniform("m" , translation * rotMat * m_marbles[i].scaleTransformation);
+                m_modelMable->draw();
+
+                m_glassShader->unbind();
+                m_phongShader->bind();
+            } else {
+                m_modelMable->draw();
+            }
         }
     }
 }
@@ -492,7 +582,6 @@ void ShapesScene::checkMarbleCollisions() {
                 float dist = sqrt(pow(m1Pos.x - m2Pos.x, 2) + pow(m1Pos.y - m2Pos.y, 2) + pow(m1Pos.z - m2Pos.z, 2));
 
                 if (dist <= (m1Rad + m2Rad)) {
-                    std::cout << "Overlap found!" << std::endl;
 
                     float overlap = ((m1Rad + m2Rad) - dist) / 2.0f + epsilon;
 
@@ -581,8 +670,8 @@ void ShapesScene::checkMarbleCollisions() {
 
 void ShapesScene::makeMap() {
     // box texture
-//    const char *tex = "../textures/real_marble.png";
-    const char *tex = "/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/textures/real_marble.png";
+//    const char *tex = "../textures/marble.jpg";
+    const char *tex = "/Users/wtauten/Desktop/Notes/Master's Fall Semester/Graphics/final/Marbles/textures/marble.jpg";
     QImage img = QGLWidget::convertToGLFormat(QImage(tex));
     m_boxTexture = std::make_shared<CS123::GL::Texture2D>(img.bits(), img.width(), img.height());
 

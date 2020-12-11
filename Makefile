@@ -154,6 +154,12 @@ OBJECTS       = generated_files/Marble.o \
 		generated_files/moc_mainwindow.o \
 		generated_files/moc_Databinding.o
 DIST          = brush/README_BRUSH \
+		shaders/glass.frag \
+		shaders/glass.vars \
+		shaders/glass.vert \
+		shaders/metal.frag \
+		shaders/metal.vars \
+		shaders/metal.vert \
 		shaders/normals/normals.vert \
 		shaders/normals/normals.frag \
 		shaders/normals/normals.gsh \
@@ -339,7 +345,8 @@ DIST          = brush/README_BRUSH \
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/mkspecs/features/exceptions.prf \
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/mkspecs/features/yacc.prf \
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/mkspecs/features/lex.prf \
-		CS123.pro marble/Marble.h \
+		CS123.pro gl/stb_image.h \
+		marble/Marble.h \
 		camera/Camera.h \
 		camera/OrbitingCamera.h \
 		camera/CamtransCamera.h \
@@ -854,7 +861,7 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents resources.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /Users/wtauten/Qt5.14.2/5.14.2/clang_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents marble/Marble.h camera/Camera.h camera/OrbitingCamera.h camera/CamtransCamera.h camera/QuaternionCamera.h marble/MetalMarble.h marble/WoodMarble.h scenegraph/MarbleScene.h scenegraph/Scene.h scenegraph/OpenGLScene.h scenegraph/ShapesScene.h scenegraph/SceneviewScene.h scenegraph/RayScene.h shapes/Box.h shapes/Cone.h shapes/Cube.h shapes/Cylinder.h shapes/Shape.h shapes/ShapeUtils.h shapes/Sphere.h ui/Canvas2D.h ui/SupportCanvas2D.h ui/SupportCanvas3D.h ui/Settings.h ui/mainwindow.h ui/Databinding.h ui_mainwindow.h gl/shaders/Shader.h gl/GLDebug.h gl/shaders/ShaderAttribLocations.h gl/datatype/VBOAttribMarker.h gl/datatype/VBO.h gl/datatype/IBO.h gl/datatype/VAO.h gl/datatype/FBO.h gl/textures/Texture.h gl/textures/Texture2D.h gl/textures/TextureParameters.h gl/textures/TextureParametersBuilder.h gl/textures/RenderBuffer.h gl/textures/DepthBuffer.h gl/shaders/CS123Shader.h gl/util/FullScreenQuad.h lib/CS123XmlSceneParser.h lib/CS123SceneData.h lib/CS123ISceneParser.h lib/ResourceLoader.h glew-1.10.0/include/GL/glew.h lib/RGBA.h $(DISTDIR)/
+	$(COPY_FILE) --parents gl/stb_image.h marble/Marble.h camera/Camera.h camera/OrbitingCamera.h camera/CamtransCamera.h camera/QuaternionCamera.h marble/MetalMarble.h marble/WoodMarble.h scenegraph/MarbleScene.h scenegraph/Scene.h scenegraph/OpenGLScene.h scenegraph/ShapesScene.h scenegraph/SceneviewScene.h scenegraph/RayScene.h shapes/Box.h shapes/Cone.h shapes/Cube.h shapes/Cylinder.h shapes/Shape.h shapes/ShapeUtils.h shapes/Sphere.h ui/Canvas2D.h ui/SupportCanvas2D.h ui/SupportCanvas3D.h ui/Settings.h ui/mainwindow.h ui/Databinding.h ui_mainwindow.h gl/shaders/Shader.h gl/GLDebug.h gl/shaders/ShaderAttribLocations.h gl/datatype/VBOAttribMarker.h gl/datatype/VBO.h gl/datatype/IBO.h gl/datatype/VAO.h gl/datatype/FBO.h gl/textures/Texture.h gl/textures/Texture2D.h gl/textures/TextureParameters.h gl/textures/TextureParametersBuilder.h gl/textures/RenderBuffer.h gl/textures/DepthBuffer.h gl/shaders/CS123Shader.h gl/util/FullScreenQuad.h lib/CS123XmlSceneParser.h lib/CS123SceneData.h lib/CS123ISceneParser.h lib/ResourceLoader.h glew-1.10.0/include/GL/glew.h lib/RGBA.h $(DISTDIR)/
 	$(COPY_FILE) --parents marble/Marble.cpp camera/OrbitingCamera.cpp camera/CamtransCamera.cpp camera/QuaternionCamera.cpp marble/MetalMarble.cpp marble/WoodMarble.cpp scenegraph/MarbleScene.cpp scenegraph/Scene.cpp scenegraph/OpenGLScene.cpp scenegraph/ShapesScene.cpp scenegraph/SceneviewScene.cpp scenegraph/RayScene.cpp shapes/Box.cpp shapes/Cone.cpp shapes/Cube.cpp shapes/Cylinder.cpp shapes/Shape.cpp shapes/ShapeUtils.cpp shapes/Sphere.cpp ui/Canvas2D.cpp ui/SupportCanvas2D.cpp ui/SupportCanvas3D.cpp ui/Settings.cpp ui/mainwindow.cpp ui/Databinding.cpp lib/CS123XmlSceneParser.cpp lib/ResourceLoader.cpp gl/shaders/Shader.cpp gl/GLDebug.cpp gl/datatype/VBOAttribMarker.cpp gl/datatype/VBO.cpp gl/datatype/IBO.cpp gl/datatype/VAO.cpp gl/datatype/FBO.cpp gl/textures/Texture.cpp gl/textures/Texture2D.cpp gl/textures/TextureParameters.cpp gl/textures/TextureParametersBuilder.cpp gl/textures/RenderBuffer.cpp gl/textures/DepthBuffer.cpp gl/shaders/CS123Shader.cpp gl/util/FullScreenQuad.cpp main.cpp glew-1.10.0/src/glew.c lib/RGBA.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ui/mainwindow.ui $(DISTDIR)/
 
@@ -899,7 +906,11 @@ qrc_resources.cpp: resources.qrc \
 		shaders/normals/normals.vert \
 		shaders/normals/normalsArrow.gsh \
 		shaders/shader.vert \
-		shaders/normals/normalsArrow.vert
+		shaders/normals/normalsArrow.vert \
+		shaders/glass.vert \
+		shaders/metal.frag \
+		shaders/metal.vert \
+		shaders/glass.frag
 	/Users/wtauten/Qt5.14.2/5.14.2/clang_64/bin/rcc -name resources resources.qrc -o qrc_resources.cpp
 
 compiler_moc_predefs_make_all: generated_files/moc_predefs.h
@@ -1947,6 +1958,7 @@ generated_files/ShapesScene.o: scenegraph/ShapesScene.cpp scenegraph/ShapesScene
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtWidgets.framework/Headers/qfiledialog.h \
 		shapes/Cube.h \
 		shapes/Cone.h \
+		gl/stb_image.h \
 		gl/shaders/CS123Shader.h \
 		gl/shaders/Shader.h \
 		gl/GLDebug.h \
@@ -3065,15 +3077,9 @@ generated_files/mainwindow.o: ui/mainwindow.cpp ui/mainwindow.h \
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
 		ui_mainwindow.h \
-		ui/Canvas2D.h \
-		ui/SupportCanvas2D.h \
-		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtWidgets.framework/Headers/QWidget \
-		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
-		ui/Settings.h \
+		ui/Databinding.h \
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtCore.framework/Headers/QObject \
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtCore.framework/Headers/qobject.h \
-		lib/RGBA.h \
-		ui/Databinding.h \
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtCore.framework/Headers/QVariant \
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtCore.framework/Headers/qvariant.h \
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtWidgets.framework/Headers/QSlider \
@@ -3186,6 +3192,12 @@ generated_files/mainwindow.o: ui/mainwindow.cpp ui/mainwindow.h \
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtGui.framework/Headers/qimage.h \
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtCore.framework/Headers/QString \
 		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtCore.framework/Headers/qstring.h \
+		ui/Canvas2D.h \
+		ui/SupportCanvas2D.h \
+		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtWidgets.framework/Headers/QWidget \
+		/Users/wtauten/Qt5.14.2/5.14.2/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		ui/Settings.h \
+		lib/RGBA.h \
 		camera/Camera.h \
 		scenegraph/ShapesScene.h \
 		scenegraph/OpenGLScene.h \

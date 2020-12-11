@@ -1,5 +1,7 @@
 #include "Texture2D.h"
 
+#include <iostream>
+
 #include <utility>
 
 namespace CS123 { namespace GL {
@@ -12,6 +14,8 @@ Texture2D::Texture2D(unsigned char *data, int width, int height, GLenum type)
     // Bind the texture by calling bind() and filling it in
     // Generate the texture with glTexImage2D
     bind();
+//    std::cout << "input width: " << width << std::endl;
+//    std::cout << "input height: " << height << std::endl;
     glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, internalFormat, type, data);
 
     // TODO Don't forget to unbind!

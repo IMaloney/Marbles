@@ -10,12 +10,12 @@ uniform vec4 ambient;		// The ambient channel of the color to reflect
 uniform vec4 diffuse;		// The diffuse channel of the color to reflect
 uniform vec4 specular;		// The specular channel of the color to reflect
 
-uniform mat4 model;             // model matrix
-uniform mat4 view;              // view matrix
+uniform mat4 m;             // model matrix
+uniform mat4 v;              // view matrix
 uniform mat4 mvp;               // model view projection matrix
 
 uniform float r0;		// The Fresnel reflectivity when the incident angle is 0
-uniform float m;		// The roughness of the material
+uniform float rough;		// The roughness of the material
 
 out vec4 fragColor;
 
@@ -24,13 +24,13 @@ void main()
     vec3 n = normalize(eyeNormal);
     vec3 l = normalize(vertexToLight);
     vec3 cameraToVertex = normalize(vertex); //remember we are in camera space!
-    vec3 v = normalize(vertexToCamera);
+    vec3 vert = normalize(vertexToCamera);
 
     vec3 h = normalize(vertexToLight + vertexToCamera);
     float alpha = acos(dot(n, h));
 
     // Beckmann distribution factor
-    float D = exp(-pow(tan(alpha), 2)/pow(m, 2))/(4.0f*pow(m, 2)*pow(cos(alpha), 4));
+    float D = exp(-pow(tan(alpha), 2)/pow(rough, 2))/(4.0f*pow(rough, 2)*pow(cos(alpha), 4));
 
     // ANGLE CALCULATION MAY BE SUS
 //    float thetaI = acos(dot(normalize(eyeNormal), cameraToVertex));
@@ -39,12 +39,12 @@ void main()
     float F = r0 + (1.0f - r0)*pow(1.0f - thetaI, 5);
 
     // geometric attenuation term
-    float min1 = (2.0f*dot(h, n)*dot(v, n))/dot(v, h);
-    float min2 = (2.0f*dot(h, n)*dot(l, n))/dot(v, h);
+    float min1 = (2.0f*dot(h, n)*dot(vert, n))/dot(vert, h);
+    float min2 = (2.0f*dot(h, n)*dot(l, n))/dot(vert, h);
     float G = min(1.0f, min(min1, min2));
 
     //k specular
-    float kS = D*F*G/dot(v, n);
+    float kS = D*F*G/dot(vert, n);
     kS = max(kS, 0);
 
     // Lambert term???????
@@ -57,7 +57,7 @@ void main()
 
     vec3 r = reflect(cameraToVertex, n);
     vec4 r2 = vec4(r[0], r[1], r[2], 0);
-    vec4 worldR = view*model * r2; // ???
+    vec4 worldR = v*m * r2; // ???
 
     vec3 finalR = vec3(worldR[0], worldR[1], worldR[2]);
     finalR = normalize(finalR);
